@@ -1,27 +1,31 @@
 import React, { useEffect, useState } from "react";
 
 function SignIn() {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
+  const [fname, setFirstName] = useState<string>("");
+  const [lname, setLastName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [passError, setPassError] = useState(false);
 
   useEffect(() => {
-    validatePassword(password, confirmPassword);
+    validatePassword(password, confirmPassword)
   }, [password, confirmPassword]);
 
-  function validatePassword(pass, confrimPass) {
+  function validatePassword(pass: string, confirmPass: string) {
     let isValid = confirmPass === pass;
     if (!isValid) {
       setPassError(true);
     }
   }
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     let userData = {
-      name,
+      fname,
+      lname,
       email,
+      username,
       password,
     };
 
@@ -43,7 +47,9 @@ function SignIn() {
     }
   }
   return (
-    
+      <form onSubmit={handleSubmit}>
+      </form>
+    );
 }
 
 export default SignIn;
