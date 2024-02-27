@@ -1,6 +1,7 @@
+"use client"
 import React, { useEffect, useState } from "react";
 
-function SignIn() {
+export default function SignIn() {
   // state variables to store user input
   const [fname, setFirstName] = useState<string>("");
   const [lname, setLastName] = useState<string>("");
@@ -13,7 +14,7 @@ function SignIn() {
 
   // useEffect hook to validate password whenever password or confirmpassword changes
   useEffect(() => {
-    validatePassword(password, confirmPassword)
+    validatePassword(password, confirmPassword);
   }, [password, confirmPassword]);
 
   // function to validate whether or not the passwords match
@@ -53,99 +54,100 @@ function SignIn() {
       //registration failed
     }
   }
+
   return (
-    <div style={{ backgroundColor: "black", color: "white", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <div style={{ maxWidth: "400px", width: "100%", padding: "20px", borderRadius: "8px", boxShadow: "0 4px 6px rgba(0,0,0,0.1)" }}>
-        <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Create an Account</h2>
+    <div className="bg-black text-white min-h-screen flex items-center justify-center">
+      <div className="max-w-md w-full p-8 rounded-lg shadow-md">
+        <h2 className="text-center mb-8">Create an Account</h2>
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: "10px" }}>
+          <div className="mb-4">
             <label htmlFor="firstName">First Name</label>
             <input
               type="text"
               id="firstName"
               value={fname}
               onChange={(e) => setFirstName(e.target.value)}
-              style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
+              className="w-full px-4 py-2 rounded border border-gray-300"
               placeholder="Enter your first name"
               required
             />
           </div>
-          <div style={{ marginBottom: "10px" }}>
+          <div className="mb-4">
             <label htmlFor="lastName">Last Name</label>
             <input
               type="text"
               id="lastName"
               value={lname}
               onChange={(e) => setLastName(e.target.value)}
-              style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
+              className="w-full px-4 py-2 rounded border border-gray-300"
               placeholder="Enter your last name"
               required
             />
           </div>
-          <div style={{ marginBottom: "10px" }}>
+          <div className="mb-4">
             <label htmlFor="email">Email Address</label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
+              className="w-full px-4 py-2 rounded border border-gray-300"
               placeholder="Enter your email"
               required
             />
           </div>
-          <div style={{ marginBottom: "10px" }}>
+          <div className="mb-4">
             <label htmlFor="DOB">Date of Birth</label>
             <input
               type="text"
               id="DOB"
               value={DOB}
               onChange={(e) => setDOB(e.target.value)}
-              style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
+              className="w-full px-4 py-2 rounded border border-gray-300"
               placeholder="Enter your Date of Birth"
               required
             />
           </div>
-          <div style={{ marginBottom: "10px" }}>
-            <label htmlFor="gender">gender</label>
+          <div className="mb-4">
+            <label htmlFor="gender">Gender</label>
             <input
               type="text"
               id="gender"
               value={gender}
               onChange={(e) => setGender(e.target.value)}
-              style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
+              className="w-full px-4 py-2 rounded border border-gray-300"
               placeholder="Enter your Gender"
               required
             />
           </div>
-          <div style={{ marginBottom: "10px" }}>
+          <div className="mb-4">
             <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
+              className="w-full px-4 py-2 rounded border border-gray-300"
               placeholder="Enter your password"
               required
             />
           </div>
-          <div style={{ marginBottom: "10px" }}>
+          <div className="mb-4">
             <label htmlFor="confirmPassword">Confirm Password</label>
             <input
               type="password"
               id="confirmPassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
+              className="w-full px-4 py-2 rounded border border-gray-300"
               placeholder="Confirm your password"
               required
             />
           </div>
-          {passError && <p style={{ color: "red" }}>Passwords do not match.</p>}
+          {passError && <p className="text-red-500">Passwords do not match.</p>}
           <button
             type="submit"
-            style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "none", backgroundColor: "indigo", color: "white", cursor: "pointer" }}
+            className="w-full px-4 py-2 rounded bg-indigo-600 text-white cursor-pointer"
           >
             Sign Up
           </button>
@@ -154,5 +156,3 @@ function SignIn() {
     </div>
   );
 }
-
-export default SignIn;
