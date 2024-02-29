@@ -1,158 +1,97 @@
-"use client"
-import React, { useEffect, useState } from "react";
+// Note: This is the register page
+"use client";
+import { signIn } from "next-auth/react";
+import Link from "next/link";
+import { useState } from "react";
 
-export default function SignIn() {
-  // state variables to store user input
-  const [fname, setFirstName] = useState<string>("");
-  const [lname, setLastName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [DOB, setDOB] = useState<string>("");
-  const [gender, setGender] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [passError, setPassError] = useState(false);
 
-  // useEffect hook to validate password whenever password or confirmpassword changes
-  useEffect(() => {
-    validatePassword(password, confirmPassword);
-  }, [password, confirmPassword]);
-
-  // function to validate whether or not the passwords match
-  function validatePassword(pass: string, confirmPass: string) {
-    let isValid = confirmPass === pass;
-    if (!isValid) {
-      setPassError(true);
-    }
-  }
-
-  // function to handle form submission 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault(); // prevents the default form submission behavior (stop spage from reloading)
-    let userData = {
-      fname,
-      lname,
-      email,
-      DOB,
-      gender,
-      password,
-    };
-
-    // Make call to backend to create user
-    const res = await fetch("http://localhost:3000/api/user/create", {
-      method: "POST", // we use the fetch api tp use this method to request to the url above 
-      body: JSON.stringify(userData), // this makes the userdata pass through as strings in  a json format
-      headers: {
-        "Content-Type": "application/json",
-      },
+const RegisterPage = () => {
+    const [registerData, setRegisterData] = useState({
+        name: "",
+        email: "",
+        password: "",
     });
-
-    if (res.ok) {
-      const data = await res.json();
-
-      // registration success
-    } else {
-      //registration failed
+    
+    const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+        setRegisterData({ ...registerData, [e.target.name]: e.target.value });
+      };
+    
+    const [alert, setAlert] = useState({
+        status: '',
+        message: ''
+    })
+    const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+        e.preventDefault()
+        try {
+          await fetch('/api/auth/signup', {
+            method: 'POST',
+            body: JSON.stringify(registerData)
+          })
+          setAlert({ status: 'success', message: 'Signup successfully' })
+          setRegisterData({ name: '', email: '', password: '' })
+        } catch (error : any) {
+          console.log({ error })
+          setAlert({ status: 'error', message: 'Something went wrong'})
+        }
     }
-  }
 
   return (
     <div className="bg-black text-white min-h-screen flex items-center justify-center">
       <div className="max-w-md w-full p-8 rounded-lg shadow-md">
         <h2 className="text-center mb-8">Create an Account</h2>
-        <form onSubmit={handleSubmit}>
+        {alert.message && 
+          <div style={{ 
+              color: alert.status === 'success' ? 'green' : 'red',
+              fontWeight: 'bold'
+          }}>   
+              {alert.status === 'success' ? '✅' : '❌'} {alert.message}
+          </div>
+        }
+        <form onSubmit={onSubmit}>
           <div className="mb-4">
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="name" className="block text-white text-sm font-bold mb-2">Name </label>
             <input
-              type="text"
-              id="firstName"
-              value={fname}
-              onChange={(e) => setFirstName(e.target.value)}
-              className="w-full px-4 py-2 rounded border border-gray-300"
-              placeholder="Enter your first name"
-              required
+              className="input input-bordered w-full max-w-xs opacity-25 text-black"
+              onChange={onChange}
+              value={registerData.name} 
+              name="name"
+              type="text" 
+              required 
             />
           </div>
+
           <div className="mb-4">
-            <label htmlFor="lastName">Last Name</label>
+            <label htmlFor="email" className="block text-white text-sm font-bold mb-2">Email </label>
             <input
-              type="text"
-              id="lastName"
-              value={lname}
-              onChange={(e) => setLastName(e.target.value)}
-              className="w-full px-4 py-2 rounded border border-gray-300"
-              placeholder="Enter your last name"
-              required
+              className="input input-bordered w-full max-w-xs opacity-25 text-black"
+              onChange={onChange}
+              value={registerData.email} 
+              name="email" 
+              type="email" 
+              required 
             />
           </div>
+
           <div className="mb-4">
-            <label htmlFor="email">Email Address</label>
+            <label htmlFor="password" className="block text-white text-sm font-bold mb-2">Password </label>
             <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 rounded border border-gray-300"
-              placeholder="Enter your email"
-              required
+              className="input input-bordered w-full max-w-xs opacity-25 text-black" 
+              onChange={onChange}
+              value={registerData.password}
+              name="password" 
+              type="password" 
+              required 
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="DOB">Date of Birth</label>
-            <input
-              type="text"
-              id="DOB"
-              value={DOB}
-              onChange={(e) => setDOB(e.target.value)}
-              className="w-full px-4 py-2 rounded border border-gray-300"
-              placeholder="Enter your Date of Birth"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="gender">Gender</label>
-            <input
-              type="text"
-              id="gender"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-              className="w-full px-4 py-2 rounded border border-gray-300"
-              placeholder="Enter your Gender"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 rounded border border-gray-300"
-              placeholder="Enter your password"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-4 py-2 rounded border border-gray-300"
-              placeholder="Confirm your password"
-              required
-            />
-          </div>
-          {passError && <p className="text-red-500">Passwords do not match.</p>}
-          <button
-            type="submit"
-            className="w-full px-4 py-2 rounded bg-indigo-600 text-white cursor-pointer"
-          >
-            Sign Up
-          </button>
+          <button type="submit" className="w-full px-4 py-2 rounded bg-indigo-600 text-white cursor-pointer">Create account</button>
         </form>
-      </div>
+        <p className="mt-10 text-center text-sm text-gray-500">
+              Already signed up?
+              <Link href="/Login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"> Sign in</Link>
+        </p>
+        </div>
     </div>
   );
-}
+};
+
+export default RegisterPage;
