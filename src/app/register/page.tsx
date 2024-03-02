@@ -38,7 +38,10 @@ const RegisterPage = () => {
   return (
     <div className="bg-black text-white min-h-screen flex items-center justify-center">
       <div className="max-w-md w-full p-8 rounded-lg shadow-md">
-        <h2 className="text-center mb-8">Create an Account</h2>
+          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+            <h2 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-white">HealthME</h2>
+            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">Create your account</h2>
+          </div>
         {alert.message && 
           <div style={{ 
               color: alert.status === 'success' ? 'green' : 'red',
@@ -51,7 +54,7 @@ const RegisterPage = () => {
           <div className="mb-4">
             <label htmlFor="name" className="block text-white text-sm font-bold mb-2">Name </label>
             <input
-              className="input input-bordered w-full max-w-xs opacity-25 text-black"
+              className="input input-bordered rounded-md w-full max-w-xs text-black"
               onChange={onChange}
               value={registerData.name} 
               name="name"
@@ -63,7 +66,7 @@ const RegisterPage = () => {
           <div className="mb-4">
             <label htmlFor="email" className="block text-white text-sm font-bold mb-2">Email </label>
             <input
-              className="input input-bordered w-full max-w-xs opacity-25 text-black"
+              className="input input-bordered rounded-md w-full max-w-xs text-black"
               onChange={onChange}
               value={registerData.email} 
               name="email" 
@@ -75,7 +78,7 @@ const RegisterPage = () => {
           <div className="mb-4">
             <label htmlFor="password" className="block text-white text-sm font-bold mb-2">Password </label>
             <input
-              className="input input-bordered w-full max-w-xs opacity-25 text-black" 
+              className="input input-bordered rounded-md w-full max-w-xs text-black" 
               onChange={onChange}
               value={registerData.password}
               name="password" 
@@ -83,7 +86,7 @@ const RegisterPage = () => {
               required 
             />
           </div>
-          <button type="submit" className="w-full px-4 py-2 rounded bg-indigo-600 text-white cursor-pointer">Create account</button>
+          <button type="submit" className="w-full px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-500 text-white cursor-pointer font-semibold">Create</button>
         </form>
         <p className="mt-10 text-center text-sm text-gray-500">
               Already signed up?
