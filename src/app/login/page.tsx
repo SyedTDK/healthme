@@ -48,7 +48,7 @@ const LoginPage = () => {
       <div className="bg-black text-white min-h-screen flex items-center justify-center">
         <div className="max-w-md w-full p-8 rounded-lg shadow-md">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <h2 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-white">HealthME</h2>
+            <img src="/logo.png" alt="logo" className="mx-auto w-24" />
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">Sign in to your account</h2>
           </div>
           {alert.message && 
