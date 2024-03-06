@@ -2,6 +2,7 @@ import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/app/libs/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import bcrypt from "bcrypt";
 
 
 export const authOptions: AuthOptions = {
@@ -20,12 +21,15 @@ export const authOptions: AuthOptions = {
           });
   
           if (!user) throw new Error("user with that email does not exist");
-  
-          // ⚠️ WARNING: Need to change this to encrypt password
-          if (user.password !== credentials?.password)
-            throw new Error("incorrect password");
-  
-          return user as any;
+          
+            const passwordMatch = await bcrypt.compare(
+            credentials?.password || '',
+            user.password || ''
+            );
+
+            if (!passwordMatch) throw new Error("incorrect password");
+
+            return user as any;
         },
       }),
     
