@@ -54,7 +54,7 @@ const RegisterPage = () => {
           <div className="mb-4">
             <label htmlFor="name" className="block text-white text-sm font-bold mb-2">Name </label>
             <input
-              className="input input-bordered block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="input input-bordered block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               onChange={onChange}
               value={registerData.name} 
               name="name"
@@ -66,7 +66,7 @@ const RegisterPage = () => {
           <div className="mb-4">
             <label htmlFor="email" className="block text-white text-sm font-bold mb-2">Email </label>
             <input
-              className="input input-bordered block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="input input-bordered block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               onChange={onChange}
               value={registerData.email} 
               name="email" 
@@ -78,7 +78,7 @@ const RegisterPage = () => {
           <div className="mb-4">
             <label htmlFor="password" className="block text-white text-sm font-bold mb-2">Password </label>
             <input
-              className="input input-bordered block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+              className="input input-bordered block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
               onChange={onChange}
               value={registerData.password}
               name="password" 
