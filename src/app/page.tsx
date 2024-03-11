@@ -27,15 +27,35 @@ export default async function Home() {
   
   if (!user) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-              <img src="/logo.png" alt="logo" className="mx-auto w-24" />
-              <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">Coming Soon!</h2>
-              <Link href="/register" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"> Get Started</Link>
+      <>
+        <header>
+          <nav className="border-gray-200 px-4 lg:px-6 py-2.5">
+              <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+                  <a href="/" className="flex items-center">
+                      <img src="/logo.png" className="mr-3 h-6 sm:h-9" alt="HealthMe Logo" />
+                      <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">HealthMe</span>
+                  </a>
+              </div>
+            </nav>
+        </header>
+        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+          <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+              <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+                <h2 className="mt-10 pb-3 text-center text-2xl font-normal leading-9 tracking-tight text-white">Your Personal Health Assistant. AI Expertise and Seamless Tracking.</h2>
+                <Link href="/register" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-xl font-medium leading-6 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-800"> Get Started</Link>
+              </div>
+          </div>
+        </main>
+        <footer>
+          <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+            <div className="sm:flex sm:items-center sm:justify-between">
+                <span className="text-sm sm:text-center text-gray-400">© 2023 HealthMe™. All Rights Reserved.
+                </span>
             </div>
-        </div>
-      </main>
+          </div>
+        </footer>
+        
+      </>
     );
   }
   else {
@@ -44,6 +64,7 @@ export default async function Home() {
         <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
               <img src="/logo.png" alt="logo" className="mx-auto w-24" />
+              
               <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">Coming Soon!</h2>
               <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">Welcome {user.name}</h2>
               <LogoutButton />
