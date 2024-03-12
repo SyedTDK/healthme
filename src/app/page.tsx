@@ -42,7 +42,7 @@ export default async function Home() {
           <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <h2 className="mt-10 pb-3 text-center text-2xl font-normal leading-9 tracking-tight text-white">Your Personal Health Assistant. AI Expertise and Seamless Tracking.</h2>
-                <Link href="/register" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-xl font-medium leading-6 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-800"> Get Started</Link>
+                <Link href="/register" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-xl font-medium leading-6 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-800 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]"> Get Started</Link>
               </div>
           </div>
         </main>
@@ -54,7 +54,6 @@ export default async function Home() {
             </div>
           </div>
         </footer>
-        
       </>
     );
   }
