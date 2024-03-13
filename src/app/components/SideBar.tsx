@@ -4,7 +4,7 @@ import { UserCircleIcon } from '@heroicons/react/24/solid'
 
 function SideBar() {
   return (
-    <div className = "p-2 flex flex-col h-screen">
+    <div className = "p-2 flex flex-col h-screen bg-gray-700">
         <div className= "flex-1"> 
         <div>
             {/* {newchat} */}
@@ -17,7 +17,7 @@ function SideBar() {
 
         <div className="border-gray-700 border chatRow">
         <UserCircleIcon className =  "h-8 w-8"/>
-        <p>Fardeen Ahmed</p>
+        <p>HealthME Group</p>
     </div>
     
     </div>
