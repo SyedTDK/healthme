@@ -59,17 +59,41 @@ export default async function Home() {
   }
   else {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-              <img src="/logo.png" alt="logo" className="mx-auto w-24" />
-              
-              <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">Coming Soon!</h2>
-              <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">Welcome {user.name}</h2>
-              <LogoutButton />
+      <>
+        <header>
+          <nav className="border-gray-200 px-4 lg:px-6 py-2.5">
+              <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+                  <a href="/" className="flex items-center">
+                      <img src="/logo.png" className="mr-3 h-6 sm:h-9" alt="HealthMe Logo" />
+                      <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">HealthMe</span>
+                  </a>
+              </div>
+            </nav>
+        </header>
+        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+          <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+              <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+                <h2 className="mt-10 pb-3 text-center text-3xl md:text-6xl font-medium leading-9 tracking-tight text-white">Hello, <span className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">{user.name}.</span></h2>
+                <Link href="#" className="block max-w-sm p-6 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">
+                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">Chat with AI</h5>
+                  <p className="font-normal text-gray-400">Ask anything related to your personal health!</p>
+                </Link>
+                <Link href="#" className="block max-w-sm p-6 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">
+                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">Health Analytics</h5>
+                  <p className="font-normal text-gray-400">Keep track of your health statistics.</p>
+                </Link>
+              </div>
+          </div>
+        </main>
+        <footer>
+          <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+            <div className="sm:flex sm:items-center sm:justify-between">
+                <span className="text-sm sm:text-center text-gray-400">© 2023 HealthMe™. All Rights Reserved.
+                </span>
             </div>
-        </div>
-      </main>
+          </div>
+        </footer>
+      </>
     );
   }
 }
