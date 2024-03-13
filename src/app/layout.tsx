@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: "HealthME",
-  description: "A chatbot for your health.",
+  description: "Health AI. Chatbot and health tracking app.",
 };
 
 export default function RootLayout({
