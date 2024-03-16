@@ -90,7 +90,7 @@ export default async function Home() {
         <footer>
           <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
             <div className="sm:flex sm:items-center sm:justify-between">
-                <span className="text-sm sm:text-center text-gray-400">© 2023 HealthMe™. All Rights Reserved.
+                <span className="text-sm sm:text-center text-gray-400">© 2024 HealthMe™. All Rights Reserved.
                 </span>
             </div>
           </div>
