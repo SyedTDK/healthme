@@ -78,11 +78,11 @@ export default async function Home() {
                 <h2 className="mt-0 pb-3 inline-flex text-center text-3xl md:text-6xl font-medium leading-tight sm:leading-tight lg:leading-relaxed tracking-tight text-white">Hello, <span className="ml-2 bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text"> {firstName}</span></h2>
                 <Link href="#" className="block max-w-sm p-6 mt-2 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">
                   <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">Chat with AI</h5>
-                  <p className="font-normal text-gray-400">Ask anything related to your personal health!</p>
+                  <p className="font-normal text-gray-400">Ask anything about your personal health!</p>
                 </Link>
                 <Link href="#" className="block max-w-sm p-6 mt-4 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">
                   <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">Health Analytics</h5>
-                  <p className="font-normal text-gray-400">Keep track of your health statistics.</p>
+                  <p className="font-normal text-gray-400">Keep track of your health data.</p>
                 </Link>
               </div>
           </div>
