@@ -75,7 +75,7 @@ export default async function Home() {
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
           <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <h2 className="mt-2 pb-3 inline-flex text-center text-3xl md:text-6xl font-medium leading-tight sm:leading-tight lg:leading-relaxed tracking-tight text-white">Hello, <span className="ml-2 bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text"> {firstName}</span></h2>
+                <h2 className="mt-0 pb-3 inline-flex text-center text-3xl md:text-6xl font-medium leading-tight sm:leading-tight lg:leading-relaxed tracking-tight text-white">Hello, <span className="ml-2 bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text"> {firstName}</span></h2>
                 <Link href="#" className="block max-w-sm p-6 mt-2 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">
                   <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">Chat with AI</h5>
                   <p className="font-normal text-gray-400">Ask anything related to your personal health!</p>
