@@ -71,7 +71,7 @@ export default async function Home() {
               <div className="flex flex-nowrap justify-between items-center mx-auto max-w-screen-xl">
                   <Link href="/" className="flex items-center">
                       <img src="/logo.png" className="mr-3 h-6 sm:h-9" alt="HealthMe Logo" />
-                      <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">HealthMe</span>
+                      <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">HealthMe</span>
                   </Link>
                   <div className="flex items-center">
                     <Profile user={user} />
