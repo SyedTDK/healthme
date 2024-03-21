@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/libs/auth";
 import prisma from "@/app/libs/prisma";
-import LogoutButton from "./components/LogoutButton";
+import Profile from "@/app/components/Profile";
 
 //Decodes the current session data and use prisma to retrieve the current user in the database.
 const getCurrentUser = async () => {
@@ -42,7 +42,6 @@ export default async function Home() {
                     <Link href="/register" className="px-4 py-1.5 text-sm font-medium leading-6 text-white bg-gradient-to-br from-purple-600 to-blue-500 rounded-md hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-800 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">Register</Link>
                   </div>
               </div>
-              
             </nav>
         </header>
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -68,12 +67,15 @@ export default async function Home() {
     return (
       <>
         <header>
-          <nav className="border-gray-200 px-4 lg:px-6 py-2.5">
-              <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-                  <a href="/" className="flex items-center">
+            <nav className="border-gray-200 px-4 lg:px-6 py-2.5">
+              <div className="flex flex-nowrap justify-between items-center mx-auto max-w-screen-xl">
+                  <Link href="/" className="flex items-center">
                       <img src="/logo.png" className="mr-3 h-6 sm:h-9" alt="HealthMe Logo" />
                       <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">HealthMe</span>
-                  </a>
+                  </Link>
+                  <div className="flex items-center">
+                    <Profile user={user} />
+                  </div>
               </div>
             </nav>
         </header>
