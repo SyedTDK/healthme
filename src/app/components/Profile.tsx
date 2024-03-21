@@ -25,7 +25,7 @@ const Profile = ({ user }: { user: any }) => {
                     <Link href="/" className="block px-4 py-2 hover:bg-gray-600 hover:text-white">Dashboard</Link>
                 </li>
                 </ul>
-                <div className="py-2">
+                <div className="py-2 hover:bg-gray-600">
                     <button onClick={() => signOut()} className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Sign out</button>
                 </div>
             </div>
