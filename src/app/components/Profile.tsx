@@ -12,17 +12,17 @@ const Profile = ({ user }: { user: any }) => {
             </button>
 
             <div id="dropdownInformation" className="z-10 hidden divide-y rounded-lg shadow w-44 bg-gray-700 divide-gray-600">
-                <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                <div className="px-4 py-3 text-sm text-white">
                 <div>{user.name}</div>
                 <div className="font-medium truncate">{user.email}</div>
                 </div>
-                <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformationButton">
+                <ul className="py-2 text-sm text-gray-200" aria-labelledby="dropdownInformationButton">
                 <li>
-                    <Link href="/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</Link>
+                    <Link href="/" className="block px-4 py-2 hover:bg-gray-600 hover:text-white">Dashboard</Link>
                 </li>
                 </ul>
                 <div className="py-2">
-                    <button onClick={() => signOut()} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</button>
+                    <button onClick={() => signOut()} className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Sign out</button>
                 </div>
             </div>
         </>
