@@ -44,7 +44,8 @@ export default async function Home() {
               </div>
             </nav>
         </header>
-        {/* <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        {/* old landing page
+        <main className="flex min-h-screen flex-col items-center justify-between p-24">
           <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <h2 className="mt-10 pb-3 text-center text-3xl md:text-6xl font-medium leading-9 tracking-tight text-white">Your Personal <span className="fade-in-text bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">Health Assistant.</span> AI Expertise and Seamless Tracking.</h2>
@@ -52,6 +53,7 @@ export default async function Home() {
               </div>
           </div>
         </main> */}
+        {/* new landing page */}
         <main className="flex items-center justify-center px-4 mx-auto max-w-screen-xl min-h-screen text-center lg:px-12">
           <div className="w-full">
             <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none  md:text-5xl lg:text-6xl text-white">Your Personal <span className="fade-in-text bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">Health Assistant.</span></h1>
@@ -61,7 +63,6 @@ export default async function Home() {
                     Get Started
                     <svg className="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                 </Link>
-                
             </div>  
           </div>
         </main>
