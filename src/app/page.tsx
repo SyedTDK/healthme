@@ -1,4 +1,4 @@
-//Landing page for the application
+//Landing page and home page for the application
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/libs/auth";

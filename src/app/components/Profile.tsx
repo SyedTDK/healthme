@@ -1,3 +1,5 @@
+//This is profile componenent that takes in the user object and displays the user's name and email. It also has a dropdown menu that allows the user to navigate to the dashboard or sign out.
+//This is used in header components to display the user's profile information.
 "use client";
 import Link from 'next/link'
 import { signOut } from 'next-auth/react'

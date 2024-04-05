@@ -1,3 +1,5 @@
+//This page will provide the users options to either create a new chat session or view past chat sessions.
+
 import Link from "next/link";
 import Profile from "../components/Profile";
 import { getServerSession } from "next-auth";

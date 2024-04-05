@@ -1,4 +1,4 @@
-// Chat UI
+//This page will open a new chat session with the chatbot.
 "use client";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
