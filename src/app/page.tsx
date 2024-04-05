@@ -5,7 +5,7 @@ import { authOptions } from "@/app/libs/auth";
 import prisma from "@/app/libs/prisma";
 import Profile from "@/app/components/Profile";
 
-//Decodes the current session data and use prisma to retrieve the current user in the database.
+//Decodes the current session data and use prisma to retrieve the current user in the database. This function can be copied to reuse in other parts of the application.
 const getCurrentUser = async () => {
   try {
     const session = await getServerSession(authOptions);
@@ -27,7 +27,9 @@ export default async function Home() {
   if(user) {
     var firstName = user.name?.replace(/ .*/,'');
   }
+
   if (!user) {
+    // If no user is logged in, display the landing page
     return (
       <>
         <header>
@@ -78,6 +80,7 @@ export default async function Home() {
     );
   }
   else {
+    // If a user is logged in, display the home page
     return (
       <>
         <header>
