@@ -6,7 +6,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/libs/auth";
 import prisma from "@/app/libs/prisma";
 
-
+// Decodes the current session data and use prisma to retrieve the current user in the database.
 const getCurrentUser = async () => {
   try {
     const session = await getServerSession(authOptions);
@@ -21,6 +21,19 @@ const getCurrentUser = async () => {
     return;
   }
 };
+
+// Fetch chat sessions for the current user
+const getChatSessions = async (user: any) => {
+  try {
+    const chatSessions = await prisma.chatSession.findMany({
+      where: { userId: { equals: user?.id ?? undefined } },
+      select: { id: true, createdAt: true }
+    });
+    return chatSessions;
+  } catch (error) {
+    console.error('Error fetching chat sessions:', error);
+  }
+}
 
 export default async function New() {
   const user = await getCurrentUser();
@@ -64,6 +77,9 @@ export default async function New() {
       </>
     );
   } else {
+    // If a user is logged in, display the chat sessions page
+    // This page will provide the users options to either create a new chat session or view past chat sessions.
+    const ChatSessions = await getChatSessions(user);
     return (
       <>
         <header>
@@ -83,23 +99,23 @@ export default async function New() {
           <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <Link href="/chat/new" className="block max-w-sm p-6 mt-2 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>New Session</h5>
+                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>New Session</h5>
                 </Link>
                 {/* TODO: Display past sessions with the creation date as its title. Clicking the specific session will take the user to dynamic route diplaying past messeges. */}
-                <Link href="#" className="block max-w-sm p-6 mt-4 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">PlaceholderDate1 Session</h5>
-                </Link>
-                <Link href="#" className="block max-w-sm p-6 mt-4 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">PlaceholderDate2 Session</h5>
-                </Link>
+                {ChatSessions?.map((session, index) => (
+                  <Link key={index} href={`/chat/${session.id}`} className="block max-w-sm p-6 mt-2 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">
+                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">{session.createdAt.toString()}</h5>
+                  </Link>
+                )) ?? []}
+                       
               </div>
           </div>
         </main>
         <footer>
           <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
             <div className="sm:flex sm:items-center sm:justify-between">
-                <span className="text-sm sm:text-center text-gray-400">© 2024 HealthMe™. All Rights Reserved.
-                </span>
+              <span className="text-sm sm:text-center text-gray-400">© 2024 HealthMe™. All Rights Reserved.
+              </span>
             </div>
           </div>
         </footer>
