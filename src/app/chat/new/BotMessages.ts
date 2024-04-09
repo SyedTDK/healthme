@@ -92,15 +92,7 @@ export const BotMessages: Record<BotResponseType, string[]> = {
         "Does the patient have further symptoms to mention?"
     ],
     [BotResponseType.DISEASE]:[
-        "Based on the symptoms provided, it seems the patient might be suffering from {disease}.",
-    "After analyzing the symptoms, it appears that the patient could have {disease}.",
-    "The symptoms described align with {disease}. It's possible the patient is affected by it.",
-    "Considering the symptoms, {disease} is a potential concern for the patient.",
-    "The symptoms reported suggest {disease} as a possible condition the patient is experiencing.",
-    "It's likely that the patient is suffering from {disease} based on the symptoms presented.",
-    "Given the symptoms mentioned, {disease} could be the underlying issue for the patient.",
-    "It seems probable that the patient is affected by {disease} considering the symptoms provided.",
-    "The symptoms described are consistent with {disease}. It's important to further investigate."
+      
     ]
     
   };

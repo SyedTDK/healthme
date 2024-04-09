@@ -21,6 +21,8 @@ const App: React.FC = () => {
     gender: '',
     symptoms: [],
   });
+
+  const [detectDiseaseMode, setDetectDiseaseMode] = useState(false); // State variable to track the mode of the button
   const [symptomOptions] = useState<string[]>(['itching', 'skin rash', 'nodal skin eruptions', 'continuous sneezing',
   'shivering', 'chills', 'joint pain', 'stomach pain', 'acidity',
   'ulcers on tongue', 'muscle wasting', 'vomiting', 'burning micturition',
@@ -60,10 +62,7 @@ const App: React.FC = () => {
   'silver-like dusting', 'small dents in nails', 'inflammatory nails',
   'blister', 'red sore around nose', 'yellow crust ooze']);
 
-  useEffect(() => {
-    fetchMessages();
-  }, []);
-
+ 
   useEffect(() => {
     const welcomeMessage = BotMessages[BotResponseType.WELCOME][Math.floor(Math.random() * BotMessages[BotResponseType.WELCOME].length)];
     const patientWhoMessage = BotMessages[BotResponseType.PATIENT_WHO][Math.floor(Math.random() * BotMessages[BotResponseType.PATIENT_WHO].length)];
@@ -74,15 +73,14 @@ const App: React.FC = () => {
     ]);
   }, []);
 
-  const fetchMessages = async () => {
-    try {
-      const response = await axios.get('https://healthme-test-1868220c15ef.herokuapp.com/chatbot');
-      const chatbotMessages = response.data.messages.map((message: string) => ({ text: message, isUser: false }));
-      setMessages(chatbotMessages);
-    } catch (error) {
-      console.error('Error fetching messages:', error);
+  useEffect(() => {
+    // Check if the number of selected symptoms is three or more
+    if (patientInfo.symptoms.length >= 3) {
+      setDetectDiseaseMode(true); // Enable "Detect Disease" mode
+    } else {
+      setDetectDiseaseMode(false); // Disable "Detect Disease" mode
     }
-  };
+  }, [patientInfo.symptoms]); // Re-run effect when symptoms change
 
   const sendMessage = async (userInput: string) => {
     setMessages(prevMessages => [...prevMessages, { text: userInput, isUser: true }]);
@@ -122,22 +120,36 @@ const App: React.FC = () => {
         } else {
           setPatientInfo(prev => ({ ...prev, symptoms: [...prev.symptoms, userInput] }));
           setMessages(prevMessages => [...prevMessages, { text: `The symptom "${userInput}" has been added.`, isUser: false }]);
-          if (patientInfo.symptoms.length >= 2) {
+          if (patientInfo.symptoms.length >= 3) {
+            setDetectDiseaseMode(true); // Enable "Detect Disease" mode
+          }
+          if (patientInfo.symptoms.length >= 3) {
             nextStep = BotResponseType.DISEASE;
           }
         }
         break;
         case BotResponseType.DISEASE:
-        // POST request to send the user's message to the chatbot API
-        try {
-          const response = await axios.post('https://healthme-test-1868220c15ef.herokuapp.com/chatbot', { message: userInput });
-          const botResponse = response.data.response;
-          setMessages(prevMessages => [...prevMessages, { text: botResponse, isUser: false }]);
-        } catch (error) {
-          console.error('Error sending message:', error);
-          setMessages(prevMessages => [...prevMessages, { text: "Sorry, we couldn't process your request at the moment. Please try again later.", isUser: false }]);
-        }
-        break;
+          // Construct the payload with the collected symptoms
+          const payload = {
+            symptoms: patientInfo.symptoms
+          };
+        
+          // Use axios to send a POST request to your backend
+          try {
+            const response = await axios.post('https://api-nts4.onrender.com/chatbot', payload);
+            // Assuming your API returns a response that includes a message or advice
+            const apiResponse = response.data;
+        
+            // Assuming apiResponse includes a property 'message' that contains the diagnosis or advice
+            // Update your messages state with this new message from the API
+            setMessages(prevMessages => [...prevMessages, { text: apiResponse.message, isUser: false }]);
+        
+            // Here, you might also handle transitioning to another conversation step or concluding the interaction
+          } catch (error) {
+            console.error('Error receiving response from the API:', error);
+            setMessages(prevMessages => [...prevMessages, { text: "Sorry, we couldn't process your request at the moment. Please try again later.", isUser: false }]);
+          }
+          break;
       default:
         console.log("Unhandled step");
     }
@@ -163,6 +175,7 @@ const App: React.FC = () => {
             onChange={(e) => setNewMessage(e.target.value)}
             value={newMessage}
             className="flex-grow bg-gray-800 rounded-lg text-white p-3 shadow-md"
+            disabled={detectDiseaseMode} // Disable the select when in "Detect Disease" mode
           >
             <option value="">Select a symptom</option>
             {symptomOptions.map((symptom, index) => (
@@ -171,7 +184,31 @@ const App: React.FC = () => {
               </option>
             ))}
           </select>
-          <button onClick={() => sendMessage(newMessage)} className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg ml-2">Add Symptom</button>
+          <button
+    onClick={async () => {
+        if (detectDiseaseMode) {
+            setCurrentStep(BotResponseType.DISEASE); // Change the conversation step
+
+            // Call the API to detect the disease
+            try {
+                const response = await axios.post('https://api-nts4.onrender.com/chatbot', { symptoms: patientInfo.symptoms });
+                const apiResponse = response.data;
+
+                // Update messages with the response from the API
+                setMessages(prevMessages => [...prevMessages, { text: apiResponse.message, isUser: false }]);
+            } catch (error) {
+                console.error('Error receiving response from the API:', error);
+                setMessages(prevMessages => [...prevMessages, { text: "Sorry, we couldn't process your request at the moment. Please try again later.", isUser: false }]);
+            }
+        } else {
+            sendMessage(newMessage); // Adding a symptom
+        }
+    }}
+    className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg ml-2"
+>
+    {detectDiseaseMode ? 'Detect Disease' : 'Add Symptom'}
+</button>
+
         </>
       );
     } else {
@@ -187,6 +224,8 @@ const App: React.FC = () => {
       );
     }
   };
+  
+  
 
   return (
     <div className="flex h-screen bg-black text-white">
