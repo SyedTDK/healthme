@@ -108,7 +108,7 @@ export default async function Home() {
                   <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">Health Analytics</h5>
                   <p className="font-normal text-gray-400">Keep track of your health data.</p>
                 </Link>
-                <Link href="#" className="block max-w-sm p-6 mt-4 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">
+                <Link href="/search" className="block max-w-sm p-6 mt-4 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">
                   <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">Find a Doctor</h5>
                   <p className="font-normal text-gray-400">Find doctors and specialists near you.</p>
                 </Link>
