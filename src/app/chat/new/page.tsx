@@ -169,10 +169,7 @@ const App: React.FC = () => {
               // Update your messages state with this new message from the API
               setMessages(prevMessages => [...prevMessages, { text: apiResponse.message, isUser: false }]);
 
-              //submit the data to database
-              if (status === "authenticated" && userId) {
-                submitData;
-              }
+              
           
               // Here, you might also handle transitioning to another conversation step or concluding the interaction
             } catch (error) {
@@ -225,7 +222,9 @@ const App: React.FC = () => {
                   const apiResponse = response.data;
 
                 //submit the data to database
-                submitData;
+                if (status === "authenticated" && userId) {
+                  submitData;
+                }
 
                   // Update messages with the response from the API
                   setMessages(prevMessages => [...prevMessages, { text: apiResponse.message, isUser: false }]);
