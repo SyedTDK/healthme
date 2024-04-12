@@ -5,9 +5,18 @@ import prisma from "@/app/libs/prisma";
 
 export async function POST(request: Request) {
     try {
-
+        
         const body = await request.json();
         const { userId, symptoms, diagnosis } = body;
+        // Check if user exists (optional, adds robustness)
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+        });
+
+        if (!user) {
+            console.error("No user found with id:", userId);
+            return; // Optionally handle this scenario appropriately
+        }
         const chatSession = await prisma.chatSession.create({
             data: { userId, symptoms, diagnosis },
         });
