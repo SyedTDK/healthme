@@ -104,11 +104,7 @@ export default async function New() {
                 {/* Header of past session*/}
                 <h2 className="mt-8 mb-4 text-3xl font-bold tracking-tight text-white">Past Chat Sessions</h2>
                 {/* TODO: Display past sessions with the creation date as its title. Clicking the specific session will take the user to dynamic route diplaying past messeges. */}
-                {ChatSessions?.map((session, index) => (
-                  <Link key={index} href={`/chat/${session.id}`} className="block max-w-sm p-6 mt-2 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">{session.createdAt.toString()}</h5>
-                  </Link>
-                )) ?? []}
+               
               </div>
           </div>
         </main>
