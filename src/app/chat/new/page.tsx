@@ -15,7 +15,6 @@ const App: React.FC = () => {
     const { data: session, status } = useSession();
 
     const userName = session?.user?.name;
-    const userId = session?.user?.id;
 
    
     const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>([]);
@@ -67,25 +66,7 @@ const App: React.FC = () => {
     'prominent veins on calf', 'palpitations', 'painful walking',
     'pus-filled pimples', 'blackheads', 'scarring', 'skin peeling',
     'silver-like dusting', 'small dents in nails', 'inflammatory nails',
-    'blister', 'red sore around nose', 'yellow crust ooze']);
-
-     //Function for saving the symptoms and diagnosis to the database
-     const submitData = async (e: React.SyntheticEvent) => {
-      e.preventDefault();
-      try {
-        const body = {
-          userId: userId,
-          symptoms: patientInfo.symptoms,
-          diagnosis: messages[messages.length - 1].text
-        };
-        await fetch('/api/saveSession', {
-          method: 'POST',
-          body: JSON.stringify(body),
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    'blister', 'red sore around nose', 'yellow crust ooze']);  
 
   
     useEffect(() => {
@@ -257,7 +238,27 @@ const App: React.FC = () => {
     };
     
     if (status === "authenticated") {
+      const userId = parseInt(session?.user?.id || '0');
+      
+      //Function for saving the symptoms and diagnosis to the database
+      const submitData = async (e: React.SyntheticEvent) => {
+        e.preventDefault();
+        try {
+          const body = {
+            userId: userId,
+            symptoms: patientInfo.symptoms,
+            diagnosis: messages[messages.length - 1].text
+          };
+          await fetch('/api/saveSession', {
+            method: 'POST',
+            body: JSON.stringify(body),
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      };
 
+      //Display the chat interface
       return (
         <>
         <header>
