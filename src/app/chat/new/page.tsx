@@ -8,6 +8,8 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { useSession } from "next-auth/react";
 import { Message, PatientInfo } from '../../../../types/types';
 import { BotResponseType, BotMessages } from './BotMessages';
+import Profile from "@/app/components/Profile";
+import Link from 'next/link';
 
 const App: React.FC = () => {
     const { data: session, status } = useSession();
@@ -257,7 +259,45 @@ const App: React.FC = () => {
       }
     };
     
-    
+    if (status === "authenticated") {
+
+      return (
+        <>
+        <header>
+            <nav className="border-gray-200 px-4 lg:px-6 py-2.5">
+              <div className="flex flex-nowrap justify-between items-center mx-auto max-w-screen-xl">
+                  <Link href="/" className="flex items-center">
+                      <img src="/logo.png" className="mr-3 h-6 sm:h-9" alt="HealthMe Logo" />
+                      <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">HealthMe</span>
+                  </Link>
+                  <div className="flex items-center">
+                    <Profile user={session.user} />
+                  </div>
+              </div>
+            </nav>
+        </header>
+        <div className="flex h-screen bg-black text-white">
+        <div className="flex flex-col flex-grow justify-between py-10 h-screen bg-black text-white ml-3">
+          
+          <div className="flex flex-col flex-grow px-6">
+            <div className="flex-grow overflow-y-auto">
+              {messages.map((message, index) => (
+                <div key={index} className={`flex justify-${message.isUser ? 'end' : 'start'} mb-5`}>
+                  <div className={`bg-blue-500 text-white rounded-lg p-2 max-w-xs`}>
+                    {message.text}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex items-center">
+              {renderInputArea()}
+            </div>
+          </div>
+        </div>
+      </div>
+      </>
+      )
+    } else {
 
     return (
       <div className="flex h-screen bg-black text-white">
@@ -283,6 +323,7 @@ const App: React.FC = () => {
         </div>
       </div>
     );
+  }
   
 };
 
