@@ -223,10 +223,7 @@ const App: React.FC = () => {
                   const response = await axios.post('https://api-nts4.onrender.com/chatbot', { symptoms: patientInfo.symptoms });
                   const apiResponse = response.data;
 
-                //submit the data to database
-                if (status === "authenticated" && userId) {
-                  submitData;
-                }
+               
 
                   // Update messages with the response from the API
                   setMessages(prevMessages => [...prevMessages, { text: apiResponse.message, isUser: false }]);
@@ -292,6 +289,12 @@ const App: React.FC = () => {
             <div className="flex items-center">
               {renderInputArea()}
             </div>
+            <button
+                onClick={submitData}
+                className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg ml-2"
+              >
+                Save and End Session
+              </button>
           </div>
         </div>
       </div>
@@ -319,6 +322,7 @@ const App: React.FC = () => {
             <div className="flex items-center">
               {renderInputArea()}
             </div>
+            
           </div>
         </div>
       </div>
