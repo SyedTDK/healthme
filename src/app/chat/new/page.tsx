@@ -15,7 +15,8 @@ const App: React.FC = () => {
     const { data: session, status } = useSession();
 
     const userName = session?.user?.name;
-
+    const [submitMessage, setSubmitMessage] = useState<string>('');
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
    
     const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>([]);
     const [newMessage, setNewMessage] = useState('');
@@ -255,6 +256,9 @@ const App: React.FC = () => {
           });
         } catch (error) {
           console.log(error);
+        } finally {
+          setIsSubmitting(false);
+          setSubmitMessage('Your chat has been saved!');
         }
       };
 
@@ -294,8 +298,10 @@ const App: React.FC = () => {
                 onClick={submitData}
                 className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg ml-2"
               >
-                Save and End Session
+                {isSubmitting && <p>Saving...</p>}
+                {!isSubmitting && <p>Save</p>}
               </button>
+              <div className="text-white text-center mt-2">{submitMessage}</div>
           </div>
         </div>
       </div>
