@@ -239,7 +239,7 @@ const App: React.FC = () => {
     };
     
     if (status === "authenticated") {
-      const userId = session.user.id;
+      const userId = parseInt(session?.user?.id || '0');
       const symptoms = ["itching", "skin rash", "nodal skin eruptions"];
       const diagnosis = "Disease";
 
