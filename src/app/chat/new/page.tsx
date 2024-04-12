@@ -240,16 +240,15 @@ const App: React.FC = () => {
     
     if (status === "authenticated") {
       const userId = parseInt(session?.user?.id || '0');
+      const symptoms = ["itching", "skin rash", "nodal skin eruptions"];
+      const diagnosis = "Disease";
+
       
       //Function for saving the symptoms and diagnosis to the database
       const submitData = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         try {
-          const body = {
-            userId: userId,
-            symptoms: patientInfo.symptoms,
-            diagnosis: messages[messages.length - 1].text
-          };
+          const body = { userId, symptoms, diagnosis};
           await fetch('/api/saveSession', {
             method: 'POST',
             body: JSON.stringify(body),
