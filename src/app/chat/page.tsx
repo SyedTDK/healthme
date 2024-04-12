@@ -109,7 +109,6 @@ export default async function New() {
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">{session.createdAt.toString()}</h5>
                   </Link>
                 )) ?? []}
-                       
               </div>
           </div>
         </main>
