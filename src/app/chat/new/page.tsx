@@ -10,9 +10,8 @@ import { Message, PatientInfo } from '../../../../types/types';
 import { BotResponseType, BotMessages } from './BotMessages';
 
 const App: React.FC = () => {
-  const { data: session, status } = useSession();
+    const { data: session, status } = useSession();
 
-  if (status === "authenticated") {
     const userName = session?.user?.name;
     const userId = session?.user?.id;
 
@@ -164,9 +163,16 @@ const App: React.FC = () => {
               // Assuming your API returns a response that includes a message or advice
               const apiResponse = response.data;
           
+
+
               // Assuming apiResponse includes a property 'message' that contains the diagnosis or advice
               // Update your messages state with this new message from the API
               setMessages(prevMessages => [...prevMessages, { text: apiResponse.message, isUser: false }]);
+
+              //submit the data to database
+              if (status === "authenticated" && userId) {
+                submitData;
+              }
           
               // Here, you might also handle transitioning to another conversation step or concluding the interaction
             } catch (error) {
@@ -278,27 +284,7 @@ const App: React.FC = () => {
         </div>
       </div>
     );
-  } else {
-    return (
-      <div className="flex h-screen bg-black text-white">
-        <div className="flex flex-col flex-grow justify-between py-10 h-screen bg-black text-white ml-3">
-          <div className="flex items-center justify-between px-6 mb-5">
-            <h1 className="text-3xl font-bold">HealthME</h1>
-            <UserCircleIcon className="h-8 w-8 text-gray-500" />
-          </div>
-          <div className="flex flex-col flex-grow px-6">
-            <div className="flex-grow overflow-y-auto">
-              <div className="flex justify-center mb-5">
-                <div className="bg-blue-500 text-white rounded-lg p-2 max-w-xs">
-                  You need to be logged in to use this feature.
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  
 };
 
 export default App;
