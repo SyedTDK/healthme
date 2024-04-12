@@ -240,6 +240,7 @@ const App: React.FC = () => {
     
     if (status === "authenticated") {
       const userId = parseInt(session?.user?.id || '0');
+      console.log(userId);
       const symptoms = ["itching", "skin rash", "nodal skin eruptions"];
       const diagnosis = "Disease";
 
