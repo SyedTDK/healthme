@@ -240,9 +240,10 @@ const App: React.FC = () => {
     
     if (status === "authenticated") {
       const userId = parseInt(session?.user?.id || '0');
-      console.log(userId);
-      const symptoms = ["itching", "skin rash", "nodal skin eruptions"];
-      const diagnosis = "Disease";
+      //Extract the symptoms as a string[]
+      const symptoms = patientInfo.symptoms;
+      //Extract the diagnosis as a string
+      const diagnosis = messages[messages.length - 1].text;
 
       
       //Function for saving the symptoms and diagnosis to the database
