@@ -27,7 +27,7 @@ const getChatSessions = async (user: any) => {
   try {
     const chatSessions = await prisma.chatSession.findMany({
       where: { userId: { equals: user?.id ?? undefined } },
-      select: { id: true, createdAt: true }
+      select: { id: true, createdAt: true, symptoms: true, diagnosis: true}
     });
     return chatSessions;
   } catch (error) {
