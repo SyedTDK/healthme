@@ -32,22 +32,34 @@ export default function SelectOption({ selectedOption, onChange }: Props) {
 
 // Values to show in the select element, add more values if needed
 export const options: Array<OptionType> = [
-    { value: 'allergist', label: 'Allergists' },
-    { value: 'anesthesiologist', label: 'Anesthesiologists' },
-    { value: 'cardiologists', label: 'Cardiologists' },
-    { value: 'dermatologist', label: 'Dermatologists' },
-    { value: 'endocrinologist', label: 'Endocrinologists' },
-    { value: 'gastroenterologist', label: 'Gastroenterologists' },
-    { value: 'nephrologist', label: 'Nephrologists' },
-    { value: 'neurologist', label: 'Neurologists' },
-    { value: 'obstetricians and gynecologists', label: 'Obstetricians and Gynecologists' },
-    { value: 'ophthalmologist', label: 'Ophthalmologists' },
-    { value: 'pediatrician', label: 'Pediatricians' },
-    { value: 'physiatrist', label: 'Physiatrists' },
+    { value: 'allergist', label: 'Allergist' },
+    { value: 'audiologist', label:'Audiologist' },
+    // { value: 'anesthesiologist', label: 'Anesthesiologist' },
+    { value: 'cardiologists', label: 'Cardiologist' },
+    { value: 'dentist', label: 'Dentist'},
+    { value: 'dermatologist', label: 'Dermatologist' },
+    { value: 'endocrinologist', label: 'Endocrinologist' },
+    { value: 'primary care physician', label: 'Primary Care Physician'},
+    { value: 'gastroenterologist', label: 'Gastroenterologist' },
+    { value: 'hepatologist', label: 'Hepatologist' },
+    { value: 'infectious disease specialist', label: 'Infectious Disease Specialist'},
+    { value: 'nephrologist', label: 'Nephrologist' },
+    { value: 'neurologist', label: 'Neurologist' },
+    { value: 'obstetricians and gynecologists', label: 'Obstetricians and Gynecologist' },
+    { value: 'oncologist', label: 'Oncologist'},
+    { value: 'ophthalmologist', label: 'Ophthalmologist' },
+    { value: 'otolaryngologist', label: 'Otolaryngologist' },
+    { value: 'pediatrician', label: 'Pediatrician' },
+    { value: 'physiatrist', label: 'Physiatrist' },
+    { value: 'plastic surgeons', label: 'Plastic Surgeons' },
+    { value: 'pulmonologist', label: 'Pulmonologist' },
+    { value: 'rheumatologist', label: 'Rheumatologist'},
     { value: 'speech therapist', label: 'Speech Therapist' },
     // { value: 'family practice', label: 'Family Physicians' },
+    { value: 'urologist', label: 'Urologist'},
+    { value: 'vascular surgeons', label: 'Vascular Surgeons'},
     
-    { value: 'plastic surgeons', label: 'Plastic Surgeons' },
+    
    
 ];
 
