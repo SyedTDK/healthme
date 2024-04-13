@@ -104,14 +104,14 @@ export default async function New() {
                 {/* Header of past session*/}
                 <h2 className="mt-8 mb-4 text-3xl font-bold tracking-tight text-white">Past Chat Sessions</h2>
                 {/* TODO: Display past session information with the creation date as its title. Under the title, it should display the symptoms and possible diagnosis by AI*/}
-                {ChatSessions?.map((session: any, index: number) => (
+                {ChatSessions?.map((ChatSession: any, index: number) => (
                   <div 
-                    key={session.id || index} 
+                    key={ChatSession.id || index} 
                     className="block max-w-sm p-6 mt-4 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]"
                   >
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">{session.createdAt?.toString() || 'No creation date'} </h5>
-                    <p className="font-normal text-gray-400">Symptoms experianced: {session.symptoms?.join(', ') || 'No symptoms'}</p>
-                    <p className="font-normal text-gray-400">Possible Diagnosis by AI: {session.diagnosis || 'No diagnosis'}</p>
+                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">{ChatSession.createdAt?.toString() || 'No creation date'} </h5>
+                    <p className="font-normal text-gray-400">Symptoms experianced: {ChatSession.symptoms?.join(', ') || 'No symptoms'}</p>
+                    <p className="font-normal text-gray-400">Possible Diagnosis by AI: {ChatSession.diagnosis || 'No diagnosis'}</p>
                   </div>
                 ))}
 
