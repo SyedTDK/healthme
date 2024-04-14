@@ -23,9 +23,43 @@ const getCurrentUser = async () => {
     }
 };
 
-//Prisma Query for finding latest session of the user
-const getLatestSession = async (id: number) => {
-    const session = await prisma.chatSession.findMany({
+// Map specialists to arrays of diseases they can treat, add more as needed
+const specialistMap = new Map([
+    ["Allergist", ["allergy", "bronchial"]],
+    ["Audiologist", ["deafness", "hearing"]],
+
+    ["Cardiologist", ["hypertension", "heart"]],
+    ["Dentist", ["dental", "periodontal", "edentulism", "oro-dental", "noma"]],
+    ["Dermatologist", ["fungal", "drug", "acne", "psoriasis", "impetigo", "melanoma"]],
+
+    ["Endocrinologist", ["diabetes", "hypothyroidism", "hypoglycemia"]],
+    ["Primary Care Physician", ["common",]],
+    ["Gastroenterologist", ["gerd", "chronic", "peptic", "gastroenteritis", "jaundice", "dimorphic"]],
+
+    ["Hepatologist", ["hepatitis", "alcoholic"]],
+
+    ["Infectious Disease Specialist", ["aids", "malaria", "chicken", "dengue", "typhoid", "covid-19"]],
+
+    ["Neurologist", ["migraine", "paralysis", "acoustic"]],
+    ["Ophthalmologist", ["color", "refractive", "age-related", "cataract", "diabetic", "glaucoma", "amblyopia", "strabismus"]],
+    ["Oncologist", ["breast", "colorectal", "kidney", "lung", "lymphoma"]],
+    ["Otolaryngologist", ["Vertigo", "oral", "earache", "ear", "fluid", "glue"]],
+
+    ["Physiatrist", ["cervical"]],
+    ["Plastic Surgeon", ["cleft"]],
+    ["Pulmonologist", ["tuberculosis", "pneumonia"]],
+    ["Rheumatologist", ["osteoarthritis", "arthritis"]],
+    ["Urologist", ["urinary", "bladder"]],
+    ["Vascular Surgeons", ["varicose"]],
+]);
+
+
+
+
+export default async function Page() {
+    const user = await getCurrentUser();
+    const id = user?.id ?? 0; // Provide a default value of 0 if user?.id is undefined
+    const latestSession = await prisma.chatSession.findMany({
         where: {
             userId: id,
         },
@@ -34,59 +68,19 @@ const getLatestSession = async (id: number) => {
         },
         take: 1,
     });
-    return session;
-}
 
-function findSpecialist(disease: string) {
-    // Map specialists to arrays of diseases they can treat, add more as needed
-    const specialistMap = new Map([
-        ["Allergist", ["allergy", "bronchial"]],
-        ["Audiologist", ["deafness", "hearing"]],
-
-        ["Cardiologist", ["hypertension", "heart"]],
-        ["Dentist", ["dental", "periodontal", "edentulism", "oro-dental", "noma"]],
-        ["Dermatologist", ["fungal", "drug", "acne", "psoriasis", "impetigo", "melanoma"]],
-
-        ["Endocrinologist", ["diabetes", "hypothyroidism", "hypoglycemia"]],
-        ["Primary Care Physician", ["common",]],
-        ["Gastroenterologist", ["gerd", "chronic", "peptic", "gastroenteritis", "jaundice", "dimorphic"]],
-
-        ["Hepatologist", ["hepatitis", "alcoholic"]],
-
-        ["Infectious Disease Specialist", ["aids", "malaria", "chicken", "dengue", "typhoid", "covid-19"]],
-
-        ["Neurologist", ["migraine", "paralysis", "acoustic"]],
-        ["Ophthalmologist", ["color", "refractive", "age-related", "cataract", "diabetic", "glaucoma", "amblyopia", "strabismus"]],
-        ["Oncologist", ["breast", "colorectal", "kidney", "lung", "lymphoma"]],
-        ["Otolaryngologist", ["Vertigo", "oral", "earache", "ear", "fluid", "glue"]],
-
-        ["Physiatrist", ["cervical"]],
-        ["Plastic Surgeon", ["cleft"]],
-        ["Pulmonologist", ["tuberculosis", "pneumonia"]],
-        ["Rheumatologist", ["osteoarthritis", "arthritis"]],
-        ["Urologist", ["urinary", "bladder"]],
-        ["Vascular Surgeons", ["varicose"]],
-    ]);
-
-    // Loop through the specialistMap
-    for (const [specialist, diseases] of specialistMap as any) {
-        // Check if the disease exists in the specialist's array of treated diseases
-        if (diseases.includes(disease.toLowerCase())) {
-            return specialist;
+    const latestDiagnosis = latestSession[0]?.diagnosis ?? "No diagnosis found";
+    const disease = latestDiagnosis.split(' ')[4];
+    //Find the specialist that can treat the disease by iterating through the map
+    let specialist = "Primary Care Physician";
+    for (const [key, value] of specialistMap as any) {
+        if (value.includes(disease)) {
+            specialist = key;
+            break;
         }
     }
-
-    return "No specialist found for the given disease";
-}
-
-
-export default async function Page() {
-    const user = await getCurrentUser();
-    const userId = user?.id ?? 0; // Provide a default value of 0 if user?.id is undefined
-    const session = await getLatestSession(userId);
-    const latestDiagnosis = session[0]?.diagnosis ?? "No diagnosis found";
-    const disease = latestDiagnosis.split(' ')[4];
-    const specialist = findSpecialist(disease);
+    
+    
     const specialistValue = specialist.toLowerCase();
    
     const defaultValue: OptionType = {
