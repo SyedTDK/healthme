@@ -24,34 +24,34 @@ const getCurrentUser = async () => {
 };
 
 // Map specialists to arrays of diseases they can treat, add more as needed
-const specialistMap = new Map([
-    ["Allergist", ["allergy", "bronchial"]],
-    ["Audiologist", ["deafness", "hearing"]],
+// const specialistMap = new Map([
+//     ["Allergist", ["allergy", "bronchial"]],
+//     ["Audiologist", ["deafness", "hearing"]],
 
-    ["Cardiologist", ["hypertension", "heart"]],
-    ["Dentist", ["dental", "periodontal", "edentulism", "oro-dental", "noma"]],
-    ["Dermatologist", ["fungal", "drug", "acne", "psoriasis", "impetigo", "melanoma"]],
+//     ["Cardiologist", ["hypertension", "heart"]],
+//     ["Dentist", ["dental", "periodontal", "edentulism", "oro-dental", "noma"]],
+//     ["Dermatologist", ["fungal", "drug", "acne", "psoriasis", "impetigo", "melanoma"]],
 
-    ["Endocrinologist", ["diabetes", "hypothyroidism", "hypoglycemia"]],
-    ["Primary Care Physician", ["common",]],
-    ["Gastroenterologist", ["gerd", "chronic", "peptic", "gastroenteritis", "jaundice", "dimorphic"]],
+//     ["Endocrinologist", ["diabetes", "hypothyroidism", "hypoglycemia"]],
+//     ["Primary Care Physician", ["common",]],
+//     ["Gastroenterologist", ["gerd", "chronic", "peptic", "gastroenteritis", "jaundice", "dimorphic"]],
 
-    ["Hepatologist", ["hepatitis", "alcoholic"]],
+//     ["Hepatologist", ["hepatitis", "alcoholic"]],
 
-    ["Infectious Disease Specialist", ["aids", "malaria", "chicken", "dengue", "typhoid", "covid-19"]],
+//     ["Infectious Disease Specialist", ["aids", "malaria", "chicken", "dengue", "typhoid", "covid-19"]],
 
-    ["Neurologist", ["migraine", "paralysis", "acoustic"]],
-    ["Ophthalmologist", ["color", "refractive", "age-related", "cataract", "diabetic", "glaucoma", "amblyopia", "strabismus"]],
-    ["Oncologist", ["breast", "colorectal", "kidney", "lung", "lymphoma"]],
-    ["Otolaryngologist", ["Vertigo", "oral", "earache", "ear", "fluid", "glue"]],
+//     ["Neurologist", ["migraine", "paralysis", "acoustic"]],
+//     ["Ophthalmologist", ["color", "refractive", "age-related", "cataract", "diabetic", "glaucoma", "amblyopia", "strabismus"]],
+//     ["Oncologist", ["breast", "colorectal", "kidney", "lung", "lymphoma"]],
+//     ["Otolaryngologist", ["Vertigo", "oral", "earache", "ear", "fluid", "glue"]],
 
-    ["Physiatrist", ["cervical"]],
-    ["Plastic Surgeon", ["cleft"]],
-    ["Pulmonologist", ["tuberculosis", "pneumonia"]],
-    ["Rheumatologist", ["osteoarthritis", "arthritis"]],
-    ["Urologist", ["urinary", "bladder"]],
-    ["Vascular Surgeons", ["varicose"]],
-]);
+//     ["Physiatrist", ["cervical"]],
+//     ["Plastic Surgeon", ["cleft"]],
+//     ["Pulmonologist", ["tuberculosis", "pneumonia"]],
+//     ["Rheumatologist", ["osteoarthritis", "arthritis"]],
+//     ["Urologist", ["urinary", "bladder"]],
+//     ["Vascular Surgeons", ["varicose"]],
+// ]);
 
 
 
