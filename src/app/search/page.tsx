@@ -88,8 +88,7 @@ export default async function Page() {
     const disease = latestDiagnosis.split(' ')[4];
     const specialist = findSpecialist(disease);
    
-    const specialistValue = specialist;
-    specialistValue.toLowerCase();
+    const specialistValue = specialist.toLowerCase();
     const defaultValue: OptionType = {
         value: specialistValue,
         label: specialist
