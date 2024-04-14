@@ -69,9 +69,9 @@ function findSpecialist(disease: string) {
     ]);
 
     // Loop through the specialistMap
-    for (const [specialist, diseases] of specialistMap) {
+    for (const [specialist, diseases] of specialistMap as any) {
         // Check if the disease exists in the specialist's array of treated diseases
-        if (diseases.includes(disease)) {
+        if (diseases.includes(disease.toLowerCase())) {
             return specialist;
         }
     }
@@ -86,17 +86,8 @@ export default async function Page() {
     const session = await getLatestSession(userId);
     const latestDiagnosis = session[0]?.diagnosis ?? "No diagnosis found";
     const disease = latestDiagnosis.split(' ')[4];
-    const diseaseValue = disease.replace(/[A-Z]/g, (match) => {
-        // Calculate the ASCII value for the lowercase letter
-        const lowerChar = String.fromCharCode(match.charCodeAt(0) + 32);
-        return lowerChar;
-    });
-    const specialist = findSpecialist(diseaseValue);
-    const specialistValue = specialist.replace(/[A-Z]/g, (match) => {
-        // Calculate the ASCII value for the lowercase letter
-        const lowerChar = String.fromCharCode(match.charCodeAt(0) + 32);
-        return lowerChar;
-    });
+    const specialist = findSpecialist(disease);
+    const specialistValue = specialist.toLowerCase();
    
     const defaultValue: OptionType = {
         value: specialistValue,
