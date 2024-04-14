@@ -73,12 +73,12 @@ export default async function Page() {
     const disease = latestDiagnosis.split(' ')[4];
     //Find the specialist that can treat the disease by iterating through the map
     let specialist = "Primary Care Physician";
-    for (const [key, value] of specialistMap as any) {
-        if (value.includes(disease)) {
-            specialist = key;
-            break;
-        }
-    }
+    // for (const [key, value] of specialistMap as any) {
+    //     if (value.includes(disease)) {
+    //         specialist = key;
+    //         break;
+    //     }
+    // }
     
     
     const specialistValue = specialist.toLowerCase();
