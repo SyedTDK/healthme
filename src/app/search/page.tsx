@@ -87,13 +87,16 @@ export default async function Page() {
     const latestDiagnosis = session[0]?.diagnosis ?? "No diagnosis found";
     const disease = latestDiagnosis.split(' ')[4];
     const specialist = findSpecialist(disease);
-    const specialistValue = specialist?.toLowerCase();
+    const specialistValue = specialist.replace(/[A-Z]/g, (match) => {
+        // Calculate the ASCII value for the lowercase letter
+        const lowerChar = String.fromCharCode(match.charCodeAt(0) + 32);
+        return lowerChar;
+    });
    
     const defaultValue: OptionType = {
         value: specialistValue,
         label: specialist
     };
-    
         return (
             <>
                 <header>
