@@ -1,98 +1,135 @@
-"use client"
 import Link from 'next/link';
-import Image from 'next/image';
-import { useState, FormEvent } from 'react';
-import SelectOption, { OptionType } from "./options";
-import AddressBar from './address-bar';
-import DoctorList from './list';
-import { CircularProgress } from '@mui/material'; // For loading circle
+import Profile from "@/app/components/Profile";
+import Search from './Search';
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/libs/auth";
+import { OptionType } from './options';
 
-import axios from 'axios';
+import prisma from "@/app/libs/prisma";
 
-// Initial value for the slecet elemtn
-const defaultValue: OptionType = {
-    value: "allergist",
-    label: "Allergists"
+
+const getCurrentUser = async () => {
+    try {
+      const session = await getServerSession(authOptions);
+      if (!session?.user?.email) return;
+      const currentUser = await prisma.user.findUnique({
+        where: { email: session.user.email }
+      });
+      if (!currentUser) return;
+      return currentUser;
+    } catch (e: any) {
+      // simply ignores if no user is logged in
+      return;
+    }
 };
 
-export default function Page() {
-    const [selectedOption, setSelectedOption] = useState<OptionType | null>(defaultValue);
-    const [address, setAddress] = useState("");
-    const [loading, setLoading] = useState(false); 
-    const [businesses, setBusinesses] = useState([]);  
+//Prisma Query for finding latest session of the user
+const getLatestSession = async (id: number) => {
+    const session = await prisma.chatSession.findMany({
+        where: {
+            userId: id,
+        },
+        orderBy: {
+            createdAt: 'desc',
+        },
+        take: 1,
+    });
+    return session;
+}
 
-    const handleOptionChange = (selectedOption: OptionType | null) => {
-        setSelectedOption(selectedOption);
-    };
+function findSpecialist(disease: string) {
+    // Map specialists to arrays of diseases they can treat, add more as needed
+    const specialistMap = new Map([
+        ["Allergist", ["allergy", "bronchial"]],
+        ["Audiologist", ["deafness", "hearing"]],
 
-    const handleAddressChange = (newAddress: string) => {
-        setAddress(newAddress);
-    };
+        ["Cardiologist", ["hypertension", "heart"]],
+        ["Dentist", ["dental", "periodontal", "edentulism", "oro-dental", "noma"]],
+        ["Dermatologist", ["fungal", "drug", "acne", "psoriasis", "impetigo", "melanoma"]],
 
-    // Called when the form is submitted
-    const handleSubmit = async (event: FormEvent) => {
-        event.preventDefault();
-        setLoading(true); // Set loading state to true when submitting form
+        ["Endocrinologist", ["diabetes", "hypothyroidism", "hypoglycemia"]],
+        ["Primary Care Physician", ["common",]],
+        ["Gastroenterologist", ["gerd", "chronic", "peptic", "gastroenteritis", "jaundice", "dimorphic"]],
 
-        // format of the API call
-        const apiUrl = 'https://yelpapi-ahzs.onrender.com/search';
-        const requestData = {
-            limit: 8,
-            doctor_type: selectedOption?.value,
-            location: address,
-        };
+        ["Hepatologist", ["hepatitis", "alcoholic"]],
 
-        try {
-            const response = await axios.post(apiUrl, requestData);
-            setBusinesses(response.data.businesses);
-            console.log(response.data.businesses)
-        } catch (error) {
-            console.error('Error:', error);
-        } finally {
-            setLoading(false); // Set loading state to false when API request completes
+        ["Infectious Disease Specialist", ["aids", "malaria", "chicken", "dengue", "typhoid", "covid-19"]],
+
+        ["Neurologist", ["migraine", "paralysis", "acoustic"]],
+        ["Ophthalmologist", ["color", "refractive", "age-related", "cataract", "diabetic", "glaucoma", "amblyopia", "strabismus"]],
+        ["Oncologist", ["breast", "colorectal", "kidney", "lung", "lymphoma"]],
+        ["Otolaryngologist", ["Vertigo", "oral", "earache", "ear", "fluid", "glue"]],
+
+        ["Physiatrist", ["cervical"]],
+        ["Plastic Surgeon", ["cleft"]],
+        ["Pulmonologist", ["tuberculosis", "pneumonia"]],
+        ["Rheumatologist", ["osteoarthritis", "arthritis"]],
+        ["Urologist", ["urinary", "bladder"]],
+        ["Vascular Surgeons", ["varicose"]],
+    ]);
+
+    // Loop through the specialistMap
+    for (const [specialist, diseases] of specialistMap) {
+        // Check if the disease exists in the specialist's array of treated diseases
+        if (diseases.includes(disease.toLowerCase())) {
+            return specialist;
         }
+    }
+
+    return "No specialist found for the given disease";
+}
+
+
+export default async function Page() {
+    const user = await getCurrentUser();
+    const userId = user?.id ?? 0; // Provide a default value of 0 if user?.id is undefined
+    const session = await getLatestSession(userId);
+    const latestDiagnosis = session[0]?.diagnosis ?? "No diagnosis found";
+    const disease = latestDiagnosis.split(' ')[4];
+    const specialist = findSpecialist(disease);
+    const specialistValue = specialist.toLowerCase();
+    const defaultValue: OptionType = {
+        value: specialistValue,
+        label: specialist
     };
+    
+        return (
+            <>
+                <header>
+                    <nav className="border-gray-200 px-4 lg:px-6 py-2.5">
+                    <div className="flex flex-nowrap justify-between items-center mx-auto max-w-screen-xl">
+                        <Link href="/" className="flex items-center">
+                            <img src="/logo.png" className="mr-3 h-6 sm:h-9" alt="HealthMe Logo" />
+                            <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">HealthMe</span>
+                        </Link>
+                        <div className="flex items-center">
+                            <Profile user={user} />
+                        </div>
+                    </div>
+                    </nav>
+                </header>
 
-    return (
-        <>
-            <Logo />
-            <form onSubmit={handleSubmit} className='md:flex mx-auto sm:w-4/6 w-11/12 mb-5'>
-                <SelectOption selectedOption={selectedOption} onChange={handleOptionChange} />
-                <AddressBar address={address} onAddressChange={handleAddressChange} />
-                <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4  md:inline block mx-auto rounded-lg">Search</button>
-            </form>
+                <Search defaultValue={defaultValue} />
+            </>
+        
+        );
+} 
 
-            {/* <p>{address}</p>
-            <p>Selected option: {selectedOption ? selectedOption.label : ""}</p> */}
 
-            {/* Show loding cirlce untill data is dispalyed */}
-            {loading ? ( 
-                <div className="flex justify-center mt-4">
-                    <CircularProgress color="primary" /> 
-                </div>
-            ) : (
-                businesses.length > 0 && (
-                    <DoctorList businesses={businesses} initial_address={address} />
-                )
-            )}
-        </>
-    );
-}
-
-function Logo() {
-    return (
-        <div className="mt-2 mb-4 w-fit h-fit mx-auto">
-            <Link href="/" className="flex items-center justify-center">
-                <Image
-                    src="/logo.png"
-                    alt="HealthMe Logo"
-                    width={100}
-                    height={100}
-                    className="mr-4 w-1/3 h-1/3"
-                    priority={true}
-                />
-                <h1 className="lg:text-3xl md:text-2xl text-xl inline">HealthMe</h1>
-            </Link>
-        </div>
-    );
-}
+// function Logo() {
+//     return (
+//         <div className="mt-2 mb-4 w-fit h-fit mx-auto">
+//             <Link href="/" className="flex items-center justify-center">
+//                 <Image
+//                     src="/logo.png"
+//                     alt="HealthMe Logo"
+//                     width={100}
+//                     height={100}
+//                     className="mr-4 w-1/3 h-1/3"
+//                     priority={true}
+//                 />
+//                 <h1 className="lg:text-3xl md:text-2xl text-xl inline">HealthMe</h1>
+//             </Link>
+//         </div>
+//     );
+// }
