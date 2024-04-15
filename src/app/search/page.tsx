@@ -36,8 +36,8 @@ const getLatestSession = async (userId: any) => {
 const getSpecialist = async (disease: string) => {
     try {
         const specialistMap = new Map([
-            ["Allergist", ["allergy", "bronchial asthma"]],
-            ["Audiologist", ["deafness", "hearing loss"]],
+            ["Allergist", ["allergy", "bronchial"]],
+            ["Audiologist", ["deafness", "hearing"]],
     
             ["Cardiologist", ["hypertension", "heart"]],
             ["Dentist", ["dental", "periodontal", "edentulism", "oro-dental", "noma"]],
@@ -47,9 +47,9 @@ const getSpecialist = async (disease: string) => {
             ["Primary Care Physician", ["common",]],
             ["Gastroenterologist", ["gerd", "chronic", "peptic", "gastroenteritis", "jaundice", "dimorphic"]],
     
-            ["Hepatologist", ["hepatitis a", "hepatitis b", "hepatitis c", "hepatitis d", "hepatitis e", "alcoholic hepatitis"]],
+            ["Hepatologist", ["hepatitis", "alcoholic"]],
     
-            ["Infectious Disease Specialist", ["aids", "malaria", "chicken pox", "dengue", "typhoid", "covid-19"]],
+            ["Infectious Disease Specialist", ["aids", "malaria", "chicken", "dengue", "typhoid", "covid-19"]],
     
             ["Neurologist", ["migraine", "paralysis", "acoustic"]],
             ["Ophthalmologist", ["color", "refractive", "age-related", "cataract", "diabetic", "glaucoma", "amblyopia", "strabismus"]],
@@ -84,7 +84,8 @@ export default async function Page() {
     const userId = user?.id;
     const session = await getLatestSession(userId);
     const latestDiagnosis = session?.diagnosis;
-    const disease = latestDiagnosis?.split(' ')[4] ?? '';
+    const disease = latestDiagnosis?.split(' ')[4].replace(/\.$/, '') ?? '';
+
     const specialist = await getSpecialist(disease) ?? '';
     return (
         <>

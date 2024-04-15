@@ -249,6 +249,7 @@ const App: React.FC = () => {
       //Function for saving the symptoms and diagnosis to the database
       const submitData = async (e: React.SyntheticEvent) => {
         e.preventDefault();
+        setIsSubmitting(true);
         try {
           const body = { userId, symptoms, diagnosis};
           await fetch('/api/saveSession', {
@@ -259,8 +260,9 @@ const App: React.FC = () => {
           console.log(error);
         } finally {
           setIsSubmitting(false);
+          //Redirect to the doctor search page using react router
+          window.location.href = '/search';
         }
-        //Redirect to the doctor search page using react router
       };
 
       //Display the chat interface
