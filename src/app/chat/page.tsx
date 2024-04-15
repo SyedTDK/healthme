@@ -27,7 +27,8 @@ const getChatSessions = async (user: any) => {
   try {
     const chatSessions = await prisma.chatSession.findMany({
       where: { userId: { equals: user?.id ?? undefined } },
-      select: { id: true, createdAt: true, symptoms: true, diagnosis: true}
+      select: { id: true, createdAt: true, symptoms: true, diagnosis: true},
+      orderBy: { createdAt: 'desc' }
     });
     return chatSessions;
   } catch (error) {
@@ -103,7 +104,7 @@ export default async function New() {
                 </a>
                 {/* Header of past session*/}
                 <h2 className="mt-8 mb-4 text-3xl font-bold tracking-tight text-white">Past Chat Sessions</h2>
-                {/* TODO: Display past session information with the creation date as its title. Under the title, it should display the symptoms and possible diagnosis by AI*/}
+                {/* TODO: Display past session information with the creation date as its title sorted by the most recent. Under the title, it should display the symptoms and possible diagnosis by AI*/}
                 {ChatSessions?.map((ChatSession: any, index: number) => (
                   <div 
                     key={ChatSession.id || index} 
@@ -111,12 +112,9 @@ export default async function New() {
                   >
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">{ChatSession.createdAt?.toString() || 'No creation date'} </h5>
                     <p className="font-normal text-gray-400">Symptoms experianced: {ChatSession.symptoms?.join(', ') || 'No symptoms'}</p>
-                    <p className="font-normal text-gray-400">Possible Diagnosis by AI: {ChatSession.diagnosis || 'No diagnosis'}</p>
+                    <p className="font-normal text-gray-400">Possible Diagnosis by <span className="font-bold bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">AI</span>: {ChatSession.diagnosis || 'No diagnosis'}</p>
                   </div>
                 ))}
-
-
-               
               </div>
           </div>
         </main>
