@@ -254,6 +254,9 @@ const App: React.FC = () => {
           const body = { userId, symptoms, diagnosis};
           await fetch('/api/saveSession', {
             method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
             body: JSON.stringify(body),
           });
         } catch (error) {
