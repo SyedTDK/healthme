@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/libs/auth";
 import prisma from "@/app/libs/prisma";
 import Profile from "@/app/components/Profile";
-import Search from "@/app/components/Search";
+import Search from "./Search";
 
 const getCurrentUser = async () => {
     try {
