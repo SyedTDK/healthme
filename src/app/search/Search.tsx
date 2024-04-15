@@ -10,12 +10,13 @@ import { CircularProgress } from '@mui/material'; // For loading circle
 import axios from 'axios';
 
 // Initial value for the slecet elemtn
-const defaultValue: OptionType = {
-    value: "allergist",
-    label: "Allergists"
-};
 
-export default function Search() {
+
+export default function Search({specialistValue, specialistLabel}: {specialistValue: string, specialistLabel: string}) {
+    const defaultValue: OptionType = {
+        value: specialistValue,
+        label: specialistLabel,
+    };
     const [selectedOption, setSelectedOption] = useState<OptionType | null>(defaultValue);
     const [address, setAddress] = useState("");
     const [loading, setLoading] = useState(false); 
