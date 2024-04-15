@@ -262,7 +262,6 @@ const App: React.FC = () => {
           setIsSubmitting(false);
         }
         //Redirect to the doctor search page using react router
-        window.location.href = "/search";
       };
 
       //Display the chat interface
