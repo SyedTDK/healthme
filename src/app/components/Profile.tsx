@@ -19,8 +19,8 @@ const Profile = ({ user }: { user: any }) => {
 
             <div id="dropdownInformation" className={`z-10 divide-y rounded-lg shadow w-44 bg-gray-800 divide-gray-600 absolute mt-2 right-0 ${dropdownVisible ? '' : 'hidden'}`}>
                 <div className="px-4 py-3 text-sm text-white">
-                <div>{user.name}</div>
-                <div className="font-medium truncate">{user.email}</div>
+                <div>{user?.name}</div>
+                <div className="font-medium truncate">{user?.email}</div>
                 </div>
                 <ul className="py-2 text-sm text-gray-200" aria-labelledby="dropdownInformationButton">
                 <li>
