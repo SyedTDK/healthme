@@ -1,4 +1,4 @@
-//This page will provide the users options to either create a new chat session or view past chat sessions.
+//This page will provide the users options to either create a new chat session or view summeries past chat sessions.
 
 import Link from "next/link";
 import Profile from "../components/Profile";

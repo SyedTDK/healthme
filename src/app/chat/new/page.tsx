@@ -1,4 +1,4 @@
-// page.tsx
+// This is the chat page where the user can interact with the chatbot
 
 "use client";
 import React, { useState, useEffect } from 'react';
@@ -249,6 +249,7 @@ const App: React.FC = () => {
       //Function for saving the symptoms and diagnosis to the database
       const submitData = async (e: React.SyntheticEvent) => {
         e.preventDefault();
+        setIsSubmitting(true);
         try {
           const body = { userId, symptoms, diagnosis};
           await fetch('/api/saveSession', {
@@ -259,7 +260,8 @@ const App: React.FC = () => {
           console.log(error);
         } finally {
           setIsSubmitting(false);
-          setSubmitMessage('Your chat has been saved!');
+          //Redirect to the doctor search page
+          window.location.href = '/search';
         }
       };
 
@@ -295,14 +297,15 @@ const App: React.FC = () => {
             <div className="flex items-center">
               {renderInputArea()}
             </div>
+            {/*TODO: Two buttons need to be displayed. One will Find a doctor, another return dashboard */}
+          
             <button
                 onClick={submitData}
-                className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg ml-2"
+                className="block mt-1 border bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f] py-2 px-4 rounded-lg ml-2"
               >
                 {isSubmitting && <p>Saving...</p>}
-                {!isSubmitting && <p>Save</p>}
+                {!isSubmitting && <p>End Session and Find a Doctor</p>}
               </button>
-              <div className="text-white text-center mt-2">{submitMessage}</div>
           </div>
         </div>
       </div>
