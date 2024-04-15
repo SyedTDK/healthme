@@ -260,9 +260,9 @@ const App: React.FC = () => {
           console.log(error);
         } finally {
           setIsSubmitting(false);
-          //Redirect to the doctor search page
-          window.location.href = '/search';
         }
+        //Redirect to the doctor search page using react router
+        window.location.href = "/search";
       };
 
       //Display the chat interface
