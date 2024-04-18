@@ -1,6 +1,7 @@
 export enum BotResponseType {
     WELCOME = "WELCOME",
     NAME = "NAME",
+    GREET = "GREET",
     GENDER = "GENDER",
     PATIENT_WHO = "PATIENT_WHO",
     AGE = "AGE",
@@ -35,6 +36,12 @@ export const BotMessages: Record<BotResponseType, string[]> = {
         "Appreciate it. Before we proceed, could you provide the name of the patient?",
         "Perfect. Let's start by knowing the name of the patient."
     ],
+    [BotResponseType.GREET]: [
+        "Hello {name}, let's get started.",
+        "Nice to meet you, {name}! Let's get started",
+        "Hi {name}, I'm here to assist you. Let's get started."
+    ],
+    
     [BotResponseType.GENDER]: [
         "What is the gender of the patient?",
         "Could you tell me the gender of the patient?",
