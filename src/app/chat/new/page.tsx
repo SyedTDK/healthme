@@ -299,8 +299,7 @@ const App: React.FC = () => {
                   ))}
                   <div ref={messagesEndRef} />
                 </div>
-                <div className="flex items-center">
-                  <div>
+                  <div className='flex items-center'>
                     {renderInputArea()}
                   </div>            
                   <button
@@ -310,7 +309,7 @@ const App: React.FC = () => {
                     {isSubmitting && <p>Saving...</p>}
                     {!isSubmitting && <p>End Session and Find a Doctor</p>}
                 </button>
-                </div>
+                
             </div>
           </div>
         </div>
