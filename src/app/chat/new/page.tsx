@@ -304,7 +304,7 @@ const App: React.FC = () => {
                   </div>            
                   <button
                     onClick={submitData}
-                    className="block mt-1 border bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f] py-2 px-4 rounded-lg ml-2"
+                    className="block border bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f] rounded-lg ml-2"
                   >
                     {isSubmitting && <p>Saving...</p>}
                     {!isSubmitting && <p>End Session and Find a Doctor</p>}
