@@ -23,22 +23,15 @@ import { getSession } from "next-auth/react";
 //};
 
 
-export default function Home() {
+export default async function Home() {
   // const user = await getCurrentUser();
   // if(user) {
   //   var firstName = user.name?.replace(/ .*/,'');
   // }
-  const router = useRouter();
-  useEffect(() => {
-    const redirectUser = async () => {
-      const session = await getSession(); 
-      if (session) {
-        router.push("/chat/new"); // Redirect to the homepage after successful login
-      }
-    };
-
-    redirectUser();
-  }, [router]);
+  const session = await getSession();
+  if(session) {
+    window.location.href = "/chat/new";
+  }
 
 
     // If no user is logged in, display the landing page
