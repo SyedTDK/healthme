@@ -6,7 +6,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/libs/auth";
 import prisma from "@/app/libs/prisma";
 import Sidebar, { SidebarItem } from "../components/Sidebar";
-import { BotMessageSquare, UserSearch, LayoutDashboard, History } from "lucide-react";
+import { BotMessageSquare, UserSearch, LayoutDashboard, History, LogOut } from "lucide-react";
+import { signOut } from "next-auth/react";
 
 // Decodes the current session data and use prisma to retrieve the current user in the database.
 const getCurrentUser = async () => {
@@ -88,8 +89,10 @@ export default async function New() {
           <Sidebar>
                   <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={false} /></a>
                   <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
-                  <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </a>
-                  <a href="/"><SidebarItem icon={<History />} text="Chat History" active={true} /> </a>
+                  <a href="#"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </a>
+                  <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={true} /> </a>
+                  <button onClick={() => signOut()}><SidebarItem icon={<LogOut />} text="Log Out" active={false} /></button>
+
 
           </Sidebar>
           <div className="flex-grow">

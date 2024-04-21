@@ -1,10 +1,10 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/libs/auth";
 import prisma from "@/app/libs/prisma";
-import Profile from "@/app/components/Profile";
 import Search from "./Search";
 import Sidebar, { SidebarItem } from "../components/Sidebar";
-import { UserCircle, BotMessageSquare, UserSearch, LayoutDashboard, History} from "lucide-react";
+import { BotMessageSquare, UserSearch, LayoutDashboard, History, LogOut} from "lucide-react";
+import { signOut } from "next-auth/react";
 
 const getCurrentUser = async () => {
     try {
@@ -109,7 +109,8 @@ export default async function Page() {
                 <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={false} /></a>
                 <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={true} /> </a>
                 <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </a>
-                <a href="/chat/history"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
+                <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
+                <button onClick={() => signOut()}><SidebarItem icon={<LogOut />} text="Log Out" active={false} /></button>
             </Sidebar>
             {/*Display to the user the latest diagnosis */}
             <div className="flex-grow">

@@ -3,15 +3,14 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { UserCircleIcon } from '@heroicons/react/16/solid';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useSession } from "next-auth/react";
 import { Message, PatientInfo } from '../../../../types/types';
 import { BotResponseType, BotMessages } from './BotMessages';
-import Profile from "@/app/components/Profile";
-import Link from 'next/link';
 import Sidebar, { SidebarItem } from "@/app/components/Sidebar";
-import { BotMessageSquare, LayoutDashboard, UserSearch, History } from 'lucide-react';
+import { BotMessageSquare, LayoutDashboard, UserSearch, History, LogOut } from 'lucide-react';
+import { signOut } from 'next-auth/react'
+
 
 const App: React.FC = () => {
     const { data: session, status } = useSession();
@@ -145,7 +144,7 @@ const App: React.FC = () => {
           
             // Use axios to send a POST request to your backend
             try {
-              const response = await axios.post('https://api-nts4.onrender.com/chatbot', payload);
+              const response = await axios.post('https://api-production-b578.up.railway.app/chatbot', payload);
               // Assuming your API returns a response that includes a message or advice
               const apiResponse = response.data;
           
@@ -204,7 +203,7 @@ const App: React.FC = () => {
 
               // Call the API to detect the disease
               try {
-                  const response = await axios.post('https://api-nts4.onrender.com/chatbot', { symptoms: patientInfo.symptoms });
+                  const response = await axios.post('https://api-production-b578.up.railway.app/chatbot', { symptoms: patientInfo.symptoms });
                   const apiResponse = response.data;
 
                
@@ -278,6 +277,7 @@ const App: React.FC = () => {
                 <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
                 <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Dashboard" active={false} /> </a>
                 <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
+                <button onClick={() => signOut()}><SidebarItem icon={<LogOut />} text="Log Out" active={false} /></button>
         </Sidebar>
         <div className='flex-grow'>
           <div className="flex h-screen bg-black text-white">
