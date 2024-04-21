@@ -1,7 +1,7 @@
 // This is the chat page where the user can interact with the chatbot
 
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useSession } from "next-auth/react";
@@ -87,6 +87,14 @@ const App: React.FC = () => {
         setDetectDiseaseMode(false); // Disable "Detect Disease" mode
       }
     }, [patientInfo.symptoms]); // Re-run effect when symptoms change
+
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    const scrollToBottom = () => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    }
+
+    useEffect(scrollToBottom, [messages]);
 
     const sendMessage = async (userInput: string) => {
       setMessages(prevMessages => [...prevMessages, { text: userInput, isUser: true }]);
@@ -278,10 +286,10 @@ const App: React.FC = () => {
         </Sidebar>
         <div className='flex-grow'>
           <div className="flex h-screen bg-black text-white">
-            <div className="flex flex-col flex-grow justify-between py-10 h-screen bg-black text-white ml-3">
+            <div className="flex flex-col flex-grow justify-between h-screen bg-black text-white ml-3">
             
-              <div className="flex flex-col flex-grow px-6">
-                <div className="flex-grow overflow-y-auto">
+              <div className="flex flex-col h-screen justify-between">
+                <div className="overflow-y-auto">
                 {messages.map((message, index) => (
                   <div key={index} className={`flex justify-${message.isUser ? 'end' : 'start'} mb-5`}>
                     <div className={`bg-blue-500 text-white rounded-lg p-2 max-w-xs`}>
@@ -289,17 +297,20 @@ const App: React.FC = () => {
                     </div>
                   </div>
                   ))}
+                  <div ref={messagesEndRef} />
                 </div>
                 <div className="flex items-center">
-                  {renderInputArea()}
-                </div>            
-                <button
-                  onClick={submitData}
-                  className="block mt-1 border bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f] py-2 px-4 rounded-lg ml-2"
-                >
-                  {isSubmitting && <p>Saving...</p>}
-                  {!isSubmitting && <p>End Session and Find a Doctor</p>}
+                  <div>
+                    {renderInputArea()}
+                  </div>            
+                  <button
+                    onClick={submitData}
+                    className="block mt-1 border bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f] py-2 px-4 rounded-lg ml-2"
+                  >
+                    {isSubmitting && <p>Saving...</p>}
+                    {!isSubmitting && <p>End Session and Find a Doctor</p>}
                 </button>
+                </div>
             </div>
           </div>
         </div>
@@ -308,39 +319,39 @@ const App: React.FC = () => {
       )
     } else {
 
-    return (
-      <main className='flex'>
-        <Sidebar>
-                <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={true} /></a>
-                <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
-                <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </a>
-                <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
-        </Sidebar>
-        <div className='flex-grow'>
-          <div className="flex h-screen bg-black text-white">
-            <div className="flex flex-col flex-grow justify-between py-10 h-screen bg-black text-white ml-3">
-            
-              <div className="flex flex-col flex-grow px-6">
-                <div className="flex-grow overflow-y-auto">
-                {messages.map((message, index) => (
-                  <div key={index} className={`flex justify-${message.isUser ? 'end' : 'start'} mb-5`}>
-                    <div className={`bg-blue-500 text-white rounded-lg p-2 max-w-xs`}>
-                      {message.text}
+      return (
+        <main className='flex'>
+          <Sidebar>
+                  <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={true} /></a>
+                  <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
+                  <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </a>
+                  <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
+          </Sidebar>
+          <div className='flex-grow'>
+            <div className="flex h-screen bg-black text-white">
+              <div className="flex flex-col flex-grow justify-between h-screen bg-black text-white ml-3">
+              
+                <div className="flex flex-col h-screen justify-between">
+                  <div className="overflow-y-auto">
+                  {messages.map((message, index) => (
+                    <div key={index} className={`flex justify-${message.isUser ? 'end' : 'start'} mb-5`}>
+                      <div className={`bg-blue-500 text-white rounded-lg p-2 max-w-xs`}>
+                        {message.text}
+                      </div>
                     </div>
+                    ))}
+                    <div ref={messagesEndRef} />
                   </div>
-                  ))}
-                </div>
-                <div className="flex items-center">
-                  {renderInputArea()}
-                </div>            
-                
+                  <div className="flex items-center">
+                    {renderInputArea()}
+                  </div>            
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      </main>
-    );
-  }
+        </main>
+      );
+    }
   
 };
 
