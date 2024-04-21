@@ -10,6 +10,8 @@ import { Message, PatientInfo } from '../../../../types/types';
 import { BotResponseType, BotMessages } from './BotMessages';
 import Profile from "@/app/components/Profile";
 import Link from 'next/link';
+import Sidebar, { SidebarItem } from "@/app/components/Sidebar";
+import { BotMessageSquare, LayoutDashboard, UserSearch, History } from 'lucide-react';
 
 const App: React.FC = () => {
     const { data: session, status } = useSession();
@@ -270,76 +272,76 @@ const App: React.FC = () => {
 
       //Display the chat interface
       return (
-        <>
-        <header>
-            <nav className="border-gray-200 px-4 lg:px-6 py-2.5">
-              <div className="flex flex-nowrap justify-between items-center mx-auto max-w-screen-xl">
-                  <Link href="/" className="flex items-center">
-                      <img src="/logo.png" className="mr-3 h-6 sm:h-9" alt="HealthMe Logo" />
-                      <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">HealthMe</span>
-                  </Link>
-                  <div className="flex items-center">
-                    <Profile user={session.user} />
+        <main className='flex'>
+        <Sidebar>
+                <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={true} /></a>
+                <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
+                <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Dashboard" active={false} /> </a>
+                <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
+        </Sidebar>
+        <div className='flex-grow'>
+          <div className="flex h-screen bg-black text-white">
+            <div className="flex flex-col flex-grow justify-between py-10 h-screen bg-black text-white ml-3">
+            
+              <div className="flex flex-col flex-grow px-6">
+                <div className="flex-grow overflow-y-auto">
+                {messages.map((message, index) => (
+                  <div key={index} className={`flex justify-${message.isUser ? 'end' : 'start'} mb-5`}>
+                    <div className={`bg-blue-500 text-white rounded-lg p-2 max-w-xs`}>
+                      {message.text}
+                    </div>
                   </div>
-              </div>
-            </nav>
-        </header>
-        <div className="flex h-screen bg-black text-white">
-        <div className="flex flex-col flex-grow justify-between py-10 h-screen bg-black text-white ml-3">
-          
-          <div className="flex flex-col flex-grow px-6">
-            <div className="flex-grow overflow-y-auto">
-              {messages.map((message, index) => (
-                <div key={index} className={`flex justify-${message.isUser ? 'end' : 'start'} mb-5`}>
-                  <div className={`bg-blue-500 text-white rounded-lg p-2 max-w-xs`}>
-                    {message.text}
-                  </div>
+                  ))}
                 </div>
-              ))}
+                <div className="flex items-center">
+                  {renderInputArea()}
+                </div>            
+                <button
+                  onClick={submitData}
+                  className="block mt-1 border bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f] py-2 px-4 rounded-lg ml-2"
+                >
+                  {isSubmitting && <p>Saving...</p>}
+                  {!isSubmitting && <p>End Session and Find a Doctor</p>}
+                </button>
             </div>
-            <div className="flex items-center">
-              {renderInputArea()}
-            </div>
-            {/*TODO: Two buttons need to be displayed. One will Find a doctor, another return dashboard */}
-          
-            <button
-                onClick={submitData}
-                className="block mt-1 border bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f] py-2 px-4 rounded-lg ml-2"
-              >
-                {isSubmitting && <p>Saving...</p>}
-                {!isSubmitting && <p>End Session and Find a Doctor</p>}
-              </button>
           </div>
         </div>
       </div>
-      </>
+      </main>
       )
     } else {
 
     return (
-      <div className="flex h-screen bg-black text-white">
-        <div className="flex flex-col flex-grow justify-between py-10 h-screen bg-black text-white ml-3">
-          <div className="flex items-center justify-between px-6 mb-5">
-            <h1 className="text-3xl font-bold">HealthME</h1>
-            <UserCircleIcon className="h-8 w-8 text-gray-500" />
-          </div>
-          <div className="flex flex-col flex-grow px-6">
-            <div className="flex-grow overflow-y-auto">
-              {messages.map((message, index) => (
-                <div key={index} className={`flex justify-${message.isUser ? 'end' : 'start'} mb-5`}>
-                  <div className={`bg-blue-500 text-white rounded-lg p-2 max-w-xs`}>
-                    {message.text}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="flex items-center">
-              {renderInputArea()}
-            </div>
+      <main className='flex'>
+        <Sidebar>
+                <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={true} /></a>
+                <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
+                <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </a>
+                <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
+        </Sidebar>
+        <div className='flex-grow'>
+          <div className="flex h-screen bg-black text-white">
+            <div className="flex flex-col flex-grow justify-between py-10 h-screen bg-black text-white ml-3">
             
+              <div className="flex flex-col flex-grow px-6">
+                <div className="flex-grow overflow-y-auto">
+                {messages.map((message, index) => (
+                  <div key={index} className={`flex justify-${message.isUser ? 'end' : 'start'} mb-5`}>
+                    <div className={`bg-blue-500 text-white rounded-lg p-2 max-w-xs`}>
+                      {message.text}
+                    </div>
+                  </div>
+                  ))}
+                </div>
+                <div className="flex items-center">
+                  {renderInputArea()}
+                </div>            
+                
+            </div>
           </div>
         </div>
       </div>
+      </main>
     );
   }
   
