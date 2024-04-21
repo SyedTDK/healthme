@@ -299,7 +299,7 @@ const App: React.FC = () => {
                   ))}
                   <div ref={messagesEndRef} />
                 </div>
-                <div>
+                <div className='w-full'>
                   {renderInputArea()}        
                   <button
                     onClick={submitData}
