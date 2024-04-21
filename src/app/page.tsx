@@ -23,7 +23,7 @@ import { getSession } from "next-auth/react";
 //};
 
 
-export default async function Home() {
+export default function Home() {
   // const user = await getCurrentUser();
   // if(user) {
   //   var firstName = user.name?.replace(/ .*/,'');

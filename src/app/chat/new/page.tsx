@@ -15,7 +15,6 @@ const App: React.FC = () => {
     const { data: session, status } = useSession();
 
     const userName = session?.user?.name;
-    const [submitMessage, setSubmitMessage] = useState<string>('');
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
    
     const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>([]);
