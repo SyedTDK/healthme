@@ -4,7 +4,6 @@ import prisma from "@/app/libs/prisma";
 import Search from "./Search";
 import Sidebar, { SidebarItem } from "../components/Sidebar";
 import { BotMessageSquare, UserSearch, LayoutDashboard, History, LogOut} from "lucide-react";
-import { signOut } from "next-auth/react";
 
 const getCurrentUser = async () => {
     try {
@@ -110,7 +109,6 @@ export default async function Page() {
                 <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={true} /> </a>
                 <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </a>
                 <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
-                <button onClick={() => signOut()}><SidebarItem icon={<LogOut />} text="Log Out" active={false} /></button>
             </Sidebar>
             {/*Display to the user the latest diagnosis */}
             <div className="flex-grow">

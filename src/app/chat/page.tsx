@@ -1,13 +1,11 @@
 //This page will provide the users options to either create a new chat session or view summeries past chat sessions.
 
 import Link from "next/link";
-import Profile from "../components/Profile";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/libs/auth";
 import prisma from "@/app/libs/prisma";
 import Sidebar, { SidebarItem } from "../components/Sidebar";
 import { BotMessageSquare, UserSearch, LayoutDashboard, History, LogOut } from "lucide-react";
-import { signOut } from "next-auth/react";
 
 // Decodes the current session data and use prisma to retrieve the current user in the database.
 const getCurrentUser = async () => {
@@ -91,7 +89,6 @@ export default async function New() {
                   <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
                   <a href="#"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </a>
                   <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={true} /> </a>
-                  <button onClick={() => signOut()}><SidebarItem icon={<LogOut />} text="Log Out" active={false} /></button>
 
 
           </Sidebar>

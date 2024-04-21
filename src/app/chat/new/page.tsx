@@ -9,7 +9,6 @@ import { Message, PatientInfo } from '../../../../types/types';
 import { BotResponseType, BotMessages } from './BotMessages';
 import Sidebar, { SidebarItem } from "@/app/components/Sidebar";
 import { BotMessageSquare, LayoutDashboard, UserSearch, History, LogOut } from 'lucide-react';
-import { signOut } from 'next-auth/react'
 
 
 const App: React.FC = () => {
@@ -277,7 +276,6 @@ const App: React.FC = () => {
                 <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
                 <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Dashboard" active={false} /> </a>
                 <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
-                <button onClick={() => signOut()}><SidebarItem icon={<LogOut />} text="Log Out" active={false} /></button>
         </Sidebar>
         <div className='flex-grow'>
           <div className="flex h-screen bg-black text-white">
