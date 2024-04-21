@@ -36,7 +36,7 @@ const LoginPage = () => {
     const redirectUser = async () => {
       const session = await getSession(); 
       if (session) {
-        router.push("/"); // Redirect to the homepage after successful login
+        router.push("/chat/new"); // Redirect to the homepage after successful login
       }
     };
 
