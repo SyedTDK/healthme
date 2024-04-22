@@ -12,9 +12,9 @@ export default function Sidebar({ children }: { children: React.ReactNode[] }) {
     const [expanded, setExpanded] = useState(true)
   
     return (
-        <aside className={` h-screen transition-all ${expanded ? "w-64" : "w-20"}`}>
+      <aside className={` h-screen transition-all ${expanded ? "w-64" : "w-20"}`}>
         <nav className="h-full flex flex-col bg-black border-r shadow-sm">
-            <div className="p-4 pb-2 inline-flex justify-between items-center">
+          <div className="p-4 pb-2 inline-flex justify-between items-center">
             <img
                 src="/logo.png"
                 className={`overflow-hidden transition-all ${
@@ -28,13 +28,13 @@ export default function Sidebar({ children }: { children: React.ReactNode[] }) {
             >
                 {expanded ? <ChevronFirst /> : <ChevronLast />}
             </button>
-            </div>
+          </div>
 
-            <SidebarContext.Provider value={{ expanded }}>
+          <SidebarContext.Provider value={{ expanded }}>
             <ul className="flex-1 px-3">{children}</ul>
-            </SidebarContext.Provider>
+          </SidebarContext.Provider>
 
-            <div className="border-t flex p-3">
+          <div className="border-t flex p-3">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-user w-10 h-10 rounded-md"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             <div
                 className={`
@@ -43,14 +43,14 @@ export default function Sidebar({ children }: { children: React.ReactNode[] }) {
             `}
             >
                 <div className="leading-4">
-                <h4 className="font-semibold">{userName}</h4>
-                <span className="text-xs text-gray-600">{userEmail}</span>
+                  <h4 className="font-semibold">{userName}</h4>
+                  <span className="text-xs text-gray-600">{userEmail}</span>
                 </div>
                 <MoreVertical size={20} />
             </div>
-            </div>
+          </div>
         </nav>
-        </aside>
+      </aside>
     )
 }
 
