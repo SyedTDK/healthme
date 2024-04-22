@@ -11,7 +11,7 @@ const HealthAnalytics: React.FC = () => {
     bloodSugar: '2 mmol/L', // Example data
   };
   const medications = []; // Assuming no medications, as per the image
-  const doctors = ['Dr. Smith', 'Dr. Johnson','Dr. Smith', 'Dr. Johnson','Dr. Smith', 'Dr. Johnson']; // Add actual doctor data
+  const doctors = ['Dr. Smith', 'Dr. Johnson']; // Add actual doctor data
   const bloodPressureData = []; // You will need to retrieve and format blood pressure data for charts
 
   // State to manage expansion of each section
@@ -24,17 +24,19 @@ const HealthAnalytics: React.FC = () => {
       <h1 className="text-3xl font-bold mb-4">Hello {userName}!</h1>
 
       {/* Medications Section */}
-      <div className="mb-6">
+      <div className={`mb-6 ${medicationsExpanded ? 'h-auto' : 'h-32'} max-w-md`}>
         <h2 className="text-xl font-semibold mb-2 flex justify-between items-center">
           Medications
           <button
             className="text-sm text-gray-500 focus:outline-none"
             onClick={() => setMedicationsExpanded(!medicationsExpanded)}
           >
-            {medicationsExpanded ? 'See Less' : 'See More'}
+            {medicationsExpanded ? 'See More' : 'See Less'}
           </button>
         </h2>
-        <div className="bg-white rounded-lg shadow-lg p-4">
+        <div
+          className={`bg-white rounded-lg shadow-lg p-4 ${medicationsExpanded ? 'h-auto' : 'h-24'} overflow-hidden`}
+        >
           {/* Logic to check and display 'No Medications Have Been Added' or list of medications */}
           {medicationsExpanded || medications.length === 0 ? (
             <p className="text-gray-500">
@@ -58,11 +60,13 @@ const HealthAnalytics: React.FC = () => {
         <div className="grid grid-cols-3 gap-4">
           {/* Display latest vitals */}
           {vitalsExpanded ||
-          Object.entries(latestVitals).map(([key, value], index) => (
-            <div key={index} className="bg-white rounded-lg shadow-lg p-4">
-              <p className="text-gray-500">{key}: {value}</p>
-            </div>
-          ))}
+            Object.entries(latestVitals).map(([key, value], index) => (
+              <div key={index} className="bg-white rounded-lg shadow-lg p-4">
+                <p className="text-gray-500">
+                  {key}: {value}
+                </p>
+              </div>
+            ))}
         </div>
       </div>
 
@@ -78,9 +82,12 @@ const HealthAnalytics: React.FC = () => {
           </button>
         </h2>
         <div className="bg-white rounded-lg shadow-lg p-4">
-          {doctorsExpanded || doctors.map((doctor, index) => (
-            <p key={index} className="text-gray-500">{doctor}</p>
-          ))}
+          {doctorsExpanded ||
+            doctors.map((doctor, index) => (
+              <p key={index} className="text-gray-500">
+                {doctor}
+              </p>
+            ))}
         </div>
       </div>
 
@@ -90,3 +97,4 @@ const HealthAnalytics: React.FC = () => {
 };
 
 export default HealthAnalytics;
+
