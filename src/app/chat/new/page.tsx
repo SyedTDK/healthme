@@ -279,7 +279,7 @@ const App: React.FC = () => {
       //Display the chat interface
       return (
         <main className="h-screen bg-[#212121]">
-          <Profile user={""}/>
+          <Profile user={session.user}/>
           <div className='flex'>
             <Sidebar>
                     <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={true} /></a>
