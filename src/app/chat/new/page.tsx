@@ -193,7 +193,7 @@ const App: React.FC = () => {
             <select
               onChange={(e) => setNewMessage(e.target.value)}
               value={newMessage}
-              className="flex-grow bg-gray-800 rounded-lg text-white p-3 shadow-md"
+              className="flex-grow rounded-lg text-white p-3 shadow-md"
               disabled={detectDiseaseMode} // Disable the select when in "Detect Disease" mode
             >
               <option value="">Select a symptom</option>
