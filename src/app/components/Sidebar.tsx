@@ -46,7 +46,7 @@ export default function Sidebar({ children }: { children: React.ReactNode[] }) {
                   <h4 className="font-semibold">{userName}</h4>
                   <span className="text-xs text-gray-600">{userEmail}</span>
                 </div>
-                <MoreVertical size={20} />
+                {/* <MoreVertical size={20} /> */}
             </div>
           </div>
         </nav>
