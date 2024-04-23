@@ -6,6 +6,7 @@ import { authOptions } from "@/app/libs/auth";
 import prisma from "@/app/libs/prisma";
 import Sidebar, { SidebarItem } from "../components/Sidebar";
 import { BotMessageSquare, UserSearch, LayoutDashboard, History, LogOut } from "lucide-react";
+import ConvertToEasternTime from "../components/ConvertToEasternTime";
 
 // Decodes the current session data and use prisma to retrieve the current user in the database.
 const getCurrentUser = async () => {
@@ -109,7 +110,7 @@ export default async function New() {
                         key={ChatSession.id || index} 
                         className="block max-w-sm p-6 mt-4 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]"
                       >
-                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">{ChatSession.createdAt?.toString() || 'No creation date'} </h5>
+                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-white"><ConvertToEasternTime utcDateString={ChatSession.createdAt?.toString()} ></ConvertToEasternTime> </h5>
                         <p className="font-normal text-gray-400">Symptoms experianced: {ChatSession.symptoms?.join(', ') || 'No symptoms'}</p>
                         <p className="font-normal text-gray-400">Possible Diagnosis by <span className="font-bold bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">AI</span>: {ChatSession.diagnosis || 'No diagnosis'}</p>
                       </div>
