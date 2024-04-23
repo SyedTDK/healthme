@@ -9,6 +9,7 @@ import { Message, PatientInfo } from '../../../../types/types';
 import { BotResponseType, BotMessages } from './BotMessages';
 import Sidebar, { SidebarItem } from "@/app/components/Sidebar";
 import { BotMessageSquare, LayoutDashboard, UserSearch, History, LogOut } from 'lucide-react';
+import Profile from '@/app/components/Profile';
 
 
 const App: React.FC = () => {
@@ -277,48 +278,54 @@ const App: React.FC = () => {
 
       //Display the chat interface
       return (
-        <main className='flex'>
-        <Sidebar>
-                <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={true} /></a>
-                <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
-                <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Dashboard" active={false} /> </a>
-                <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
-        </Sidebar>
-        <div className='flex-grow'>
-          <div className="flex h-screen bg-black text-white">
-            <div className="flex flex-col flex-grow justify-between h-screen bg-black text-white ml-3">
-            
-              <div className="flex flex-col h-screen justify-between">
-                <div className="overflow-y-auto">
-                {messages.map((message, index) => (
-                  <div key={index} className={`flex justify-${message.isUser ? 'end' : 'start'} mb-5`}>
-                    <div className={`bg-blue-500 text-white rounded-lg p-2 max-w-xs`}>
-                      {message.text}
+        <main className="h-screen bg-[#212121]">
+          <Profile user={""}/>
+          <div className='flex'>
+            <Sidebar>
+                    <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={true} /></a>
+                    <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
+                    <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Dashboard" active={false} /> </a>
+                    <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
+            </Sidebar>
+            <div className='flex-grow'>
+              <div className="flex h-screen bg-[#212121] text-white">
+                <div className="flex flex-col flex-grow justify-between h-screen text-white ml-3">
+                
+                  <div className="flex flex-col h-screen justify-between">
+                    <div className="overflow-y-auto">
+                    {messages.map((message, index) => (
+                      <div key={index} className={`flex justify-${message.isUser ? 'end' : 'start'} mb-5`}>
+                        <div className={`bg-blue-500 text-white rounded-lg p-2 max-w-xs`}>
+                          {message.text}
+                        </div>
+                      </div>
+                      ))}
+                      <div ref={messagesEndRef} />
                     </div>
-                  </div>
-                  ))}
-                  <div ref={messagesEndRef} />
+                    <div className='flex items-center'>
+                      {renderInputArea()}        
+                      <button
+                        onClick={submitData}
+                        className="mt-1 border bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f] py-2 px-4 rounded-lg ml-2"
+                      >
+                        {isSubmitting && <p>Saving...</p>}
+                        {!isSubmitting && <p>End Session and Find a Doctor</p>}
+                      </button>
+                    </div>
                 </div>
-                <div className='flex items-center'>
-                  {renderInputArea()}        
-                  <button
-                    onClick={submitData}
-                    className="mt-1 border bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f] py-2 px-4 rounded-lg ml-2"
-                  >
-                    {isSubmitting && <p>Saving...</p>}
-                    {!isSubmitting && <p>End Session and Find a Doctor</p>}
-                  </button>
-                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </main>
       )
     } else {
 
       return (
-        <main className='flex'>
+        <>
+        <main className="h-screen bg-[#212121]">
+        <Profile user={""}/>
+        <div className='flex'>
           <Sidebar>
                   <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={true} /></a>
                   <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
@@ -326,8 +333,8 @@ const App: React.FC = () => {
                   <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
           </Sidebar>
           <div className='flex-grow'>
-            <div className="flex h-screen bg-black text-white">
-              <div className="flex flex-col flex-grow justify-between h-screen bg-black text-white ml-3">
+            <div className="flex h-screen text-white">
+              <div className="flex flex-col flex-grow justify-between h-screen text-white ml-3">
               
                 <div className="flex flex-col h-screen justify-between">
                   <div className="overflow-y-auto">
@@ -347,7 +354,9 @@ const App: React.FC = () => {
             </div>
           </div>
         </div>
+        </div>
         </main>
+        </>
       );
     }
   

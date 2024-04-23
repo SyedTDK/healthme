@@ -13,7 +13,7 @@ export default function Sidebar({ children }: { children: React.ReactNode[] }) {
   
     return (
       <aside className={` h-screen transition-all ${expanded ? "w-64" : "w-20"}`}>
-        <nav className="h-full flex flex-col bg-black border-r shadow-sm">
+        <nav className="h-full flex flex-col bg-[#1E1C1C] shadow-sm rounded-lg">
           <div className="p-4 pb-2 inline-flex justify-between items-center">
             {/* <img
                 src="/logo.png"
@@ -66,7 +66,7 @@ export function SidebarItem({ icon, text, active}: { icon: React.ReactNode, text
         ${
           active
             ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
-            : "hover:bg-indigo-50 text-gray-600"
+            : "hover:bg-gray-800 text-gray-100"
         }
     `}
     >

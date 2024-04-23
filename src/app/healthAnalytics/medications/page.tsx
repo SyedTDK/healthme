@@ -107,7 +107,7 @@ export default async function New() {
                       >
                         <h5 className="mb-2 text-xl font-bold tracking-tight text-white">{medication?.name || ''} </h5>
                         <p className="font-normal text-gray-400">Instructions: {medication?.instructions || ''}</p>
-                        <p className="font-normal text-gray-400">Start Date: <ConvertToEasternTime utcDateString={medication?.startDate}></ConvertToEasternTime></p>
+                        <p className="font-normal text-gray-400">Start Date: {medication?.startDate}</p>
                       </div>
                       /*TODO: Display a small delete button*/
                     ))}
