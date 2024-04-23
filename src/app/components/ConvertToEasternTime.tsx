@@ -7,7 +7,7 @@ const ConvertToEasternTime = ({ utcDateString }: { utcDateString: string }) => {
     const date = new Date(dateString);
     return date.toLocaleString("en-US", {
       timeZone: "America/New_York",
-      hour12: false // 24-hour format, can be changed to hour12: true for AM/PM format
+      hour12: true // false for 24-hour format, true for AM/PM format
     });
   };
 

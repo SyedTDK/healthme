@@ -95,7 +95,7 @@ export default async function New() {
             <div className="flex h-screen bg-black text-white">
               <div className="flex flex-col flex-grow justify-between h-screen bg-black text-white ml-3">
                 <div className="flex flex-col h-screen justify-between">
-                  <div className="overflow-y-auto">
+                  <div className="overflow-y-auto mx-auto max-w-screen-md">
                     <a href="/chat/new" className="block max-w-sm p-6 mt-2 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">
                       <h5 className="mb-2 text-2xl font-bold tracking-tight text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>New Chat Session</h5>
                     </a>
