@@ -1,11 +1,13 @@
-//This page will provide the users options to either create a new chat session or view summeries past chat sessions.
+//This page will provide the users options to either add new medications or view all existing medications.
 
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/libs/auth";
 import prisma from "@/app/libs/prisma";
 import Sidebar, { SidebarItem } from "../components/Sidebar";
+import AddMedication from "../components/AddMedication";
 import { BotMessageSquare, UserSearch, LayoutDashboard, History, LogOut } from "lucide-react";
+import ConvertToEasternTime from "../components/ConvertToEasternTime";
 
 // Decodes the current session data and use prisma to retrieve the current user in the database.
 const getCurrentUser = async () => {
@@ -23,17 +25,17 @@ const getCurrentUser = async () => {
   }
 };
 
-// Fetch chat sessions for the current user
-const getChatSessions = async (user: any) => {
+// Fetch medications for the current user
+const getMedications = async (user: any) => {
   try {
-    const chatSessions = await prisma.chatSession.findMany({
+    const medications = await prisma.medications.findMany({
       where: { userId: { equals: user?.id ?? undefined } },
-      select: { id: true, createdAt: true, symptoms: true, diagnosis: true},
+      select: { id: true, createdAt: true, name: true, instructions: true, startDate: true },
       orderBy: { createdAt: 'desc' }
     });
-    return chatSessions;
+    return medications;
   } catch (error) {
-    console.error('Error fetching chat sessions:', error);
+    console.error('Error fetching medications:', error);
   }
 }
 
@@ -81,7 +83,7 @@ export default async function New() {
   } else {
     // If a user is logged in, display the chat sessions page
     // This page will provide the users options to either create a new chat session or view past chat sessions.
-    const ChatSessions = await getChatSessions(user);
+    const medications = await getMedications(user);
     return (
         <main className="flex">
           <Sidebar>
@@ -91,36 +93,29 @@ export default async function New() {
                   <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={true} /> </a>
           </Sidebar>
           <div className="flex-grow">
-            <div className="flex h-screen bg-black text-white">
-              <div className="flex flex-col flex-grow justify-between h-screen bg-black text-white ml-3">
-                <div className="flex flex-col h-screen justify-between">
-                  <div className="overflow-y-auto">
-                    <a href="/chat/new" className="block max-w-sm p-6 mt-2 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">
-                      <h5 className="mb-2 text-2xl font-bold tracking-tight text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>New Chat Session</h5>
-                    </a>
-                    {/* Header of past session*/}
-                    <h2 className="mt-8 mb-4 text-3xl font-bold tracking-tight text-white">Past Chat Sessions</h2>
-                    {/*Display past session information with the creation date as its title sorted by the most recent. Under the title, it should display the symptoms and possible diagnosis by AI*/}
-
-                    {ChatSessions?.length === 0 &&
+            <div className="flex min-h-screen flex-col items-center justify-between p-24">
+              <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+                  <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+                    <AddMedication/>
+                    <h2 className="mt-8 mb-4 text-3xl font-bold tracking-tight text-white">Medications</h2>
+                    {medications?.length === 0 &&
                       <p className="text-gray-400">No past chat sessions found.</p>}
-                    {ChatSessions?.map((ChatSession: any, index: number) => (
+                    {medications?.map((medication: any, index: number) => (
                       <div 
-                        key={ChatSession.id || index} 
+                        key={medication.id || index} 
                         className="block max-w-sm p-6 mt-4 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]"
                       >
-                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">{ChatSession.createdAt?.toString() || 'No creation date'} </h5>
-                        <p className="font-normal text-gray-400">Symptoms experianced: {ChatSession.symptoms?.join(', ') || 'No symptoms'}</p>
-                        <p className="font-normal text-gray-400">Possible Diagnosis by <span className="font-bold bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">AI</span>: {ChatSession.diagnosis || 'No diagnosis'}</p>
+                        <h5 className="mb-2 text-xl font-bold tracking-tight text-white">{medication?.name || ''} </h5>
+                        <p className="font-normal text-gray-400">Instructions: {medication?.instructions || ''}</p>
+                        <p className="font-normal text-gray-400">Start Date: <ConvertToEasternTime utcDateString={medication?.startDate}></ConvertToEasternTime></p>
                       </div>
-                      /*Display a small delete button on the top right corner of each past chat session. When clicked, it should delete the chat session from the database.*/
+                      /*TODO: Display a small delete button*/
                     ))}
                   </div>
-                </div>
               </div>
             </div>
-          </div>
-        </main>
+        </div>
+      </main>
     );
   }
 }
