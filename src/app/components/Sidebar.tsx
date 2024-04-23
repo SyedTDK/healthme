@@ -15,13 +15,13 @@ export default function Sidebar({ children }: { children: React.ReactNode[] }) {
       <aside className={` h-screen transition-all ${expanded ? "w-64" : "w-20"}`}>
         <nav className="h-full flex flex-col bg-black border-r shadow-sm">
           <div className="p-4 pb-2 inline-flex justify-between items-center">
-            <img
+            {/* <img
                 src="/logo.png"
                 className={`overflow-hidden transition-all ${
                 expanded ? "w-20" : "w-0"
                 }`}
                 alt=""
-            />
+            /> */}
             <button
                 onClick={() => setExpanded((curr) => !curr)}
                 className="p-1.5 rounded-lg bg-black hover:bg-gray-800"
