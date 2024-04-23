@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { set } from 'firebase/database';
 
 export default function AddMedication() {
     const { data: session, status } = useSession();
