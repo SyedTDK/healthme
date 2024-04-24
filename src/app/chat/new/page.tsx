@@ -121,7 +121,7 @@ const App: React.FC = () => {
                         onClick={() => handleUserOptionSelection(false)} 
                         className="bg-gray-800 hover:bg-gray-700 text-white text-lg py-4 px-8 rounded-lg shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]"
                     >
-                        Learn about Medication
+                        Learn about Medications
                     </button>
                 </div>
             </>
