@@ -12,8 +12,8 @@ export default function Sidebar({ children }: { children: React.ReactNode[] }) {
     const [expanded, setExpanded] = useState(true)
   
     return (
-      <aside className={` h-screen transition-all ${expanded ? "w-64" : "w-20"}`}>
-        <nav className="h-full flex flex-col bg-[#1E1C1C] shadow-sm rounded-lg">
+      <aside className={`transition-all ${expanded ? "w-64" : "w-20"}`}>
+        <nav className="h-screen flex flex-col bg-[#1E1C1C] shadow-sm rounded-lg">
           <div className="p-4 pb-2 inline-flex justify-between items-center">
             {/* <img
                 src="/logo.png"

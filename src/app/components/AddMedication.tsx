@@ -7,16 +7,17 @@ export default function AddMedication() {
     const userId = parseInt(session?.user?.id || '0');
     const [showModal, setShowModal] = React.useState(false);
     const [name, setName] = useState('');
-    const [startDate, setStartDate] = useState('');
     const [instructions, setInstructions] = useState('');
     const [isSaving, setIsSaving] = useState<boolean>(false);
+    const [dose, setDose] = useState('');
+    const [frequency, setFrequency] = useState('');
     
     
     const submitData = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         setIsSaving(true);
         try {
-          const body = { userId, name, instructions, startDate };
+          const body = { userId, name, instructions, dose, frequency};
           await fetch('/api/saveMedication', {
             method: 'POST',
             body: JSON.stringify(body),
@@ -26,8 +27,9 @@ export default function AddMedication() {
         } finally {
             setIsSaving(false);
             setName('');
-            setStartDate('');
             setInstructions('');
+            setDose('');
+            setFrequency('');
             setShowModal(false);
         }
       };
@@ -64,25 +66,38 @@ export default function AddMedication() {
                                 <form onSubmit={submitData} className="p-4 md:p-5">
                                     <div className="grid gap-4 mb-4 grid-cols-2">
                                         <div className="col-span-2">
-                                            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                                            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Medication Name</label>
                                             <input 
                                                 type="text" 
                                                 name="name"
                                                 onChange={(e) => setName(e.target.value)}
                                                 value={name} 
-                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" 
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
+                                                placeholder="Medication Name" 
                                                 required
                                             />
                                         </div>
                                         <div className="col-span-2 sm:col-span-1">
-                                            <label htmlFor="startDate" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start Date</label>
+                                            <label htmlFor="dose" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start Date</label>
                                             <input 
                                                 type="text" 
-                                                name="startDate"
-                                                onChange={(e) => setStartDate(e.target.value)}
-                                                value={startDate}  
+                                                name="dose"
+                                                onChange={(e) => setDose(e.target.value)}
+                                                value={dose}  
                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
-                                                placeholder="" 
+                                                placeholder="X tablets/capsules/teaspoons etc." 
+                                                required
+                                            />
+                                        </div>
+                                        <div className="col-span-2 sm:col-span-1">
+                                            <label htmlFor="frequency" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start Date</label>
+                                            <input 
+                                                type="text" 
+                                                name="frequency"
+                                                onChange={(e) => setFrequency(e.target.value)}
+                                                value={frequency}  
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
+                                                placeholder="X times a day / week / month or every X hours or when needed" 
                                                 required
                                             />
                                         </div>
@@ -94,7 +109,7 @@ export default function AddMedication() {
                                                 onChange={(e) => setInstructions(e.target.value)}
                                                 value={instructions} 
                                                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                                                placeholder="Provide instructions for the medications. Include dosage, frequency, duration, and end date etc.">
+                                                placeholder="Provide instructions for the medications. Include specific times, duration, and end date etc.">
                                             </textarea>                    
                                         </div>
                                     </div>

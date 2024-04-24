@@ -40,7 +40,8 @@ model Medications {
   id                Int         @id @default(autoincrement())
   name              String
   instructions      String
-  startDate         String
+  dose              String?
+  frequency         String?
   user              User        @relation(fields: [userId], references: [id])
   userId            Int
   createdAt         DateTime    @default(now())

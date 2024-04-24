@@ -6,7 +6,7 @@ import { authOptions } from "@/app/libs/auth";
 import prisma from "@/app/libs/prisma";
 import Sidebar, { SidebarItem } from "../../components/Sidebar";
 import AddMedication from "../../components/AddMedication";
-import { BotMessageSquare, UserSearch, LayoutDashboard, History, LogOut } from "lucide-react";
+import { BotMessageSquare, UserSearch, LayoutDashboard, History, LogOut, Pill } from "lucide-react";
 import ConvertToEasternTime from "../../components/ConvertToEasternTime";
 
 // Decodes the current session data and use prisma to retrieve the current user in the database.
@@ -30,7 +30,7 @@ const getMedications = async (user: any) => {
   try {
     const medications = await prisma.medications.findMany({
       where: { userId: { equals: user?.id ?? undefined } },
-      select: { id: true, createdAt: true, name: true, instructions: true, startDate: true },
+      select: { id: true, createdAt: true, name: true, instructions: true, dose: true, frequency: true },
       orderBy: { createdAt: 'desc' }
     });
     return medications;
@@ -90,6 +90,8 @@ export default async function New() {
                   <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={false} /></a>
                   <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
                   <a href="#"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </a>
+                  <a href="/medications"><SidebarItem icon={<Pill />} text="Medications" active={false} /> </a>
+
                   <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={true} /> </a>
           </Sidebar>
           <div className="flex-grow">

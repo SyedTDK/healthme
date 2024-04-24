@@ -10,8 +10,7 @@ const Profile = ({ user }: { user: any }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
     return (
-        <header>
-            <nav className="bg-[#212121] px-4 lg:px-6 py-2.5">
+            <nav className="px-4 lg:px-6 py-2.5">
               <div className="flex flex-nowrap justify-between items-center mx-auto max-w-screen-xl">
                   <Link href="/" className="flex items-center">
                       <img src="/logo.png" className="mr-3 h-6 sm:h-9" alt="HealthMe Logo" />
@@ -43,7 +42,6 @@ const Profile = ({ user }: { user: any }) => {
                   </div>
               </div>
             </nav>
-        </header>
         
     )
 }

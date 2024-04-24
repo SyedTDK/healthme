@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     try {
         
         const body = await request.json();
-        const { userId, name, instructions, startDate } = body;
+        const { userId, name, instructions, dose, frequency } = body;
         // Check if user exists (optional, adds robustness)
         const user = await prisma.user.findUnique({
             where: { id: userId },
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
             return; // Optionally handle this scenario appropriately
         }
         const chatSession = await prisma.medications.create({
-            data: { userId, name, instructions, startDate },
+            data: { userId, name, instructions, dose, frequency },
         });
         return NextResponse.json(chatSession);
     } catch (error: any) {

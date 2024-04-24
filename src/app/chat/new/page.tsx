@@ -288,7 +288,7 @@ const App: React.FC = () => {
                     <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
             </Sidebar>
             <div className='flex-grow'>
-              <div className="flex h-screen bg-[#212121] text-white">
+              <div className="flex h-screen text-white">
                 <div className="flex flex-col flex-grow justify-between h-screen text-white ml-3">
                 
                   <div className="flex flex-col h-screen justify-between">
@@ -323,7 +323,7 @@ const App: React.FC = () => {
 
       return (
         <>
-        <main className="h-screen bg-[#212121]">
+        <main className="h-screen">
         <Profile user={""}/>
         <div className='flex'>
           <Sidebar>
@@ -333,8 +333,8 @@ const App: React.FC = () => {
                   <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
           </Sidebar>
           <div className='flex-grow'>
-            <div className="flex h-screen text-white">
-              <div className="flex flex-col flex-grow justify-between h-screen text-white ml-3">
+            <div className="flex text-white">
+              <div className="flex flex-col flex-grow justify-between text-white ml-3">
               
                 <div className="flex flex-col h-screen justify-between">
                   <div className="overflow-y-auto">

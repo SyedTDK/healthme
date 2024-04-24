@@ -4,10 +4,9 @@
 
 :root {
   --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
+  --background-start-rgb: 33, 33, 33;  /* Updated to RGB equivalent of #212121 */
+  --background-end-rgb: 33, 33, 33;    /* Updated to RGB equivalent of #212121 */
 }
-
 
 body {
   color: rgb(var(--foreground-rgb));
