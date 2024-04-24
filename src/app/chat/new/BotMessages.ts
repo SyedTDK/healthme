@@ -7,7 +7,8 @@ export enum BotResponseType {
     AGE = "AGE",
     SYMPTOM = "SYMPTOM",
     MORE_SYMPTOM = "MORE_SYMPTOM",
-    DISEASE = "DISEASE"
+    DISEASE = "DISEASE",
+    MEDICINE = "MEDICINE"
 
 }
 
@@ -99,6 +100,9 @@ export const BotMessages: Record<BotResponseType, string[]> = {
         "Does the patient have further symptoms to mention?"
     ],
     [BotResponseType.DISEASE]:[
+      
+    ],
+    [BotResponseType.MEDICINE]:[
       
     ]
     
