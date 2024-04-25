@@ -122,7 +122,10 @@ export default async function New() {
           {medications?.length === 0 &&
                               <p className="text-gray-400">No past chat sessions found.</p>}
                             {medications?.map((medication: any, index: number) => (
-            <div className="medication-item mb-4 p-4 shadow rounded">
+            <div 
+              className="medication-item mb-4 p-4 shadow rounded"
+              key={medication.id || index}
+              >
               <div className="flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-tablets mr-4"><circle cx="7" cy="7" r="5"/><circle cx="17" cy="17" r="5"/><path d="M12 17h10"/><path d="m3.46 10.54 7.08-7.08"/></svg>
                 <div>
