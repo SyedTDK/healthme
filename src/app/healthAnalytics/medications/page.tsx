@@ -131,7 +131,7 @@ export default async function New() {
                 <div>
                   <div className="medication-name">{medication?.name}</div>
                   <div className="medication-dosage">{medication?.dosage}, {medication?.frequency}</div>  
-                  <div className="text-sm text-gray-600">Effective from date: {medication?.createdAt}</div>
+                  <div className="text-sm text-gray-600">Effective from date: <ConvertToEasternTime utcDateString={medication?.createdAt.toString()}></ConvertToEasternTime></div>
                 </div>
               </div>
             </div>))}
