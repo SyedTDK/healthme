@@ -78,7 +78,7 @@ export default function AddMedication() {
                                             />
                                         </div>
                                         <div className="col-span-2 sm:col-span-1">
-                                            <label htmlFor="dose" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start Date</label>
+                                            <label htmlFor="dose" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dose</label>
                                             <input 
                                                 type="text" 
                                                 name="dose"
@@ -90,7 +90,7 @@ export default function AddMedication() {
                                             />
                                         </div>
                                         <div className="col-span-2 sm:col-span-1">
-                                            <label htmlFor="frequency" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start Date</label>
+                                            <label htmlFor="frequency" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Frequency</label>
                                             <input 
                                                 type="text" 
                                                 name="frequency"
