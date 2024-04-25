@@ -204,9 +204,11 @@ const App: React.FC = () => {
           console.log("Unhandled step");
       }
 
-      setCurrentStep(nextStep);
-      const botResponse = BotMessages[nextStep][Math.floor(Math.random() * BotMessages[nextStep].length)];
-      setMessages(prevMessages => [...prevMessages, { text: botResponse, isUser: false }]);
+      if (nextStep) {
+        setCurrentStep(nextStep);
+        const botResponse = BotMessages[nextStep][Math.floor(Math.random() * BotMessages[nextStep].length)];
+        setMessages(prevMessages => [...prevMessages, { text: botResponse, isUser: false }]);
+      }
     };
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
