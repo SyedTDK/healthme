@@ -13,24 +13,21 @@ import Profile from '@/app/components/Profile';
 
 
 const App: React.FC = () => {
-    const { data: session, status } = useSession();
-
-    const userName = session?.user?.name;
-    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-   
-    const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>([]);
-    const [newMessage, setNewMessage] = useState('');
-    const [currentStep, setCurrentStep] = useState<BotResponseType>(BotResponseType.WELCOME);
-    const [patientInfo, setPatientInfo] = useState<PatientInfo>({
-      isPatient: null,
-      name: '',
-      age: '',
-      gender: '',
-      symptoms: [],
-    });
-
-    const [detectDiseaseMode, setDetectDiseaseMode] = useState(false); // State variable to track the mode of the button
-    const [symptomOptions] = useState<string[]>(['itching', 'skin rash', 'nodal skin eruptions', 'continuous sneezing',
+  const { data: session, status } = useSession();
+  const userName = session?.user?.name;
+  const [patientInfo, setPatientInfo] = useState<PatientInfo>({
+    isPatient: false, // Example value, adjust as needed
+    name: "",         // Example value, adjust as needed
+    age: "",           // Example value, adjust as needed
+    gender: "",       // Example value, adjust as needed
+    symptoms: [],
+  }); // Define patientInfo state
+  const [currentStep, setCurrentStep] = useState<BotResponseType | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [messages, setMessages] = useState<Message[]>([]); // Simplified message type
+  const [newMessage, setNewMessage] = useState('');
+  const [detectDiseaseMode, setDetectDiseaseMode] = useState(false);
+  const [symptomOptions] = useState<string[]>(['itching', 'skin rash', 'nodal skin eruptions', 'continuous sneezing',
     'shivering', 'chills', 'joint pain', 'stomach pain', 'acidity',
     'ulcers on tongue', 'muscle wasting', 'vomiting', 'burning micturition',
     'spotting urination', 'fatigue', 'weight gain', 'anxiety',
@@ -67,18 +64,20 @@ const App: React.FC = () => {
     'prominent veins on calf', 'palpitations', 'painful walking',
     'pus-filled pimples', 'blackheads', 'scarring', 'skin peeling',
     'silver-like dusting', 'small dents in nails', 'inflammatory nails',
-    'blister', 'red sore around nose', 'yellow crust ooze']);  
+    'blister', 'red sore around nose', 'yellow crust ooze']);
+
+    const [medicineOptions] = useState<string[]>(['tylenol', 'nyquil']); 
 
   
     useEffect(() => {
-      const welcomeMessage = BotMessages[BotResponseType.WELCOME][Math.floor(Math.random() * BotMessages[BotResponseType.WELCOME].length)];
-      const patientWhoMessage = BotMessages[BotResponseType.PATIENT_WHO][Math.floor(Math.random() * BotMessages[BotResponseType.PATIENT_WHO].length)];
-
-      setMessages([
-        { text: welcomeMessage, isUser: false },
-        { text: patientWhoMessage, isUser: false }
-      ]);
-    }, []);
+      if (userName) {
+        const welcomeMessage = `Hello, ${userName}! Would you like to talk about symptoms or medicines?`;
+        setMessages([{ text: welcomeMessage, isUser: false }]);
+        setCurrentStep(null); // Set currentStep to null to trigger rendering of user options
+      }
+    }, [userName]);
+    
+    
 
     useEffect(() => {
       // Check if the number of selected symptoms is three or more
@@ -97,35 +96,50 @@ const App: React.FC = () => {
 
     useEffect(scrollToBottom, [messages]);
 
+    const handleUserOptionSelection = (isEnteringSymptoms: boolean) => {
+      if (isEnteringSymptoms) {
+          setCurrentStep(BotResponseType.SYMPTOM);
+      } else {
+          setCurrentStep(BotResponseType.MEDICINE); // Set current step to medicine
+      }
+  };
+  
+  
+
+  const renderUserOptions = () => {
+    if (currentStep === null) {  // Only show these options initially
+        return (
+            <>
+                <div className="flex justify-around p-4">
+                    <button 
+                        onClick={() => handleUserOptionSelection(true)} 
+                        className="bg-gray-800 hover:bg-gray-700 text-white text-lg py-4 px-8 rounded-lg shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]"
+                    >
+                        Enter Symptoms
+                    </button>
+                    <button 
+                        onClick={() => handleUserOptionSelection(false)} 
+                        className="bg-gray-800 hover:bg-gray-700 text-white text-lg py-4 px-8 rounded-lg shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]"
+                    >
+                        Learn about Medications
+                    </button>
+                </div>
+            </>
+        );
+    }
+    return null;
+};
+
+
     const sendMessage = async (userInput: string) => {
       setMessages(prevMessages => [...prevMessages, { text: userInput, isUser: true }]);
 
       let nextStep = currentStep;
       switch (currentStep) {
         case BotResponseType.WELCOME:
-          nextStep = BotResponseType.NAME;
-          setPatientInfo(prev => ({ ...prev, isPatient: userInput.toLowerCase() === 'yes' }));
+          nextStep = userInput.toLowerCase() === 'symptoms' ? BotResponseType.SYMPTOM : BotResponseType.MEDICINE;
           break;
-        case BotResponseType.NAME:
-          setPatientInfo(prev => ({ ...prev, name: userInput }));
-          nextStep = BotResponseType.GENDER;
-          break;
-        case BotResponseType.GENDER:
-          setPatientInfo(prev => ({ ...prev, gender: userInput }));
-          nextStep = BotResponseType.AGE;
-          break;
-        case BotResponseType.AGE:
-          const isValidAge = /^[0-9]{1,3}$/.test(userInput.trim()) && parseInt(userInput.trim()) >= 0 && parseInt(userInput.trim()) <= 100;
-          if (isValidAge) {
-            setPatientInfo(prev => ({ ...prev, age: userInput }));
-            nextStep = BotResponseType.SYMPTOM;
-          } else {
-            setMessages(prevMessages => [
-              ...prevMessages,
-              { text: "Please enter a valid age between 0 and 100.", isUser: false }
-            ]);
-          }
-          break;
+
         case BotResponseType.SYMPTOM:
           if (patientInfo.symptoms.includes(userInput)) {
             setMessages(prevMessages => [
@@ -143,32 +157,49 @@ const App: React.FC = () => {
             }
           }
           break;
-          case BotResponseType.DISEASE:
-            // Construct the payload with the collected symptoms
-            const payload = {
-              symptoms: patientInfo.symptoms
-            };
           
-            // Use axios to send a POST request to your backend
-            try {
-              const response = await axios.post('https://api-production-b578.up.railway.app/chatbot', payload);
-              // Assuming your API returns a response that includes a message or advice
-              const apiResponse = response.data;
-          
+          case BotResponseType.MEDICINE:
+    if (!userInput.trim()) {
+        setMessages(prevMessages => [
+            ...prevMessages,
+            { text: "Please enter a medication you would like to learn about.", isUser: false }
+        ]);
+        break;
+    }
+    try {
+        const response = await axios.post('https://medicine-production-8a43.up.railway.app/medicine', { medicine: userInput });
+        const apiResponse = response.data;
 
+        if (response.status === 200) {
+            // If the API response indicates success, display medication info
+            const { matches } = apiResponse;
 
-              // Assuming apiResponse includes a property 'message' that contains the diagnosis or advice
-              // Update your messages state with this new message from the API
-              setMessages(prevMessages => [...prevMessages, { text: apiResponse.message, isUser: false }]);
-
-              
-          
-              // Here, you might also handle transitioning to another conversation step or concluding the interaction
-            } catch (error) {
-              console.error('Error receiving response from the API:', error);
-              setMessages(prevMessages => [...prevMessages, { text: "Sorry, we couldn't process your request at the moment. Please try again later.", isUser: false }]);
+            // Define the Match interface here
+            interface Match {
+                medicine: string;
+                Uses: string;
+                'Side Effects': string;
             }
-            break;
+
+            // Map over matches with the Match interface
+            const message = matches.map((match: Match) => `${match.medicine}:\n\nUses - ${match.Uses}\n\nSide Effects - ${match['Side Effects']}`).join('\n\n');
+            setMessages(prevMessages => [...prevMessages, { text: message, isUser: false }]);
+        } else {
+            // If the API response indicates failure, display a message to the user
+            setMessages(prevMessages => [...prevMessages, { text: "Medication information is not available. Please enter another medication.", isUser: false }]);
+        }
+    } catch (error) {
+        // If there's an error fetching the response, display an error message
+        console.error('Error receiving response from the API:', error);
+        setMessages(prevMessages => [...prevMessages, { text: "Sorry, we couldn't process your request at the moment. Please try again later.", isUser: false }]);
+    }
+    break;
+
+
+
+          
+
+
         default:
           console.log("Unhandled step");
       }
@@ -188,70 +219,90 @@ const App: React.FC = () => {
 
     const renderInputArea = () => {
       if (currentStep === BotResponseType.SYMPTOM) {
-        return (
-          <>
-            <select
-              onChange={(e) => setNewMessage(e.target.value)}
-              value={newMessage}
-              className="flex-grow rounded-lg text-white p-3 shadow-md"
-              disabled={detectDiseaseMode} // Disable the select when in "Detect Disease" mode
-            >
-              <option value="">Select a symptom</option>
-              {symptomOptions.map((symptom, index) => (
-                <option key={index} value={symptom}>
-                  {symptom.replace(/_/g, ' ')}
-                </option>
-              ))}
-            </select>
-            <button
-      onClick={async () => {
-          if (detectDiseaseMode) {
-              setCurrentStep(BotResponseType.DISEASE); // Change the conversation step
-
-              // Call the API to detect the disease
-              try {
-                  const response = await axios.post('https://api-production-b578.up.railway.app/chatbot', { symptoms: patientInfo.symptoms });
-                  const apiResponse = response.data;
-
-               
-
-                  // Update messages with the response from the API
-                  setMessages(prevMessages => [...prevMessages, { text: apiResponse.message, isUser: false }]);
-              } catch (error) {
-                  console.error('Error receiving response from the API:', error);
-                  setMessages(prevMessages => [...prevMessages, { text: "Sorry, we couldn't process your request at the moment. Please try again later.", isUser: false }]);
-              }
-          } else {
-              sendMessage(newMessage); // Adding a symptom
-          }
-      }}
-      className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg ml-2"
-  >
-      {detectDiseaseMode ? 'Detect Disease' : 'Add Symptom'}
-  </button>
-
-          </>
-        );
+          return (
+              <>
+                  <select
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      value={newMessage}
+                      className="flex-grow bg-gray-800 rounded-lg text-white p-3 shadow-md"
+                      disabled={detectDiseaseMode} // Disable the select when in "Detect Disease" mode
+                  >
+                      <option value="">Select a symptom</option>
+                      {symptomOptions.map((symptom, index) => (
+                          <option key={index} value={symptom}>
+                              {symptom.replace(/_/g, ' ')}
+                          </option>
+                      ))}
+                  </select>
+                  <button
+                      onClick={async () => {
+                          if (detectDiseaseMode) {
+                              setCurrentStep(BotResponseType.DISEASE); // Change the conversation step
+  
+                              // Call the API to detect the disease
+                              try {
+                                  const response = await axios.post('https://api-nts4.onrender.com/chatbot', { symptoms: patientInfo.symptoms });
+                                  const apiResponse = response.data;
+  
+                                  // Update messages with the response from the API
+                                  setMessages(prevMessages => [...prevMessages, { text: apiResponse.message, isUser: false }]);
+                              } catch (error) {
+                                  console.error('Error receiving response from the API:', error);
+                                  setMessages(prevMessages => [...prevMessages, { text: "Sorry, we couldn't process your request at the moment. Please try again later.", isUser: false }]);
+                              }
+                          } else {
+                              sendMessage(newMessage); // Adding a symptom
+                          }
+                      }}
+                      className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg ml-2"
+                  >
+                      {detectDiseaseMode ? 'Detect Disease' : 'Add Symptom'}
+                  </button>
+  
+              </>
+          );
+      } else if (currentStep === BotResponseType.MEDICINE) {
+          return (
+              <>
+                  <TextareaAutosize
+                      rows={1}
+                      placeholder="Please enter a medication you would like to learn about."
+                      value={newMessage}
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      onKeyPress={handleKeyPress}
+                      className="flex-grow bg-gray-800 rounded-lg text-white border-none focus:outline-none p-3 shadow-md"
+                  />
+                  <button
+                      onClick={() => sendMessage(newMessage)}
+                      className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg ml-2"
+                  >
+                      Submit
+                  </button>
+              </>
+          );
       } else {
-        return (
-          <TextareaAutosize
-            rows={1}
-            placeholder="Message HealthME..."
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
-            className="flex-grow bg-gray-800 rounded-lg text-white border-none focus:outline-none p-3 shadow-md"
-          />
-        );
+          return (
+              <TextareaAutosize
+                  rows={1}
+                  placeholder="Message HealthME..."
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  className="flex-grow bg-gray-800 rounded-lg text-white border-none focus:outline-none p-3 shadow-md"
+              />
+          );
       }
-    };
+  };
+  
+    
     
     if (status === "authenticated") {
       const userId = parseInt(session?.user?.id || '0');
       //Extract the symptoms as a string[]
       const symptoms = patientInfo.symptoms;
       //Extract the diagnosis as a string
-      const diagnosis = messages[messages.length - 1].text;
+      const diagnosis = messages.length > 0 ? messages[messages.length - 1].text : '';
+
 
       
       //Function for saving the symptoms and diagnosis to the database
@@ -300,6 +351,7 @@ const App: React.FC = () => {
                         </div>
                       </div>
                       ))}
+                      {renderUserOptions()}
                       <div ref={messagesEndRef} />
                     </div>
                     <div className='flex items-center'>
