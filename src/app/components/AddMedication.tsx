@@ -40,7 +40,7 @@ export default function AddMedication() {
                 type="button"
                 onClick={() => setShowModal(true)}
             >
-                + Add
+                + Add New Medication
             </button>
             {showModal ? (
                 <>

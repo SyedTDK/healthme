@@ -111,8 +111,8 @@ export default async function New() {
             </div>
           </div> 
           </div>*/}
-        <AddMedication/>
         <div className="container mx-auto p-6">
+          <AddMedication/>
           <div className="flex mb-4">
             <div>Medications</div>
           </div>
