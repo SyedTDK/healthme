@@ -243,7 +243,7 @@ const App: React.FC = () => {
   
                               // Call the API to detect the disease
                               try {
-                                  const response = await axios.post('https://api-nts4.onrender.com/chatbot', { symptoms: patientInfo.symptoms });
+                                  const response = await axios.post('https://api-production-b578.up.railway.app/chatbot', { symptoms: patientInfo.symptoms });
                                   const apiResponse = response.data;
   
                                   // Update messages with the response from the API
@@ -386,28 +386,14 @@ const App: React.FC = () => {
                   <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </a>
                   <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
           </Sidebar>
-          <div className='flex-grow'>
-            <div className="flex text-white">
-              <div className="flex flex-col flex-grow justify-between text-white ml-3">
-              
-                <div className="flex flex-col h-screen justify-between">
-                  <div className="overflow-y-auto">
-                  {messages.map((message, index) => (
-                    <div key={index} className={`flex justify-${message.isUser ? 'end' : 'start'} mb-5`}>
-                      <div className={`bg-blue-500 text-white rounded-lg p-2 max-w-xs`}>
-                        {message.text}
-                      </div>
-                    </div>
-                    ))}
-                    <div ref={messagesEndRef} />
-                  </div>
-                  <div className="flex items-center">
-                    {renderInputArea()}
-                  </div>            
-              </div>
+          {/* Show a page asking the user to sign in to access this feature */}
+          <div className='flex-grow flex items-center justify-center'>
+            <div className='text-center'>
+              <h1 className='text-3xl font-bold text-gray-800'>Welcome to HealthME!</h1>
+              <p className='text-lg text-gray-600'>Please sign in to access the chat feature</p>
+              <a href="/login" className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4'>Sign In</a>
             </div>
           </div>
-        </div>
         </div>
         </main>
         </>
