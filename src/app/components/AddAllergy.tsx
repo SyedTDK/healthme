@@ -30,6 +30,7 @@ export default function AddAllergy() {
             setDescription('');
             setMedications('');
             setShowModal(false);
+            window.location.reload();
         }
     }
     return (

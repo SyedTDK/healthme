@@ -59,6 +59,7 @@ export default function AddVitals() {
             setSystolic('');
             setDiastolic('');
             setShowBloodPressure(false);
+            window.location.reload();
         }
     }
     const submitTemperature = async (e: React.SyntheticEvent) => {

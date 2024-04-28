@@ -8,6 +8,7 @@ import Sidebar, { SidebarItem } from "../components/Sidebar";
 import { BotMessageSquare, UserSearch, LayoutDashboard, History, LogOut, ClipboardList, Pill, ShieldBan } from "lucide-react";
 import ConvertToEasternTime from "../components/ConvertToEasternTime";
 import Profile from "../components/Profile";
+import DeleteData from "@/app/components/DeleteData";
 
 // Decodes the current session data and use prisma to retrieve the current user in the database.
 const getCurrentUser = async () => {
@@ -111,7 +112,9 @@ export default async function New() {
                         <h5 className="mb-2 text-2xl font-bold tracking-tight text-white"><ConvertToEasternTime utcDateString={ChatSession.createdAt?.toString()} ></ConvertToEasternTime> </h5>
                         <p className="font-normal text-gray-400">Symptoms experianced: {ChatSession.symptoms?.join(', ') || 'No symptoms'}</p>
                         <p className="font-normal text-gray-400">Possible Diagnosis by <span className="font-bold bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">AI</span>: {ChatSession.diagnosis || 'No diagnosis'}</p>
+                        <DeleteData dataId={ChatSession?.id} type="chatSession" />
                       </div>
+                      
                       /*Display a small delete button on the top right corner of each past chat session. When clicked, it should delete the chat session from the database.*/
                     ))}
                   </div>

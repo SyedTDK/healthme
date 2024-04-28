@@ -31,6 +31,7 @@ export default function AddMedication() {
             setDose('');
             setFrequency('');
             setShowModal(false);
+            window.location.reload();
         }
       };
     return (

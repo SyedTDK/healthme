@@ -27,16 +27,7 @@ const getCurrentUser = async () => {
   }
 };
 
-const deleteMedication = async (id: number) => {
-  try {
-    await prisma.medications.delete({
-      where: { id }
-    });
-    window.location.reload();
-  } catch (error) {
-    console.error('Error deleting medication:', error);
-  }
-}
+
 
 // Fetch medications for the current user
 const getMedications = async (user: any) => {
