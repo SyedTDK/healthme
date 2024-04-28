@@ -27,7 +27,7 @@ const LoginPage = () => {
       setLoginData({ email: "", password: "" });
     } catch (error: any) {
       console.log({ error });
-      setAlert({ status: "error", message: "Something went wrong" });
+      setAlert({ status: "error", message: "Invalid credentials. Please try again. (Email is case sensitive)" });
     } finally {
       window.location.href = "/chat/new";
     }

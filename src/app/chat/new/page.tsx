@@ -8,8 +8,9 @@ import { useSession } from "next-auth/react";
 import { Message, PatientInfo } from '../../../../types/types';
 import { BotResponseType, BotMessages } from './BotMessages';
 import Sidebar, { SidebarItem } from "@/app/components/Sidebar";
-import { BotMessageSquare, LayoutDashboard, UserSearch, History, LogOut } from 'lucide-react';
+import { BotMessageSquare, LayoutDashboard, UserSearch, History, LogOut, ClipboardList, Pill, ShieldBan } from 'lucide-react';
 import Profile from '@/app/components/Profile';
+import Link from 'next/link';
 
 
 const App: React.FC = () => {
@@ -331,14 +332,17 @@ const App: React.FC = () => {
 
       //Display the chat interface
       return (
-        <main className="h-screen bg-[#212121]">
+        <main className="h-screen">
           <Profile user={session.user}/>
           <div className='flex'>
             <Sidebar>
-                    <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={true} /></a>
-                    <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
-                    <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Dashboard" active={false} /> </a>
-                    <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
+              <Link href="/healthAnalytics"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </Link>
+              <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={true} /></a>
+              <Link href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </Link>
+              <Link href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </Link>
+              <Link href="/healthAnalytics/vitals"><SidebarItem icon={<ClipboardList />} text="Logbook" active={false} /> </Link>
+              <Link href="/healthAnalytics/medications"><SidebarItem icon={<Pill />} text="Medications" active={false} /> </Link>
+              <Link href="/healthAnalytics/allergies"><SidebarItem icon={<ShieldBan />} text="Allergies" active={false} /> </Link>
             </Sidebar>
             <div className='flex-grow'>
               <div className="flex h-screen text-white">
@@ -377,26 +381,33 @@ const App: React.FC = () => {
 
       return (
         <>
-        <main className="h-screen">
-        <Profile user={""}/>
-        <div className='flex'>
-          <Sidebar>
-                  <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={true} /></a>
-                  <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
-                  <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </a>
-                  <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
-          </Sidebar>
-          {/* Show a page asking the user to sign in to access this feature */}
-          <div className='flex-grow flex items-center justify-center'>
-            <div className='text-center'>
-              <h1 className='text-3xl font-bold text-gray-800'>Welcome to HealthME!</h1>
-              <p className='text-lg text-gray-600'>Please sign in to access the chat feature</p>
-              <a href="/login" className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4'>Sign In</a>
-            </div>
-          </div>
-        </div>
+        <header>
+            <nav className="border-gray-200 px-4 lg:px-6 py-2.5">
+                <div className="flex flex-nowrap justify-between items-center mx-auto max-w-screen-xl">
+                    <Link href="/" className="flex items-center">
+                        <img src="/logo.png" className="mr-3 h-6 sm:h-9" alt="HealthMe Logo" />
+                        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">HealthMe</span>
+                    </Link>
+                    <div className="flex items-center">
+                        <Link href="/login" className="px-4 py-1.5 mr-2 text-sm font-medium leading-6 text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-blue-800">Login</Link>
+                        <Link href="/register" className="px-4 py-1.5 text-sm font-medium leading-6 text-white bg-gradient-to-br from-purple-600 to-blue-500 rounded-md hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-800 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">Register</Link>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <section className="flex flex-col items-center justify-center h-screen">
+                <h1 className="text-5xl font-bold text-center text-white">Welcome to HealthMe</h1>
+                <p className="text-lg text-center text-gray-300">Please login or register to access the application.</p>
+            </section>
         </main>
-        </>
+        <footer>
+            <div className="flex flex-col items-center justify-center py-4 text-sm text-gray-300">
+                <p>© 2024 HealthMe. All rights reserved.</p>
+                <p className="mt-2">Made with ❤️ by Team HealthMe</p>
+            </div>
+        </footer>
+      </>
       );
     }
   

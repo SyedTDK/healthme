@@ -5,8 +5,9 @@ import { authOptions } from "@/app/libs/auth";
 import prisma from "@/app/libs/prisma";
 import Sidebar, { SidebarItem } from "../../components/Sidebar";
 import AddAllergy from "../../components/AddAllergy";
-import { BotMessageSquare, UserSearch, LayoutDashboard, History, LogOut, Pill } from "lucide-react";
+import { BotMessageSquare, UserSearch, LayoutDashboard, History, LogOut, Pill, ClipboardList, ShieldBan } from "lucide-react";
 import ConvertToEasternTime from "../../components/ConvertToEasternTime";
+import Profile from "@/app/components/Profile";
 
 const getCurrentUser = async () => {
     try {
@@ -35,6 +36,17 @@ const getCurrentUser = async () => {
     }
   }
 
+  const deleteAllergy = async (id: number) => {
+    try {
+      await prisma.allergies.delete({
+        where: { id }
+      });
+      window.location.reload();
+    } catch (error) {
+      console.error('Error deleting allergy:', error);
+    }
+  }
+
 export default async function New() {
     const user = await getCurrentUser();
     if (!(user)) {
@@ -56,52 +68,74 @@ export default async function New() {
                 </header>
                 <main>
                     <section className="flex flex-col items-center justify-center h-screen">
-                        <h1 className="text-5xl font-bold text-center text-gray-900 dark:text-white">Welcome to HealthMe</h1>
-                        <p className="text-lg text-center text-gray-600 dark:text-gray-300">Please login or register to access the application.</p>
+                        <h1 className="text-5xl font-bold text-center text-white">Welcome to HealthMe</h1>
+                        <p className="text-lg text-center text-gray-300">Please login or register to access the application.</p>
                     </section>
                 </main>
+                <footer>
+                    <div className="flex flex-col items-center justify-center py-4 text-sm text-gray-300">
+                        <p>© 2024 HealthMe. All rights reserved.</p>
+                        <p className="mt-2">Made with ❤️ by Team HealthMe</p>
+                    </div>
+                </footer>
             </>
         );
     } else {
         const allergies = await getAllergies(user);
-        <main className="flex">
-          <Sidebar>
-                  <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={false} /></a>
-                  <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
-                  <a href="#"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </a>
-                  <a href="/medications"><SidebarItem icon={<Pill />} text="Medications" active={false} /> </a>
-
-                  <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={true} /> </a>
-          </Sidebar>
-          <div className="flex-1">
-            <div className="p-4">
-              <h1 className="text-3xl font-semibold text-white">Allergies</h1>
-              <div className="mt-4">
-                <AddAllergy/>
-              </div>
-              <div className="mt-4">
-                {allergies?.length === 0 &&
-                      <p className="text-gray-400">No past chat sessions found.</p>}
-                    {allergies?.map((allergy: any, index: number) => (
-                      <div 
-                        key={allergy.id || index} 
-                        className="flex items-center justify-between py-4"
-                        >
-                        <div>
-                          <p className="text-lg font-semibold text-white">{allergy.name}</p>
-                          <p className="text-sm text-gray-400">{allergy.type}</p>
-                          <p className="text-sm text-gray-400">{allergy.description}</p>
-                          <p className="text-sm text-gray-400">Medications: {allergy.medications}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-400"><ConvertToEasternTime utcDateString={allergy.createdAt}></ConvertToEasternTime></p>
-                        </div>
-
-                        </div>
-                    ))}
+        <main className="h-screen">
+        <Profile user={user}/>
+        <div className="flex">
+        <Sidebar>
+          <Link href="/healthAnalytics"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </Link>
+          <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={false} /></a>
+          <Link href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </Link>
+          <Link href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </Link>
+          <Link href="/healthAnalytics/vitals"><SidebarItem icon={<ClipboardList />} text="Logbook" active={false} /> </Link>
+          <Link href="/healthAnalytics/medications"><SidebarItem icon={<Pill />} text="Medications" active={false} /> </Link>
+          <Link href="/healthAnalytics/allergies"><SidebarItem icon={<ShieldBan />} text="Allergies" active={true} /> </Link>
+        </Sidebar>
+          {/* <!-- Header --> */}
+          <div className="w-full ml-4 mr-4">
+          <AddAllergy />
+          <div className="items-center mb-1">
+            <h2 className="text-2xl font-semibold">Allergies</h2>
+          </div>
+          <div className="items-center mb-3">
+            <h2 className="text-xs text-gray-500">Refresh the page to update the list.</h2>
+          </div>
+ 
+          {/* <!-- Items --> */}
+          <div className="space-y-4">
+            {/* <!-- Single Item --> */}
+           {allergies?.length === 0 && 
+             <p className="text-center text-gray-500">No allergies added yet.</p>}
+           {allergies?.map((allergy: any, index: number) => (
+ 
+            <div 
+             key={allergy.id || index}
+             className="flex items-center bg-gray-900 rounded-lg shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]"
+            >
+              <div className="p-2 ml-2 rounded-2xl bg-gray-800 text-gray-700">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-tablets"><circle cx="7" cy="7" r="5"/><circle cx="17" cy="17" r="5"/><path d="M12 17h10"/><path d="m3.46 10.54 7.08-7.08"/></svg>             </div>
+              <div className="flex-grow p-4 rounded-lg flex justify-between items-center">
+                <div>
+                  <h3 className="text-lg font-bold">{allergy?.name}</h3>
+                  <div className="flex">
+                    <span className="mr-2">Type: {allergy?.type}</span>
+                      <span className="mr-2">Name: {allergy?.name}</span>
+                      <span className="mr-2">Medications: {allergy?.medications}</span>
+                      <span>Descriptions: {allergy?.description}</span>
+                  </div>
                 </div>
+                <button onClick={() => deleteAllergy(allergy?.id)} className="flex text-red-600">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                 </button>
+              </div>
             </div>
-            </div>
-        </main>
+           ))}
+           </div>
+           </div>
+      </div>
+      </main>
     }
 }
