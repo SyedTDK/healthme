@@ -91,8 +91,8 @@ export default async function New() {
             <Link href="/healthAnalytics/allergies"><SidebarItem icon={<ShieldBan />} text="Allergies" active={false} /> </Link>
           </Sidebar>
           <div className="flex-grow">
-            <div className="flex h-screen bg-black text-white">
-              <div className="flex flex-col flex-grow justify-between h-screen bg-black text-white ml-3">
+            <div className="flex h-screen text-white">
+              <div className="flex flex-col flex-grow justify-between h-screen text-white ml-3">
                 <div className="flex flex-col h-screen justify-between">
                   <div className="overflow-y-auto mx-auto max-w-screen-md">
                     <a href="/chat/new" className="block max-w-sm p-6 mt-2 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">
