@@ -5,9 +5,9 @@ import { authOptions } from "@/app/libs/auth";
 import prisma from "@/app/libs/prisma";
 import Sidebar, { SidebarItem } from "../../components/Sidebar";
 import AddAllergy from "../../components/AddAllergy";
-import { BotMessageSquare, UserSearch, LayoutDashboard, History, LogOut, Pill, ClipboardList, ShieldBan } from "lucide-react";
-import ConvertToEasternTime from "../../components/ConvertToEasternTime";
+import { BotMessageSquare, UserSearch, LayoutDashboard, History, Pill, ClipboardList, ShieldBan } from "lucide-react";
 import Profile from "@/app/components/Profile";
+import DeleteData from "@/app/components/DeleteData";
 
 const getCurrentUser = async () => {
     try {
@@ -36,16 +36,7 @@ const getCurrentUser = async () => {
     }
   }
 
-  const deleteAllergy = async (id: number) => {
-    try {
-      await prisma.allergies.delete({
-        where: { id }
-      });
-      window.location.reload();
-    } catch (error) {
-      console.error('Error deleting allergy:', error);
-    }
-  }
+  
 
 export default async function New() {
     const user = await getCurrentUser();
@@ -127,9 +118,7 @@ export default async function New() {
                       <span>Descriptions: {allergy?.description}</span>
                   </div>
                 </div>
-                <button onClick={() => deleteAllergy(allergy?.id)} className="flex text-red-600">
-                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-                 </button>
+                <DeleteData dataId={allergy.id} type="allergy" />
               </div>
             </div>
            ))}

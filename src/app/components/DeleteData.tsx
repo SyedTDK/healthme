@@ -11,6 +11,9 @@ export default function DeleteData({dataId, type}: {dataId: number, type: string
             });
         } catch (error) {
             console.log(error);
+        } finally {
+            // Refresh the page after deleting the data
+            window.location.reload();
         }
     }
     return (
