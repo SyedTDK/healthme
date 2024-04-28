@@ -27,21 +27,23 @@ const LoginPage = () => {
       setLoginData({ email: "", password: "" });
     } catch (error: any) {
       console.log({ error });
-      setAlert({ status: "error", message: "Something went wrong" });
+      setAlert({ status: "error", message: "Invalid credentials. Please try again. (Email is case sensitive)" });
+    } finally {
+      window.location.href = "/chat/new";
     }
     
   };  
 
-  useEffect(() => {
-    const redirectUser = async () => {
-      const session = await getSession(); 
-      if (session) {
-        router.push("/"); // Redirect to the homepage after successful login
-      }
-    };
+  // useEffect(() => {
+  //   const redirectUser = async () => {
+  //     const session = await getSession(); 
+  //     if (session) {
+  //       router.push("/chat/new"); // Redirect to the homepage after successful login
+  //     }
+  //   };
 
-    redirectUser();
-  }, [router]);
+  //   redirectUser();
+  // }, [router]);
 
   
     return (

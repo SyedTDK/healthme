@@ -36,7 +36,7 @@ export default function Search({specialistValue, specialistLabel}: {specialistVa
         setLoading(true); // Set loading state to true when submitting form
 
         // format of the API call
-        const apiUrl = 'https://yelpapi-ahzs.onrender.com/search';
+        const apiUrl = 'https://yelpapi-production.up.railway.app/search';
         const requestData = {
             limit: 8,
             doctor_type: selectedOption?.value,
