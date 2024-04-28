@@ -11,7 +11,6 @@ export default function AddVitals() {
     const [showCholesterol, setShowCholesterol] = useState(false);
     const [showWeight, setShowWeight] = useState(false);
     const [showMenstruation, setShowMenstruation] = useState(false);
-    const [type, setType] = useState('');
     const [value, setValue] = useState('');
     const [systolic, setSystolic] = useState('');
     const [diastolic, setDiastolic] = useState('');
@@ -23,9 +22,9 @@ export default function AddVitals() {
     const submitMenstruation = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         setIsSaving(true);
-        setType('menstruation');
+        const vitalType = 'menstruation';
         try {
-            const body = { userId, type, value, systolic, diastolic, flow, color, consistency };
+            const body = { userId, type: vitalType, value, systolic, diastolic, flow, color, consistency };
             await fetch('/api/saveVitals', {
             method: 'POST',
             body: JSON.stringify(body),
@@ -34,19 +33,19 @@ export default function AddVitals() {
             console.log(error);
         } finally {
             setIsSaving(false);
-            setType('');
             setFlow('');
             setColor('');
             setConsistency('');
             setShowMenstruation(false);
+            window.location.reload();
     }
     };
     const submitBloodPressure = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         setIsSaving(true);
-        setType('bloodPressure');
+        const vitalType = 'bloodPressure';
         try {
-            const body = { userId, type, value, systolic, diastolic, flow, color, consistency };
+            const body = { userId, type: vitalType, value, systolic, diastolic, flow, color, consistency };
             await fetch('/api/saveVitals', {
             method: 'POST',
             body: JSON.stringify(body),
@@ -55,7 +54,6 @@ export default function AddVitals() {
             console.log(error);
         } finally {
             setIsSaving(false);
-            setType('');
             setSystolic('');
             setDiastolic('');
             setShowBloodPressure(false);
@@ -65,9 +63,9 @@ export default function AddVitals() {
     const submitTemperature = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         setIsSaving(true);
-        setType('temperature');
+        const vitalType = 'temperature';
         try {
-        const body = { userId, type, value, systolic, diastolic, flow, color, consistency };
+        const body = { userId, type: vitalType, value, systolic, diastolic, flow, color, consistency };
         await fetch('/api/saveVitals', {
             method: 'POST',
             body: JSON.stringify(body),
@@ -76,17 +74,17 @@ export default function AddVitals() {
         console.log(error);
         } finally {
             setIsSaving(false);
-            setType('');
             setValue('');
             setShowTemperature(false);
+            window.location.reload();
         }
     }
     const submitWeight = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         setIsSaving(true);
-        setType('weight');
+        const vitalType = 'weight';
         try {
-          const body = { userId, type, value, systolic, diastolic, flow, color, consistency };
+          const body = { userId, type: vitalType, value, systolic, diastolic, flow, color, consistency };
           await fetch('/api/saveVitals', {
             method: 'POST',
             body: JSON.stringify(body),
@@ -95,17 +93,17 @@ export default function AddVitals() {
           console.log(error);
         } finally {
             setIsSaving(false);
-            setType('');
             setValue('');
             setShowWeight(false);
+            window.location.reload();
         }
     }
     const submitCholesterol = async (e: React.SyntheticEvent) => {
-        setType('cholesterol');
         e.preventDefault();
         setIsSaving(true);
+        const vitalType = 'cholesterol';
         try {
-          const body = { userId, type, value, systolic, diastolic, flow, color, consistency };
+          const body = { userId, type: vitalType, value, systolic, diastolic, flow, color, consistency };
           await fetch('/api/saveVitals', {
             method: 'POST',
             body: JSON.stringify(body),
@@ -114,9 +112,9 @@ export default function AddVitals() {
           console.log(error);
         } finally {
             setIsSaving(false);
-            setType('');
             setValue('');
             setShowCholesterol(false);
+            window.location.reload();
         }
     }
 
