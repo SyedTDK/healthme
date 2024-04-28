@@ -101,9 +101,9 @@ export default function AddVitals() {
         }
     }
     const submitCholesterol = async (e: React.SyntheticEvent) => {
+        setType('cholesterol');
         e.preventDefault();
         setIsSaving(true);
-        setType('cholesterol');
         try {
           const body = { userId, type, value, systolic, diastolic, flow, color, consistency };
           await fetch('/api/saveVitals', {

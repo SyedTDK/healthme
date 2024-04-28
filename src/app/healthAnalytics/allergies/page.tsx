@@ -73,6 +73,7 @@ export default async function New() {
         );
     } else {
         const allergies = await getAllergies(user);
+        return (
         <main className="h-screen">
         <Profile user={user}/>
         <div className="flex">
@@ -126,5 +127,7 @@ export default async function New() {
            </div>
       </div>
       </main>
+    );
     }
+  
 }
