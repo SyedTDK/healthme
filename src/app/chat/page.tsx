@@ -1,5 +1,3 @@
-//This page will provide the users options to either create a new chat session or view summeries past chat sessions.
-
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/libs/auth";
@@ -43,22 +41,24 @@ export default async function New() {
   const user = await getCurrentUser();
   if(!(user)) {
     return (
-    <>
-        <header>
-          <nav className="border-gray-200 px-4 lg:px-6 py-2.5">
-              <div className="flex flex-nowrap justify-between items-center mx-auto max-w-screen-xl">
-                  <Link href="/" className="flex items-center">
-                      <img src="/logo.png" className="mr-3 h-6 sm:h-9" alt="HealthMe Logo" />
-                      <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">HealthMe</span>
-                  </Link>
-                  <div className="flex items-center">
-                    <Link href="/login" className="px-4 py-1.5 mr-2 text-sm font-medium leading-6 text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-blue-800">Login</Link>
-                    <Link href="/register" className="px-4 py-1.5 text-sm font-medium leading-6 text-white bg-gradient-to-br from-purple-600 to-blue-500 rounded-md hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-800 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">Register</Link>
-                  </div>
-              </div>
-            </nav>
-        </header>
-        <main className="flex items-center justify-center px-4 mx-auto max-w-screen-xl min-h-screen text-center lg:px-12">
+      <>
+        <div className="fixed top-0 left-0 right-0 z-10">
+          <header>
+            <nav className="border-gray-200 px-4 lg:px-6 py-2.5">
+                <div className="flex flex-nowrap justify-between items-center mx-auto max-w-screen-xl">
+                    <Link href="/" className="flex items-center">
+                        <img src="/logo.png" className="mr-3 h-6 sm:h-9" alt="HealthMe Logo" />
+                        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">HealthMe</span>
+                    </Link>
+                    <div className="flex items-center">
+                      <Link href="/login" className="px-4 py-1.5 mr-2 text-sm font-medium leading-6 text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-blue-800">Login</Link>
+                      <Link href="/register" className="px-4 py-1.5 text-sm font-medium leading-6 text-white bg-gradient-to-br from-purple-600 to-blue-500 rounded-md hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-800 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]">Register</Link>
+                    </div>
+                </div>
+              </nav>
+          </header>
+        </div>
+        <main className="pt-16 flex items-center justify-center px-4 mx-auto max-w-screen-xl min-h-screen text-center lg:px-12">
           <div className="w-full">
             <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none  md:text-5xl lg:text-6xl text-white">Your Personal <span className="fade-in-text bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">Health Assistant.</span></h1>
             <p className="mb-8 text-lg font-normal  lg:text-xl sm:px-16 xl:px-48 text-gray-400">AI Expertise, Seamless Health Data Tracking, and Doctor Search</p>
@@ -87,15 +87,17 @@ export default async function New() {
     return (
         <>
         <Profile user={user} />
-        <main className="flex">
-          <Sidebar>
-                  <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={false} /></a>
-                  <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
-                  <a href="#"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </a>
-                  <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={true} /> </a>
-          </Sidebar>
+        <div className="flex flex-col h-screen">
+          <div className="fixed top-0 left-0 right-0 z-10">
+            <Sidebar>
+                    <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={false} /></a>
+                    <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
+                    <a href="#"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </a>
+                    <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={true} /> </a>
+            </Sidebar>
+          </div>
           <div className="flex-grow">
-            <div className="flex h-screen bg-black text-white">
+            <main className="flex">
               <div className="flex flex-col flex-grow justify-between h-screen bg-black text-white ml-3">
                 <div className="flex flex-col h-screen justify-between">
                   <div className="overflow-y-auto mx-auto max-w-screen-md">
@@ -122,9 +124,9 @@ export default async function New() {
                   </div>
                 </div>
               </div>
-            </div>
+            </main>
           </div>
-        </main>
+        </div>
         </>
     );
   }

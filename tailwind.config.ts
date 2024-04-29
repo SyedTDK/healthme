@@ -10,11 +10,25 @@ const config: Config = {
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      animation: {
+        typewriter: 'typewriter 1.5s steps(40, end) forwards',
+        blink: 'blink-caret 1s step-end infinite',
+      },
+      keyframes: {
+        typewriter: {
+          'from': { clipPath: 'inset(0 100% 0 0)' }, // Reveals text from right to left
+          'to': { clipPath: 'inset(0 0 0 0)' },
+        },
+        'blink-caret': {
+          'from, to': { borderColor: 'transparent' },
+          '50%': { borderColor: 'black' }, // Assuming the caret is a border element
+        },
       },
     },
   },
   plugins: [],
 };
+
 export default config;

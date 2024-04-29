@@ -69,16 +69,11 @@ export const BotMessages: Record<BotResponseType, string[]> = {
         "Could you kindly share the age of the patient?"
     ],
     [BotResponseType.SYMPTOM]: [
-        "Please describe the symptoms.",
-        "What symptoms is the patient experiencing?",
+        "What symptoms are you experiencing?",
         "Could you tell me more about the symptoms?",
-        "Describe the symptoms the patient is feeling.",
-        "What specific symptoms are troubling the patient?",
-        "Can you elaborate on the symptoms the patient is facing?",
-        "Let's talk about the symptoms the patient is having.",
-        "What are the main symptoms bothering the patient?",
-        "Tell me about any symptoms the patient has noticed.",
-        "What symptoms has the patient been experiencing lately?"
+        "Describe the symptoms you are feeling.",
+        "What specific symptoms are troubling you?",
+        "What symptoms have you been experiencing lately?"
     ],
     [BotResponseType.MORE_SYMPTOM]: [
         "Do you have any other symptoms to mention?",
