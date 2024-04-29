@@ -34,7 +34,7 @@ export default function Sidebar({ children }: { children: React.ReactNode[] }) {
             <ul className="flex-1 px-3">{children}</ul>
           </SidebarContext.Provider>
 
-          <div className="border-t flex p-3">
+          {/* <div className="border-t flex p-1">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-user w-10 h-10 rounded-md"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             <div
                 className={`
@@ -46,9 +46,8 @@ export default function Sidebar({ children }: { children: React.ReactNode[] }) {
                   <h4 className="font-semibold">{userName}</h4>
                   <span className="text-xs text-gray-600">{userEmail}</span>
                 </div>
-                {/* <MoreVertical size={20} /> */}
             </div>
-          </div>
+          </div> */}
         </nav>
       </aside>
     )
@@ -60,7 +59,7 @@ export function SidebarItem({ icon, text, active}: { icon: React.ReactNode, text
   return (
     <li
       className={`
-        relative flex items-center py-2 px-3 my-1
+        relative flex items-center py-2 px-3 mb-1
         font-medium rounded-md cursor-pointer
         transition-colors group
         ${
@@ -70,7 +69,9 @@ export function SidebarItem({ icon, text, active}: { icon: React.ReactNode, text
         }
     `}
     >
+      <div className="w-6 h-6">
       {icon}
+      </div>
       <span
         className={`overflow-hidden transition-all ${
           expanded ? "w-52 ml-3" : "w-0"

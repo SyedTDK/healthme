@@ -30,16 +30,17 @@ export default function AddAllergy() {
             setDescription('');
             setMedications('');
             setShowModal(false);
+            window.location.reload();
         }
     }
     return (
         <>
             <button
-                className="mb-2 text-2xl font-bold tracking-tight text-white"
+                className=" border focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-blue-500 text-blue-500 hover:text-white hover:bg-blue-500 focus:ring-blue-800"
                 type="button"
                 onClick={() => setShowModal(true)}
             >
-                Add New Allergy
+                + Add New Allergy
             </button>
             {showModal ? (
                 <>
