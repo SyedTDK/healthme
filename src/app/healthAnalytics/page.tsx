@@ -140,11 +140,12 @@ export default async function HealthAnalytics() {
               <div className="mb-6 h-auto">
                 <h2 className="text-xl font-semibold mb-2 flex justify-between items-center">
                   Medications
-                  <button
-                    className="text-sm text-gray-500 focus:outline-none"
+                  <Link
+                    className="text-sm text-gray-500 focus:outline-none underline"
+                    href="/healthAnalytics/medications"
                   >
                     See All
-                  </button>
+                  </Link>
                 </h2>
                 <div
                   className={` bg-gray-500 rounded-lg shadow-lg h-auto overflow-hidden`}
@@ -184,18 +185,18 @@ export default async function HealthAnalytics() {
               <div className={`mb-6 h-auto max-w-md`}>
                 <h2 className="text-xl font-semibold mb-2 flex justify-between items-center">
                   Latest Vitals
-                  <button
-                    className="text-sm text-gray-500 focus:outline-none"
-                    
+                  <Link
+                    className="text-sm text-gray-500 focus:outline-none underline"
+                    href="/healthAnalytics/vitals"
                   >
                     See All
-                  </button>
+                  </Link>
                 </h2>
                 <div
                   className={` bg-gray-500 rounded-lg shadow-lg h-auto overflow-hidden`}
                 >
                   {/* Display last three vitals */}
-                  {medications?.length === 0 &&
+                  {vitals?.length === 0 &&
                     <div className="p-4 text-center text-gray-200">
                       No vitals added
                     </div>
@@ -268,12 +269,12 @@ export default async function HealthAnalytics() {
           <div className="mb-6">
             <h2 className="text-xl font-semibold mb-2 flex justify-between items-center">
               Allergies
-              <button
-                className="text-sm text-gray-500 focus:outline-none"
-                
+              <Link
+                className="text-sm text-gray-500 focus:outline-none underline"
+                href="/healthAnalytics/allergies"
               >
                 See All
-              </button>
+              </Link>
             </h2>
             {allergies?.length === 0 &&
                     <div className="p-4 text-center text-gray-200">
@@ -301,13 +302,13 @@ export default async function HealthAnalytics() {
           {/* Recent Health Issues  */}
           <div className="mb-6">
             <h2 className="text-xl font-semibold mb-2 flex justify-between items-center">
-              Reminders
-              <button
-                className="text-sm text-gray-500 focus:outline-none"
-                
+              Recent Health Issues
+              <Link
+                className="text-sm text-gray-500 focus:outline-none underline"
+                href="/healthAnalytics/chat"
               >
                 See All
-              </button>
+              </Link>
             </h2>
             {chatSessions?.length === 0 &&
                     <div className="p-4 text-center text-gray-200">
