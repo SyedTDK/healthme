@@ -148,7 +148,7 @@ export default async function HealthAnalytics() {
                   </Link>
                 </h2>
                 <div
-                  className={` bg-gray-500 rounded-lg shadow-lg h-auto overflow-hidden`}
+                  className={`  rounded-lg shadow-lg h-auto overflow-hidden`}
                 >
                   {/* Display three medications */}
                   {medications?.length === 0 &&
@@ -193,7 +193,7 @@ export default async function HealthAnalytics() {
                   </Link>
                 </h2>
                 <div
-                  className={` bg-gray-500 rounded-lg shadow-lg h-auto overflow-hidden`}
+                  className={` rounded-lg shadow-lg h-auto overflow-hidden`}
                 >
                   {/* Display last three vitals */}
                   {vitals?.length === 0 &&
@@ -312,7 +312,7 @@ export default async function HealthAnalytics() {
             </h2>
             {chatSessions?.length === 0 &&
                     <div className="p-4 text-center text-gray-200">
-                      No allergies added
+                      No health issues found
                     </div>
                   }
                   {chatSessions?.map((chatSession: any, index: number) => (
