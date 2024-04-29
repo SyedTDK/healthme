@@ -305,7 +305,7 @@ export default async function HealthAnalytics() {
               Recent Health Issues
               <Link
                 className="text-sm text-gray-500 focus:outline-none underline"
-                href="/healthAnalytics/chat"
+                href="/chat"
               >
                 See All
               </Link>
