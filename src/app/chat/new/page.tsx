@@ -1,17 +1,19 @@
 // This is the chat page where the user can interact with the chatbot
-
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { UserCircleIcon } from '@heroicons/react/16/solid';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useSession } from "next-auth/react";
 import { Message, PatientInfo } from '../../../../types/types';
 import { BotResponseType, BotMessages } from './BotMessages';
-import Profile from "@/app/components/Profile";
-import Link from 'next/link';
+import Sidebar, { SidebarItem } from "@/app/components/Sidebar";
+import { BotMessageSquare, LayoutDashboard, UserSearch, History, LogOut } from 'lucide-react';
+import Profile from '@/app/components/Profile';
+import SymptomsInput from './SymptomsInput';
+
 
 const App: React.FC = () => {
+<<<<<<< HEAD
     const { data: session, status } = useSession();
 
     const userName = session?.user?.name;
@@ -32,6 +34,23 @@ const App: React.FC = () => {
 
     const [detectDiseaseMode, setDetectDiseaseMode] = useState(false); // State variable to track the mode of the button
     const [symptomOptions] = useState<string[]>(['itching', 'skin rash', 'nodal skin eruptions', 'continuous sneezing',
+=======
+  const { data: session, status } = useSession();
+  const userName = session?.user?.name;
+  const [patientInfo, setPatientInfo] = useState<PatientInfo>({
+    isPatient: false, // Example value, adjust as needed
+    name: "",         // Example value, adjust as needed
+    age: "",           // Example value, adjust as needed
+    gender: "",       // Example value, adjust as needed
+    symptoms: [],
+  }); // Define patientInfo state
+  const [currentStep, setCurrentStep] = useState<BotResponseType | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [messages, setMessages] = useState<Message[]>([]); // Simplified message type
+  const [newMessage, setNewMessage] = useState('');
+  const [detectDiseaseMode, setDetectDiseaseMode] = useState(false);
+  const [symptomOptions] = useState<string[]>(['itching', 'skin rash', 'nodal skin eruptions', 'continuous sneezing',
+>>>>>>> main
     'shivering', 'chills', 'joint pain', 'stomach pain', 'acidity',
     'ulcers on tongue', 'muscle wasting', 'vomiting', 'burning micturition',
     'spotting urination', 'fatigue', 'weight gain', 'anxiety',
@@ -68,9 +87,12 @@ const App: React.FC = () => {
     'prominent veins on calf', 'palpitations', 'painful walking',
     'pus-filled pimples', 'blackheads', 'scarring', 'skin peeling',
     'silver-like dusting', 'small dents in nails', 'inflammatory nails',
-    'blister', 'red sore around nose', 'yellow crust ooze']);  
+    'blister', 'red sore around nose', 'yellow crust ooze']);
+
+   
 
   
+<<<<<<< HEAD
   //   useEffect(() => {
   //     const welcomeMessage = BotMessages[BotResponseType.WELCOME][Math.floor(Math.random() * BotMessages[BotResponseType.WELCOME].length)];
   //     const patientWhoMessage = BotMessages[BotResponseType.PATIENT_WHO][Math.floor(Math.random() * BotMessages[BotResponseType.PATIENT_WHO].length)];
@@ -137,6 +159,17 @@ const renderUserOptions = () => {
   return null;
 };
   
+=======
+    useEffect(() => {
+      if (userName) {
+        const welcomeMessage = `Welcome, ${userName}. Would you like to talk about symptoms or medicines?`;
+        setMessages([{ text: welcomeMessage, isUser: false }]);
+        setCurrentStep(null); // Set currentStep to null to trigger rendering of user options
+      }
+    }, [userName]);
+    
+    
+>>>>>>> main
 
     useEffect(() => {
       // Check if the number of selected symptoms is three or more
@@ -147,6 +180,66 @@ const renderUserOptions = () => {
       }
     }, [patientInfo.symptoms]); // Re-run effect when symptoms change
 
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    const scrollToBottom = () => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    }
+
+    useEffect(scrollToBottom, [messages]);
+
+    const handleUserOptionSelection = (isEnteringSymptoms: boolean) => {
+      if (isEnteringSymptoms) {
+        setCurrentStep(BotResponseType.SYMPTOM);
+        // First message added immediately
+        setMessages(prevMessages => [
+          ...prevMessages,
+          { text: `Hello, ${userName}! Sorry to hear you are feeling unwell.`, isUser: false }
+        ]);
+    
+        // Second message after a delay
+        setTimeout(() => {
+          setMessages(prevMessages => [
+            ...prevMessages,
+            { text: "Please choose from the symptoms list below.", isUser: false }
+          ]);
+        }, 1500); // Delay in milliseconds, adjust as needed
+      } else {
+          setCurrentStep(BotResponseType.MEDICINE); // Set current step to medicine
+          setMessages(prevMessages => [
+            ...prevMessages,
+            { text: `Hello, ${userName}! Please type a medication you would like to learn more about`, isUser: false },
+          ]);
+      }
+  };
+  
+  
+
+  const renderUserOptions = () => {
+    if (currentStep === null) {  // Only show these options initially
+        return (
+            <>
+                <div className="flex justify-around p-4">
+                    <button 
+                        onClick={() => handleUserOptionSelection(true)} 
+                        className="bg-gray-800 hover:bg-gray-700 text-white text-lg py-4 px-8 rounded-lg shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]"
+                    >
+                        Enter Symptoms
+                    </button>
+                    <button 
+                        onClick={() => handleUserOptionSelection(false)} 
+                        className="bg-gray-800 hover:bg-gray-700 text-white text-lg py-4 px-8 rounded-lg shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f]"
+                    >
+                        Learn about Medications
+                    </button>
+                </div>
+            </>
+        );
+    }
+    return null;
+};
+
+
     const sendMessage = async (userInput: string) => {
       setMessages(prevMessages => [...prevMessages, { text: userInput, isUser: true }]);
 
@@ -154,6 +247,7 @@ const renderUserOptions = () => {
       let nameUsedInGreeting = patientInfo.name; 
 
       switch (currentStep) {
+<<<<<<< HEAD
 
         case BotResponseType.PATIENT_WHO:
           const isPatientUser = userInput.toLowerCase() === 'yes';
@@ -183,6 +277,11 @@ const renderUserOptions = () => {
             setPatientInfo(prev => ({ ...prev, gender: userInput }));
             nextStep = BotResponseType.AGE; // Move to AGE after GENDER
           break;
+=======
+        case BotResponseType.WELCOME:
+          nextStep = userInput.toLowerCase() === 'symptoms' ? BotResponseType.SYMPTOM : BotResponseType.MEDICINE;
+          break;
+>>>>>>> main
 
         case BotResponseType.SYMPTOM:
           if (patientInfo.symptoms.includes(userInput)) {
@@ -201,6 +300,7 @@ const renderUserOptions = () => {
             }
           }
           break;
+<<<<<<< HEAD
           
           case BotResponseType.DISEASE:
             // Construct the payload with the collected symptoms
@@ -213,25 +313,56 @@ const renderUserOptions = () => {
               const response = await axios.post('https://api-nts4.onrender.com/chatbot', payload);
               // Assuming your API returns a response that includes a message or advice
               const apiResponse = response.data;
+=======
+>>>>>>> main
           
+          case BotResponseType.MEDICINE:
+    if (!userInput.trim()) {
+        setMessages(prevMessages => [
+            ...prevMessages,
+            { text: "Please enter a medication you would like to learn about.", isUser: false }
+        ]);
+        break;
+    }
+    try {
+        const response = await axios.post('https://medicine-production-8a43.up.railway.app/medicine', { medicine: userInput });
+        const apiResponse = response.data;
 
+        if (response.status === 200) {
+            // If the API response indicates success, display medication info
+            const { matches } = apiResponse;
 
-              // Assuming apiResponse includes a property 'message' that contains the diagnosis or advice
-              // Update your messages state with this new message from the API
-              setMessages(prevMessages => [...prevMessages, { text: apiResponse.message, isUser: false }]);
-
-              
-          
-              // Here, you might also handle transitioning to another conversation step or concluding the interaction
-            } catch (error) {
-              console.error('Error receiving response from the API:', error);
-              setMessages(prevMessages => [...prevMessages, { text: "Sorry, we couldn't process your request at the moment. Please try again later.", isUser: false }]);
+            // Define the Match interface here
+            interface Match {
+                medicine: string;
+                Uses: string;
+                'Side Effects': string;
             }
-            break;
+
+            // Map over matches with the Match interface
+            const message = matches.map((match: Match) => `${match.medicine}:\n\nUses - ${match.Uses}\n\nSide Effects - ${match['Side Effects']}`).join('\n\n');
+            setMessages(prevMessages => [...prevMessages, { text: message, isUser: false }]);
+        } else {
+            // If the API response indicates failure, display a message to the user
+            setMessages(prevMessages => [...prevMessages, { text: "Medication information is not available. Please enter another medication.", isUser: false }]);
+        }
+    } catch (error) {
+        // If there's an error fetching the response, display an error message
+        console.error('Error receiving response from the API:', error);
+        setMessages(prevMessages => [...prevMessages, { text: "Sorry, we couldn't process your request at the moment. Please try again later.", isUser: false }]);
+    }
+    break;
+
+
+
+          
+
+
         default:
           console.log("Unhandled step");
       }
 
+<<<<<<< HEAD
       setCurrentStep(nextStep);
     // Ensure to use the updated name for the greeting
     const botResponse = BotMessages[nextStep].map(message =>
@@ -239,6 +370,14 @@ const renderUserOptions = () => {
     )[Math.floor(Math.random() * BotMessages[nextStep].length)];
     setMessages(prevMessages => [...prevMessages, { text: botResponse, isUser: false }]);
 };
+=======
+      if (nextStep) {
+        setCurrentStep(nextStep);
+        const botResponse = BotMessages[nextStep][Math.floor(Math.random() * BotMessages[nextStep].length)];
+        setMessages(prevMessages => [...prevMessages, { text: botResponse, isUser: false }]);
+      }
+    };
+>>>>>>> main
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
       if (event.key === 'Enter' && !event.shiftKey) {
@@ -250,70 +389,86 @@ const renderUserOptions = () => {
 
     const renderInputArea = () => {
       if (currentStep === BotResponseType.SYMPTOM) {
-        return (
-          <>
-            <select
-              onChange={(e) => setNewMessage(e.target.value)}
-              value={newMessage}
-              className="flex-grow bg-gray-800 rounded-lg text-white p-3 shadow-md"
-              disabled={detectDiseaseMode} // Disable the select when in "Detect Disease" mode
-            >
-              <option value="">Select a symptom</option>
-              {symptomOptions.map((symptom, index) => (
-                <option key={index} value={symptom}>
-                  {symptom.replace(/_/g, ' ')}
-                </option>
-              ))}
-            </select>
-            <button
-      onClick={async () => {
-          if (detectDiseaseMode) {
-              setCurrentStep(BotResponseType.DISEASE); // Change the conversation step
-
-              // Call the API to detect the disease
-              try {
-                  const response = await axios.post('https://api-nts4.onrender.com/chatbot', { symptoms: patientInfo.symptoms });
-                  const apiResponse = response.data;
-
-               
-
-                  // Update messages with the response from the API
-                  setMessages(prevMessages => [...prevMessages, { text: apiResponse.message, isUser: false }]);
-              } catch (error) {
-                  console.error('Error receiving response from the API:', error);
-                  setMessages(prevMessages => [...prevMessages, { text: "Sorry, we couldn't process your request at the moment. Please try again later.", isUser: false }]);
-              }
-          } else {
-              sendMessage(newMessage); // Adding a symptom
-          }
-      }}
-      className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg ml-2"
-  >
-      {detectDiseaseMode ? 'Detect Disease' : 'Add Symptom'}
-  </button>
-
-          </>
-        );
+          return (
+              <>
+              <SymptomsInput
+                  symptoms={symptomOptions}
+                  onSymptomSelect={(selectedSymptom) => {
+                      sendMessage(selectedSymptom); // This will add the symptom immediately on selection
+                  }}
+              />
+                  <button
+                      onClick={async () => {
+                          if (detectDiseaseMode) {
+                              setCurrentStep(BotResponseType.DISEASE); // Change the conversation step
+  
+                              // Call the API to detect the disease
+                              try {
+                                  const response = await axios.post('https://api-production-b578.up.railway.app/chatbot', { symptoms: patientInfo.symptoms });
+                                  const apiResponse = response.data;
+  
+                                  // Update messages with the response from the API
+                                  setMessages(prevMessages => [...prevMessages, { text: apiResponse.message, isUser: false }]);
+                              } catch (error) {
+                                  console.error('Error receiving response from the API:', error);
+                                  setMessages(prevMessages => [...prevMessages, { text: "Sorry, we couldn't process your request at the moment. Please try again later.", isUser: false }]);
+                              }
+                          } else {
+                              sendMessage(newMessage); // Adding a symptom
+                          }
+                      }}
+                      className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg ml-2"
+                  >
+                      {detectDiseaseMode ? 'Detect Disease' : 'Add Symptom'}
+                  </button>
+  
+              </>
+          );
+      } else if (currentStep === BotResponseType.MEDICINE) {
+          return (
+              <>
+                  <TextareaAutosize
+                      rows={1}
+                      placeholder="Please enter a medication you would like to learn about."
+                      value={newMessage}
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      onKeyPress={handleKeyPress}
+                      className="flex-grow bg-gray-800 rounded-lg text-white border-none focus:outline-none p-3 shadow-md"
+                  />
+                  <button
+                      onClick={() => sendMessage(newMessage)}
+                      className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg ml-2"
+                  >
+                      Submit
+                  </button>
+              </>
+          );
       } else {
-        return (
-          <TextareaAutosize
-            rows={1}
-            placeholder="Message HealthME..."
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
-            className="flex-grow bg-gray-800 rounded-lg text-white border-none focus:outline-none p-3 shadow-md"
-          />
-        );
+          return (
+              <TextareaAutosize
+                  rows={1}
+                  placeholder="Message HealthME..."
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  className="flex-grow bg-gray-800 rounded-lg text-white border-none focus:outline-none p-3 shadow-md"
+              />
+          );
       }
-    };
+  };
+  
+    
     
     if (status === "authenticated") {
       const userId = parseInt(session?.user?.id || '0');
       //Extract the symptoms as a string[]
       const symptoms = patientInfo.symptoms;
       //Extract the diagnosis as a string
+<<<<<<< HEAD
       const diagnosis = messages.length > 0 ? messages[messages.length - 1].text : "";
+=======
+      const diagnosis = messages.length > 0 ? messages[messages.length - 1].text : '';
+>>>>>>> main
 
 
       
@@ -341,6 +496,7 @@ const renderUserOptions = () => {
 
       //Display the chat interface
       return (
+<<<<<<< HEAD
         <>
         <header>
             <nav className="border-gray-200 px-4 lg:px-6 py-2.5">
@@ -413,6 +569,79 @@ const renderUserOptions = () => {
     //   </div>
     // );
   }
+=======
+        <main className="h-screen bg-[#212121]">
+          <Profile user={session.user}/>
+          <div className='flex'>
+            <Sidebar>
+                    <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={true} /></a>
+                    <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
+                    <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Dashboard" active={false} /> </a>
+                    <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
+            </Sidebar>
+            <div className='flex-grow'>
+              <div className="flex h-screen text-white">
+                <div className="flex flex-col flex-grow justify-between h-screen text-white ml-3">
+                
+                  <div className="flex flex-col h-screen justify-between">
+                    <div className="overflow-y-auto">
+                    {messages.map((message, index) => (
+                        <div key={index} className={`flex justify-${message.isUser ? 'end' : 'start'} mb-5`}>
+                          <div className="relative overflow-hidden bg-blue-500 text-white rounded-lg p-2 max-w-xs">
+                            <span className="inline-block animate-typewriter">
+                              {message.text}
+                            </span>
+                            <span className="absolute right-0 top-0 h-full w-0.5 bg-black animate-blink"></span>
+                          </div>
+                        </div>
+                      ))}
+                      {renderUserOptions()}
+                      <div ref={messagesEndRef} />
+                    </div>
+                    <div className='flex items-center'>
+                      {renderInputArea()}        
+                      <button
+                        onClick={submitData}
+                        className="mt-1 border bg-gray-800 border-gray-700 hover:bg-gray-700 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#08f,0_0_15px_#08f,0_0_30px_#08f] py-2 px-4 rounded-lg ml-2"
+                      >
+                        {isSubmitting && <p>Saving...</p>}
+                        {!isSubmitting && <p>End Session and Find a Doctor</p>}
+                      </button>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      )
+    } else {
+
+      return (
+        <>
+        <main className="h-screen">
+        <Profile user={""}/>
+        <div className='flex'>
+          <Sidebar>
+                  <a href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={true} /></a>
+                  <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={false} /> </a>
+                  <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </a>
+                  <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
+          </Sidebar>
+          {/* Show a page asking the user to sign in to access this feature */}
+          <div className='flex-grow flex items-center justify-center'>
+            <div className='text-center'>
+              <h1 className='text-3xl font-bold text-gray-800'>Welcome to HealthME!</h1>
+              <p className='text-lg text-gray-600'>Please sign in to access the chat feature</p>
+              <a href="/login" className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4'>Sign In</a>
+            </div>
+          </div>
+        </div>
+        </main>
+        </>
+      );
+    }
+>>>>>>> main
   
 };
 

@@ -7,14 +7,14 @@ import { useState } from "react";
 
 const RegisterPage = () => {
     const [registerData, setRegisterData] = useState({
-        name: "",
-        email: "",
-        password: "",
+      name: "",
+      email: "",
+      password: "",
     });
     
     const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        setRegisterData({ ...registerData, [e.target.name]: e.target.value });
-      };
+      setRegisterData({ ...registerData, [e.target.name]: e.target.value });
+    };
     
     const [alert, setAlert] = useState({
         status: '',

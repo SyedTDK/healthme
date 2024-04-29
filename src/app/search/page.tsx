@@ -1,8 +1,11 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/libs/auth";
 import prisma from "@/app/libs/prisma";
-import Profile from "@/app/components/Profile";
 import Search from "./Search";
+import Sidebar, { SidebarItem } from "../components/Sidebar";
+import { BotMessageSquare, UserSearch, LayoutDashboard, History, Pill} from "lucide-react";
+import Profile from "../components/Profile";
+import Link from "next/link";
 
 const getCurrentUser = async () => {
     try {
@@ -89,7 +92,7 @@ export default async function Page() {
     const specialist = await getSpecialist(disease) ?? '';
     return (
         <>
-            <header>
+            {/* <header>
                 <nav className="border-gray-200 px-4 lg:px-6 py-2.5">
                 <div className="flex flex-nowrap justify-between items-center mx-auto max-w-screen-xl">
                     <a href="/" className="flex items-center">
@@ -101,13 +104,27 @@ export default async function Page() {
                     </div>
                 </div>
                 </nav>
+            </header> */}
+            <header className="h-16">
+            <Profile user={user} />
             </header>
+            <main className="flex h-[calc(100vh-4rem)]">
+            <Sidebar>
+                <Link href="/chat/new"><SidebarItem icon={<BotMessageSquare />} text="New Chat" active={false} /></Link>
+                <a href="/search"><SidebarItem icon={<UserSearch />} text="Search Specialist" active={true} /> </a>
+                <a href="/"><SidebarItem icon={<LayoutDashboard />} text="Health Dashboard" active={false} /> </a>
+                <a href="/medications"><SidebarItem icon={<Pill />} text="Medications" active={false} /> </a>
+                <a href="/chat"><SidebarItem icon={<History />} text="Chat History" active={false} /> </a>
+            </Sidebar>
             {/*Display to the user the latest diagnosis */}
-            <div className="bg-gray-950 text-white text-center py-4 mb-4">
-                <h1 className="text-lg">Based on your latest diagnosis by <span className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">AI</span>, here is a recommended specialist:</h1>
+            <div className="flex-grow overflow-y-auto">
+            <div className=" text-white text-center py-4 mb-4">
+                <h1 className="text-lg">Based on your latest diagnosis by <span className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">AI</span>, here is a recommended specialist</h1>
                 <p className="fade-in-text text-2xl">{specialist}</p>
             </div>
             <Search specialistValue={specialist?.toLowerCase()} specialistLabel={specialist} />
+            </div>
+            </main>
         </>
     )
 
