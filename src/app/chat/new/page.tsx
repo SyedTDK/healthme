@@ -1,5 +1,4 @@
 // This is the chat page where the user can interact with the chatbot
-
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
@@ -10,6 +9,7 @@ import { BotResponseType, BotMessages } from './BotMessages';
 import Sidebar, { SidebarItem } from "@/app/components/Sidebar";
 import { BotMessageSquare, LayoutDashboard, UserSearch, History, LogOut, ClipboardList, Pill, ShieldBan } from 'lucide-react';
 import Profile from '@/app/components/Profile';
+import SymptomsInput from './SymptomsInput';
 import Link from 'next/link';
 
 
@@ -67,12 +67,12 @@ const App: React.FC = () => {
     'silver-like dusting', 'small dents in nails', 'inflammatory nails',
     'blister', 'red sore around nose', 'yellow crust ooze']);
 
-    const [medicineOptions] = useState<string[]>(['tylenol', 'nyquil']); 
+   
 
   
     useEffect(() => {
       if (userName) {
-        const welcomeMessage = `Hello, ${userName}! Would you like to talk about symptoms or medicines?`;
+        const welcomeMessage = `Welcome, ${userName}. Would you like to talk about symptoms or medicines?`;
         setMessages([{ text: welcomeMessage, isUser: false }]);
         setCurrentStep(null); // Set currentStep to null to trigger rendering of user options
       }
@@ -99,9 +99,26 @@ const App: React.FC = () => {
 
     const handleUserOptionSelection = (isEnteringSymptoms: boolean) => {
       if (isEnteringSymptoms) {
-          setCurrentStep(BotResponseType.SYMPTOM);
+        setCurrentStep(BotResponseType.SYMPTOM);
+        // First message added immediately
+        setMessages(prevMessages => [
+          ...prevMessages,
+          { text: `Hello, ${userName}! Sorry to hear you are feeling unwell.`, isUser: false }
+        ]);
+    
+        // Second message after a delay
+        setTimeout(() => {
+          setMessages(prevMessages => [
+            ...prevMessages,
+            { text: "Please choose from the symptoms list below.", isUser: false }
+          ]);
+        }, 1500); // Delay in milliseconds, adjust as needed
       } else {
           setCurrentStep(BotResponseType.MEDICINE); // Set current step to medicine
+          setMessages(prevMessages => [
+            ...prevMessages,
+            { text: `Hello, ${userName}! Please type a medication you would like to learn more about`, isUser: false },
+          ]);
       }
   };
   
@@ -224,19 +241,12 @@ const App: React.FC = () => {
       if (currentStep === BotResponseType.SYMPTOM) {
           return (
               <>
-                  <select
-                      onChange={(e) => setNewMessage(e.target.value)}
-                      value={newMessage}
-                      className="flex-grow bg-gray-800 rounded-lg text-white p-3 shadow-md"
-                      disabled={detectDiseaseMode} // Disable the select when in "Detect Disease" mode
-                  >
-                      <option value="">Select a symptom</option>
-                      {symptomOptions.map((symptom, index) => (
-                          <option key={index} value={symptom}>
-                              {symptom.replace(/_/g, ' ')}
-                          </option>
-                      ))}
-                  </select>
+              <SymptomsInput
+                  symptoms={symptomOptions}
+                  onSymptomSelect={(selectedSymptom) => {
+                      sendMessage(selectedSymptom); // This will add the symptom immediately on selection
+                  }}
+              />
                   <button
                       onClick={async () => {
                           if (detectDiseaseMode) {
@@ -351,11 +361,14 @@ const App: React.FC = () => {
                   <div className="flex flex-col h-screen justify-between">
                     <div className="overflow-y-auto">
                     {messages.map((message, index) => (
-                      <div key={index} className={`flex justify-${message.isUser ? 'end' : 'start'} mb-5`}>
-                        <div className={`bg-blue-500 text-white rounded-lg p-2 max-w-xs`}>
-                          {message.text}
+                        <div key={index} className={`flex justify-${message.isUser ? 'end' : 'start'} mb-5`}>
+                          <div className="relative overflow-hidden bg-blue-500 text-white rounded-lg p-2 max-w-xs">
+                            <span className="inline-block animate-typewriter">
+                              {message.text}
+                            </span>
+                            <span className="absolute right-0 top-0 h-full w-0.5 bg-black animate-blink"></span>
+                          </div>
                         </div>
-                      </div>
                       ))}
                       {renderUserOptions()}
                       <div ref={messagesEndRef} />
