@@ -105,7 +105,7 @@ const App: React.FC = () => {
 
           case BotResponseType.SYMPTOM:
             try {
-              const response = await axios.post('http://127.0.0.1:5000/chatbot', { symptoms: userInput });
+              const response = await axios.post('https://lstmmodelchatbot.ue.r.appspot.com/chatbot', { symptoms: userInput });
               const apiResponse = response.data;
               
               // Extract the disease name from the API response
@@ -116,11 +116,26 @@ const App: React.FC = () => {
               if (diseaseInfo) {
                 setMessages(prevMessages => [
                   ...prevMessages,
-                  { text: `${userName}, sorry to hear you are dealing with ${diseaseName}.`, isUser: false },
-                  { text: `To treat ${diseaseName}, consider the following advice: ${diseaseInfo.generalAdvice}`, isUser: false },
-                  { text: `OTC Medication: ${diseaseInfo.otcMedication}`, isUser: false }
+                  { text: `${userName}, sorry to hear you are dealing with ${diseaseName}.`, isUser: false }
                 ]);
-              } else {
+              
+                // Add a delay before adding the next text message
+                setTimeout(() => {
+                  setMessages(prevMessages => [
+                    ...prevMessages,
+                    { text: `To treat ${diseaseName}, consider the following advice: ${diseaseInfo.generalAdvice}`, isUser: false }
+                  ]);
+              
+                  // Add a delay before adding the last text message
+                  setTimeout(() => {
+                    setMessages(prevMessages => [
+                      ...prevMessages,
+                      { text: `OTC Medication: ${diseaseInfo.otcMedication}`, isUser: false }
+                    ]);
+                  }, 2000);
+                }, 2500);
+              }
+               else {
                 setMessages(prevMessages => [
                   ...prevMessages,
                   { text: "We could not find any information on this disease. Please consult a doctor for more information.", isUser: false }
