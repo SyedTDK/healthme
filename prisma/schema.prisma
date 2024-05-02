@@ -32,7 +32,7 @@ model ChatSession {
   user       User        @relation(fields: [userId], references: [id])
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
-  symptoms   String[]    // List of symptoms reported during the session
+  symptoms   String?    // List of symptoms reported during the session
   diagnosis  String?     // Tentative diagnosis
   disease    String?     // Disease diagnosed
 }

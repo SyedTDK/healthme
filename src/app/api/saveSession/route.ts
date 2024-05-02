@@ -18,7 +18,7 @@ export async function POST(request: Request) {
             return; // Optionally handle this scenario appropriately
         }
         const chatSession = await prisma.chatSession.create({
-            data: { userId, symptoms, diagnosis },
+            data: { userId, symptoms, diagnosis, disease },
         });
         return NextResponse.json(chatSession);
     } catch (error: any) {

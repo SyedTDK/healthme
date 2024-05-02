@@ -110,8 +110,8 @@ export default async function New() {
                         className="block max-w-sm p-6 mt-4 border rounded-lg bg-gray-800 border-gray-700 hover:bg-gray-700"
                       >
                         <h5 className="mb-2 text-2xl font-bold tracking-tight text-white"><ConvertToEasternTime utcDateString={ChatSession.createdAt?.toString()} ></ConvertToEasternTime> </h5>
-                        <p className="font-normal text-gray-400">Symptoms experianced: {ChatSession.symptoms?.join(', ') || 'No symptoms'}</p>
-                        <p className="font-normal text-gray-400">Possible Diagnosis by <span className="font-bold bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">AI</span>: {ChatSession.diagnosis || 'No diagnosis'}</p>
+                        <p className="font-normal text-gray-400">Symptoms experienced: {ChatSession.symptoms || 'No symptoms'}</p>
+                        <p className="font-normal text-gray-400">Diagnosis by <span className="font-bold bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">AI</span>: {ChatSession.diagnosis || 'No diagnosis'}</p>
                         <DeleteData dataId={ChatSession?.id} type="chatSession" />
                       </div>
                       
