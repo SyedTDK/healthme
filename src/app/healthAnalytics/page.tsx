@@ -325,7 +325,7 @@ export default async function HealthAnalytics() {
                     <div className=" bg-gray-700 p-4 rounded-lg flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-notebook-tabs"><path d="M2 6h4"/><path d="M2 10h4"/><path d="M2 14h4"/><path d="M2 18h4"/><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M15 2v20"/><path d="M15 7h5"/><path d="M15 12h5"/><path d="M15 17h5"/></svg>                      <div>
                         <h3 className="text-lg font-semibold"><ConvertToEasternTime utcDateString={chatSession?.createdAt?.toString()} ></ConvertToEasternTime></h3>
-                        <p className="text-sm text-gray-500">Symptoms: {chatSession?.symptoms?.join(', ') || 'No symptoms'}</p>
+                        <p className="text-sm text-gray-500">Symptoms: {chatSession?.symptoms || 'No symptoms'}</p>
                       </div>
                     </div>
                   </div>
