@@ -40,31 +40,31 @@ const getSpecialist = async (disease: string) => {
     try {
         const specialistMap = new Map([
             ["Allergist", ["allergy", "bronchial asthma"]],
-        ["Audiologist", ["deafness", "hearing loss"]],
-
-        ["Cardiologist", ["hypertension", "heart attack"]],
-        ["Dentist", ["dental caries (tooth decay)", "periodontal (gum) disease", "edentulism (total tooth loss)", "oro-dental trauma", "noma"]],
-        ["Dermatologist", ["fungal infection", "drug reaction", "acne", "psoriasis", "impetigo", "melanoma"]],
-
-        ["Endocrinologist", ["diabetes", "hypothyroidism", "hypoglycemia"]],
-        ["Primary Care Physician", ["common cold",]],
-        ["Gastroenterologist", ["gerd", "chronic cholestasis", "peptic ulcer disease", "gastroenteritis", "jaundice", "dimorphic hemorrhoids (piles)"]],
-
-        ["Hepatologist", ["hepatitis a", "hepatitis b", "hepatitis c", "hepatitis d", "hepatitis e", "alcoholic hepatitis"]],
-
-        ["Infectious Disease Specialist", ["aids", "malaria", "chicken pox", "dengue", "typhoid", "covid-19"]],
-
-        ["Neurologist", ["migraine", "paralysis (brain hemorrhage)", "acoustic neuroma"]],
-        ["Ophthalmologist", ["color blindness", "refractive errors", "age-related macular degeneration", "cataract", "diabetic retinopathy", "glaucoma", "amblyopia", "strabismus"]],
-        ["Oncologist", ["breast cancer", "colorectal cancer", "kidney cancer", "lung cancer - non-small cell", "lymphoma - non-hodgkin"]],
-        ["Otolaryngologist", ["Vertigo (Paroxysmal Positional Vertigo)", "oral and oropharyngeal cancer", "earache", "ear infection", "ear wax", "fluid from the ear", "glue ear"]],
-
-        ["Physiatrist", ["cervical spondylosis"]],
-        ["Plastic Surgeon", ["cleft lip and palate"]],
-        ["Pulmonologist", ["tuberculosis", "pneumonia"]],
-        ["Rheumatologist", ["osteoarthritis", "arthritis"]],
-        ["Urologist", ["urinary tract infection (uti)", "bladder cancer"]],
-        ["Vascular Surgeons", ["varicose veins"]],
+            ["Audiologist", ["deafness", "hearing loss"]],
+    
+            ["Cardiologist", ["hypertension", "heart attack"]],
+            ["Dentist", ["dental caries (tooth decay)", "periodontal (gum) disease", "edentulism (total tooth loss)", "oro-dental trauma", "noma"]],
+            ["Dermatologist", ["fungal infection", "drug reaction", "acne", "psoriasis", "impetigo", "melanoma"]],
+    
+            ["Endocrinologist", ["diabetes", "hypothyroidism", "hypoglycemia", "vitamin d deficiency"]],
+            ["Primary Care Physician", ["common cold", "flu", "strep throat"]],
+            ["Gastroenterologist", ["gastroesophageal reflux disease", "chronic cholestasis", "peptic ulcer disease", "gastroenteritis", "jaundice", "dimorphic hemorrhoids", "irritable bowel syndrome"]],
+            ["Gynecologist", ["yeast infection"]],
+            ["Hepatologist", ["hepatitis a", "hepatitis b", "hepatitis c", "hepatitis d", "hepatitis e", "alcoholic hepatitis"]],
+    
+            ["Infectious Disease Specialist", ["hiv/aids", "malaria", "chicken pox", "dengue", "typhoid", "covid-19"]],
+    
+            ["Neurologist", ["migraine", "paralysis (brain hemorrhage)", "acoustic neuroma"]],
+            ["Ophthalmologist", ["color blindness", "refractive errors", "age-related macular degeneration", "cataract", "diabetic retinopathy", "glaucoma", "amblyopia", "strabismus"]],
+            ["Oncologist", ["breast cancer", "colorectal cancer", "kidney cancer", "lung cancer - non-small cell", "lymphoma - non-hodgkin"]],
+            ["Otolaryngologist", ["Vertigo (Paroxysmal Positional Vertigo)", "oral and oropharyngeal cancer", "earache", "ear infection", "ear wax", "fluid from the ear", "glue ear"]],
+    
+            ["Physiatrist", ["cervical spondylosis"]],
+            ["Plastic Surgeon", ["cleft lip and palate"]],
+            ["Pulmonologist", ["tuberculosis", "pneumonia"]],
+            ["Rheumatologist", ["osteoarthritis", "arthritis"]],
+            ["Urologist", ["urinary tract infection", "bladder cancer"]],
+            ["Vascular Surgeons", ["varicose veins"]],
         ]);
     
         // Loop through the specialistMap
