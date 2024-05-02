@@ -3,11 +3,12 @@ export interface Message {
     isUser: boolean;
   }
   
-  export interface PatientInfo {
-    isPatient: boolean | null;
+  export type PatientInfo = {
+    isPatient: boolean;
     name: string;
     age: string;
     gender: string;
     symptoms: string[];
-  }
+    diagnosis: string;
+  };
   

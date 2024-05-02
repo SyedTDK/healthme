@@ -14,16 +14,17 @@ const config: Config = {
       },
       animation: {
         typewriter: 'typewriter 1.5s steps(40, end) forwards',
+        typewriterFast: 'typewriterFast 0.75s steps(40, end) forwards', // Faster version for user inputs
         blink: 'blink-caret 1s step-end infinite',
       },
       keyframes: {
         typewriter: {
-          'from': { clipPath: 'inset(0 100% 0 0)' }, // Reveals text from right to left
+          'from': { clipPath: 'inset(0 100% 0 0)' },
           'to': { clipPath: 'inset(0 0 0 0)' },
         },
-        'blink-caret': {
-          'from, to': { borderColor: 'transparent' },
-          '50%': { borderColor: 'black' }, // Assuming the caret is a border element
+        typewriterFast: {
+          'from': { clipPath: 'inset(0 100% 0 0)' },
+          'to': { clipPath: 'inset(0 0 0 0)' },
         },
       },
     },
