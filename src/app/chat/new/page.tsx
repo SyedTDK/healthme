@@ -274,9 +274,10 @@ const App: React.FC = () => {
       // const symptoms = patientInfo.symptoms;
       // //Extract the diagnosis as a string
       
-      const diagnosis = messages.length > 0 ? messages.slice(-3).join(' ') : '';
+      const diagnosis = messages.length >= 3 ? messages.slice(-3).map(msg => msg.text).join(' ') : '';
       const symptoms = messages.length > 0 ? messages[messages.length - 1].text : '';
-      const disease = messages.length > 0 ? messages[messages.length - 3].text.replace(/\.$/, '').split(/\s+/).slice(9).join(' ') : '';
+      const disease = messages.length >= 3 ? messages[messages.length - 3].text.replace(/\.$/, '').split(/\s+/).slice(9).join(' ') : '';
+
 
 
       
