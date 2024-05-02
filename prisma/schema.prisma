@@ -34,6 +34,7 @@ model ChatSession {
   updatedAt  DateTime    @updatedAt
   symptoms   String[]    // List of symptoms reported during the session
   diagnosis  String?     // Tentative diagnosis
+  disease    String?     // Disease diagnosed
 }
 
 model Medications {

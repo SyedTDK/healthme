@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     try {
         
         const body = await request.json();
-        const { userId, symptoms, diagnosis } = body;
+        const { userId, symptoms, diagnosis, disease } = body;
         // Check if user exists (optional, adds robustness)
         const user = await prisma.user.findUnique({
             where: { id: userId },

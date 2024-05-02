@@ -39,32 +39,32 @@ const getLatestSession = async (userId: any) => {
 const getSpecialist = async (disease: string) => {
     try {
         const specialistMap = new Map([
-            ["Allergist", ["allergy", "bronchial"]],
-            ["Audiologist", ["deafness", "hearing"]],
-    
-            ["Cardiologist", ["hypertension", "heart"]],
-            ["Dentist", ["dental", "periodontal", "edentulism", "oro-dental", "noma"]],
-            ["Dermatologist", ["fungal", "drug", "acne", "psoriasis", "impetigo", "melanoma"]],
-    
-            ["Endocrinologist", ["diabetes", "hypothyroidism", "hypoglycemia"]],
-            ["Primary Care Physician", ["common",]],
-            ["Gastroenterologist", ["gerd", "chronic", "peptic", "gastroenteritis", "jaundice", "dimorphic"]],
-    
-            ["Hepatologist", ["hepatitis", "alcoholic"]],
-    
-            ["Infectious Disease Specialist", ["aids", "malaria", "chicken", "dengue", "typhoid", "covid-19"]],
-    
-            ["Neurologist", ["migraine", "paralysis", "acoustic"]],
-            ["Ophthalmologist", ["color", "refractive", "age-related", "cataract", "diabetic", "glaucoma", "amblyopia", "strabismus"]],
-            ["Oncologist", ["breast", "colorectal", "kidney", "lung", "lymphoma"]],
-            ["Otolaryngologist", ["Vertigo", "oral", "earache", "ear", "fluid", "glue"]],
-    
-            ["Physiatrist", ["cervical"]],
-            ["Plastic Surgeon", ["cleft"]],
-            ["Pulmonologist", ["tuberculosis", "pneumonia"]],
-            ["Rheumatologist", ["osteoarthritis", "arthritis"]],
-            ["Urologist", ["urinary", "bladder"]],
-            ["Vascular Surgeons", ["varicose"]],
+            ["Allergist", ["allergy", "bronchial asthma"]],
+        ["Audiologist", ["deafness", "hearing loss"]],
+
+        ["Cardiologist", ["hypertension", "heart attack"]],
+        ["Dentist", ["dental caries (tooth decay)", "periodontal (gum) disease", "edentulism (total tooth loss)", "oro-dental trauma", "noma"]],
+        ["Dermatologist", ["fungal infection", "drug reaction", "acne", "psoriasis", "impetigo", "melanoma"]],
+
+        ["Endocrinologist", ["diabetes", "hypothyroidism", "hypoglycemia"]],
+        ["Primary Care Physician", ["common cold",]],
+        ["Gastroenterologist", ["gerd", "chronic cholestasis", "peptic ulcer disease", "gastroenteritis", "jaundice", "dimorphic hemorrhoids (piles)"]],
+
+        ["Hepatologist", ["hepatitis a", "hepatitis b", "hepatitis c", "hepatitis d", "hepatitis e", "alcoholic hepatitis"]],
+
+        ["Infectious Disease Specialist", ["aids", "malaria", "chicken pox", "dengue", "typhoid", "covid-19"]],
+
+        ["Neurologist", ["migraine", "paralysis (brain hemorrhage)", "acoustic neuroma"]],
+        ["Ophthalmologist", ["color blindness", "refractive errors", "age-related macular degeneration", "cataract", "diabetic retinopathy", "glaucoma", "amblyopia", "strabismus"]],
+        ["Oncologist", ["breast cancer", "colorectal cancer", "kidney cancer", "lung cancer - non-small cell", "lymphoma - non-hodgkin"]],
+        ["Otolaryngologist", ["Vertigo (Paroxysmal Positional Vertigo)", "oral and oropharyngeal cancer", "earache", "ear infection", "ear wax", "fluid from the ear", "glue ear"]],
+
+        ["Physiatrist", ["cervical spondylosis"]],
+        ["Plastic Surgeon", ["cleft lip and palate"]],
+        ["Pulmonologist", ["tuberculosis", "pneumonia"]],
+        ["Rheumatologist", ["osteoarthritis", "arthritis"]],
+        ["Urologist", ["urinary tract infection (uti)", "bladder cancer"]],
+        ["Vascular Surgeons", ["varicose veins"]],
         ]);
     
         // Loop through the specialistMap
@@ -86,9 +86,7 @@ export default async function Page() {
     const user = await getCurrentUser();
     const userId = user?.id;
     const session = await getLatestSession(userId);
-    const latestDiagnosis = session?.diagnosis;
-    const disease = latestDiagnosis?.split(' ')[4].replace(/\.$/, '') ?? '';
-
+    const disease = session?.disease?.toString() ?? '';
     
     if (!(user)) {
         return (

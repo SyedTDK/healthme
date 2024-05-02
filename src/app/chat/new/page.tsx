@@ -22,6 +22,8 @@ const App: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [currentDiseaseInfo, setCurrentDiseaseInfo] = useState(null);
+  const [userSymptoms, setUserSymptoms] = useState('');
+  const [userDisease, setUserDisease] = useState('');
 
   
   
@@ -112,7 +114,8 @@ const App: React.FC = () => {
               const diseaseName = apiResponse.disease; // Assuming 'disease' is the key where the name is stored
               const normalizedDiseaseName = diseaseName.toLowerCase();
               const diseaseInfo = diseases[normalizedDiseaseName];
-        
+              setUserDisease(diseaseName);
+              setUserSymptoms(userInput);
               if (diseaseInfo) {
                 setMessages(prevMessages => [
                   ...prevMessages,
@@ -271,9 +274,11 @@ const App: React.FC = () => {
     if (status === "authenticated") {
       const userId = parseInt(session?.user?.id || '0');
       //Extract the symptoms as a string[]
-      const symptoms = patientInfo.symptoms;
-      //Extract the diagnosis as a string
+      // const symptoms = patientInfo.symptoms;
+      // //Extract the diagnosis as a string
       const diagnosis = messages.length > 0 ? messages[messages.length - 1].text : '';
+      const symptoms = userSymptoms;
+      const disease = userDisease;
 
 
       
@@ -282,7 +287,7 @@ const App: React.FC = () => {
         e.preventDefault();
         setIsSubmitting(true);
         try {
-          const body = { userId, symptoms, diagnosis};
+          const body = { userId, symptoms, diagnosis, disease};
           await fetch('/api/saveSession', {
             method: 'POST',
             headers: {
