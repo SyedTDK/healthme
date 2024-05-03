@@ -10,8 +10,8 @@ export const diseases: Record<string, DiseaseInfo> = {
         otcMedication: "Products containing benzoyl peroxide or salicylic acid can be helpful."
     },
     "allergy": {
-        generalAdvice: "Avoid known allergens. Use an air purifier to reduce airborne allergens in your home.",
-        otcMedication: "Antihistamines like Loratadine or Cetirizine can help relieve symptoms."
+        "generalAdvice": "Avoid known allergens. Use an air purifier to reduce airborne allergens in your home.",
+        "otcMedication": "Antihistamines like Loratadine, Cetirizine, or Allegra (Fexofenadine) can help relieve symptoms."
     },
     "arthritis": {
         generalAdvice: "Maintain a healthy weight. Exercise regularly but avoid straining the joints with high-impact activities.",
